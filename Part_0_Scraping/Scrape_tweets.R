@@ -13,12 +13,20 @@ token <- get_token()
 
 search.string <- "#facebook"
 
-tweets <- search_tweets(search.string, n = 1000, 
+tweets <- search_tweets(search.string, n = 10000, 
                         include_rts = FALSE,
                         retryonratelimit = FALSE,
-                        lang = 'en')
+                        lang = 'en',
+                        token = get_token())
+setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/src")
+save(tweets, file = "First_Scrape8.03.RData")
 
-tweets_data(tweets)
+typeof(tweets)
+tweets_table <- as.data.frame(tweets)
+
+First_Scrape8.03
+
+
 text <- tweets_data(tweets) %>% pull(text)
 myCorpus <- Corpus(VectorSource(text))
 
