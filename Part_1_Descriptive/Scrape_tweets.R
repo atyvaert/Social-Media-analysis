@@ -1,7 +1,7 @@
 ########################################
 ## DESCPRITIVE ## 
 rm(list=ls()) #Clean the environment
-# setwd("/Users/konstantinlazarov/Desktop/SMWA/Group_Assignement")
+setwd("/Users/konstantinlazarov/Desktop/SMWA/Group_Assignement")
 # Install and load packages
 if (!require("pacman")) install.packages("pacman") ; require("pacman")
 p_load(tidyverse, rtweet, httpuv, stringr, qdap, httr, wordcloud2, tm, tidytext, wordcloud)
@@ -11,9 +11,9 @@ source('tokensandkeys.R')
 
 token <- get_token()
 
-search.string <- "#Netflix"
+search.string <- "#facebook"
 
-tweets <- search_tweets(search.string, n = 10000, 
+tweets <- search_tweets(search.string, n = 1000, 
                         include_rts = FALSE,
                         retryonratelimit = FALSE,
                         lang = 'en')
