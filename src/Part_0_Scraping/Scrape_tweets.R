@@ -11,7 +11,7 @@ source('tokensandkeys.R')
 
 token <- get_token()
 
-search.string <- "#facebook"
+search.string <- "#Netflix"
 
 tweets <- search_tweets(search.string, n = 10000, 
                         include_rts = FALSE,
@@ -24,7 +24,11 @@ save(tweets, file = "First_Scrape8.03.RData")
 typeof(tweets)
 tweets_table <- as.data.frame(tweets)
 
-First_Scrape8.03
+p_load(ggplot2)
+ggplot(tweets$created_at) 
+hist(tweets$created_at)
+tweets$retweet_location
+plot(tweets_table$created_at)
 
 
 text <- tweets_data(tweets) %>% pull(text)
@@ -55,7 +59,7 @@ options(warn=-1) #turn warnings off
 wordcloud(d$word,d$freq)
 options(warn=0) #turn warnings back on
 
-wordcloud_tesla <- wordcloud2(d)
+wordcloud_netflix <- wordcloud2(d)
 
 
 
