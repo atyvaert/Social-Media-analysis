@@ -18,8 +18,13 @@ tweets <- search_tweets(search.string, n = 10000,
                         retryonratelimit = FALSE,
                         lang = 'en',
                         token = get_token())
+tweets_max <- search_tweets(search.string, n = 20000, 
+                        include_rts = FALSE,
+                        retryonratelimit = FALSE,
+                        lang = 'en',
+                        token = get_token())
 setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/src")
-save(tweets, file = "First_Scrape8.03.RData")
+save(tweets, file = "First_Scrape9.03.RData")
 
 typeof(tweets)
 tweets_table <- as.data.frame(tweets)
