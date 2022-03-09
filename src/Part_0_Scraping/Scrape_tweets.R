@@ -20,9 +20,11 @@ tweets <- search_tweets(search.string, n = 10000,
                         token = get_token())
 tweets_max <- search_tweets(search.string, n = 20000, 
                         include_rts = FALSE,
-                        retryonratelimit = FALSE,
+                        retryonratelimit = TRUE,
                         lang = 'en',
                         token = get_token())
+#https://www.rdocumentation.org/packages/rtweet/versions/0.7.0/topics/search_tweets 
+
 setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/src")
 save(tweets, file = "First_Scrape9.03.RData")
 
@@ -30,7 +32,7 @@ typeof(tweets)
 tweets_table <- as.data.frame(tweets)
 
 p_load(ggplot2)
-ggplot(tweets$created_at) 
+plot(tweets_max$created_at) 
 hist(tweets$created_at)
 tweets$retweet_location
 plot(tweets_table$created_at)
