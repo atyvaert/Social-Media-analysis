@@ -11,18 +11,16 @@ source('tokensandkeys.R')
 
 token <- get_token()
 
-search.string <- "Starbucks"
+search.string <- "#Starbucks"
 
 tweets <- search_tweets(search.string, n = 18000, 
                         include_rts = FALSE,
                         retryonratelimit = FALSE,
                         lang = 'en',
                         token = get_token())
-tweets_max <- search_tweets(search.string, n = 20000, 
-                        include_rts = FALSE,
-                        retryonratelimit = TRUE,
-                        lang = 'en',
-                        token = get_token())
+
+
+
 #https://www.rdocumentation.org/packages/rtweet/versions/0.7.0/topics/search_tweets 
 
 setwd("C:\\Users\\bertj\\OneDrive\\Documenten\\GitHub\\SMWA_Performance\\data")

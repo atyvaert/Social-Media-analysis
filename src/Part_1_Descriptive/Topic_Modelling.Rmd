@@ -25,9 +25,12 @@ text <- tweets_data(tweets) %>% pull(text)
 
 set.seed(123)
 sample <- sample(unique(text), 
-                              round(length(unique(text))/100), 
+                              round(length(unique(text))/10), 
                               replace = FALSE)
 length(sample)
+```
+```{r}
+
 ```
 
 
@@ -37,14 +40,107 @@ myCorpus <- Corpus(VectorSource(sample)) %>%
   tm_map(content_transformer(str_to_lower)) %>%
   tm_map(removePunctuation) %>%
   tm_map(removeNumbers) %>%
-  tm_map(stripWhitespace)
-myStopwords <- c(stopwords('english'))
+  tm_map(stripWhitespace) 
+  
+myStopwords <- c(stopwords('english'),"starbucks", "the", "and", "📌")
 myCorpus <- tm_map(myCorpus, removeWords, myStopwords)
 
 ```
 ```{r}
 dtm1 <- DocumentTermMatrix(myCorpus)
-dtm1 
+inspect(dtm1)
+    
+```
+
+
+```{r}
+lda_basic <- LDA(dtm1, 
+                 control = list(seed = 33), 
+                 k = 5)
+terms(lda_basic, 20)
+```
+
+
+```{r}
+#chose sprasety 
+final_dtm <- removeSparseTerms(dtm1, 0.95) 
+final_dtm
+
+```
+```{r}
+#remove rows which have only 0 elements: each should contain at least 1 non zero 
+rowTotals <- apply(final_dtm , 1, sum) #Find the sum of words in each Document
+dtm_new   <- final_dtm[rowTotals> 0, ]
+dtm_new
+```
+
+
+```{r}
+#not only calculate the UMass but also try to find different likelihood measures 
+#AIC and BIC 
+topics <- seq(2,10,1)
+alpha <- seq(0.2,0.8,0.2)
+beta <- seq(0.2,0.8,0.2)
+grid <- expand.grid(topics, alpha, beta)
+colnames(grid) <- c('topics', 'alpha', 'beta')
+grid$UMass <- rep(-99999999999, nrow(grid))
+grid$LL <- rep(-99999999999, nrow(grid))
+
+#This takes a while ==> best to load fitted grid
+for (i in 1:nrow(grid)){
+  K <- grid[i,'topics']
+  a <- grid[i,'alpha']
+  b <- grid[i,'beta']
+  lda <- LDA(dtm_new, control = list(alpha = a, estimate.beta = b), k = K)
+  grid[i,'UMass'] <- mean(topic_coherence(lda, dtm_new, top_n_tokens = 30))
+}
+
+
+```
+```{r}
+```
+
+
+```{r}
+
+(optimal_settings <- grid %>% filter(UMass == max(UMass))) 
+optimal_settings
+
+```
+
+
+```{r}
+grid %>% 
+  filter(alpha==0.4 & beta==0.8) %>% 
+  ggplot(aes(x = topics, y = UMass)) + geom_line() 
+```
+
+
+```{r}
+grid %>% 
+  filter(alpha==0.2 & beta==0.2) %>% 
+  ggplot(aes(x = topics, y = UMass)) + geom_line() 
+```
+
+
+```{r}
+lda <- LDA(dtm_new, 
+           control = list(alpha = optimal_settings$alpha, 
+                          estimate.beta = optimal_settings$beta),
+           k = 10)
+
+terms(lda, 20)
+
+
+```
+
+```{r}
+lda <- LDA(dtm_new, 
+           control = list(alpha = optimal_settings$alpha, 
+                          estimate.beta = optimal_settings$beta),
+           k = 3)
+
+terms(lda, 20)
 ```
 
 
