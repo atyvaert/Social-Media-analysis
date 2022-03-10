@@ -11,9 +11,9 @@ source('tokensandkeys.R')
 
 token <- get_token()
 
-search.string <- "#Netflix"
+search.string <- "Starbucks"
 
-tweets <- search_tweets(search.string, n = 10000, 
+tweets <- search_tweets(search.string, n = 18000, 
                         include_rts = FALSE,
                         retryonratelimit = FALSE,
                         lang = 'en',
@@ -25,14 +25,14 @@ tweets_max <- search_tweets(search.string, n = 20000,
                         token = get_token())
 #https://www.rdocumentation.org/packages/rtweet/versions/0.7.0/topics/search_tweets 
 
-setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/src")
-save(tweets, file = "First_Scrape9.03.RData")
+setwd("C:\\Users\\bertj\\OneDrive\\Documenten\\GitHub\\SMWA_Performance\\data")
+save(tweets, file = "Scrape1_10_03_RData")
 
 typeof(tweets)
 tweets_table <- as.data.frame(tweets)
 
 p_load(ggplot2)
-plot(tweets_max$created_at) 
+plot(tweets$created_at) 
 hist(tweets$created_at)
 tweets$retweet_location
 plot(tweets_table$created_at)
@@ -66,7 +66,7 @@ options(warn=-1) #turn warnings off
 wordcloud(d$word,d$freq)
 options(warn=0) #turn warnings back on
 
-wordcloud_netflix <- wordcloud2(d)
+wordcloud_starbucks <- wordcloud2(d)
 
 
 
