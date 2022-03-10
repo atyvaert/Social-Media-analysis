@@ -3,9 +3,6 @@ title: "Wordclouds"
 output: html_notebook
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
-
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
 ```{r}
 # necessary packages
 if (!require("pacman")) install.packages("pacman") ; require("pacman")
@@ -17,12 +14,11 @@ p_load(tm,wordcloud, wordcloud2)
 tweets
 # change to text
 text <- tweets_data(tweets) %>% pull(text)
-text
-
 text <- iconv(text,'latin1', 'ascii', sub = '')
 ```
 
 ```{r}
+#creating corpus
 myCorpus <- Corpus(VectorSource(text)) %>%
   tm_map(content_transformer(str_to_lower)) %>%
   tm_map(removePunctuation) %>%
@@ -37,20 +33,11 @@ m <- as.matrix(tdm)
 v <- sort(rowSums(m),decreasing=TRUE)
 d <- tibble(word = names(v),freq=v)
 
-d <- d %>% filter(word != "netflix") %>% arrange(desc(freq))
-#d <- d %>% filter(word != "elonmusk") %>% arrange(desc(freq))
-#d <- d %>% filter(word != "musk") %>% arrange(desc(freq))
-#d <- d %>% filter(word != "elon") %>% arrange(desc(freq))
-#d <- d %>% filter(word != "you") %>% arrange(desc(freq))
+#filtering the tibble
+d <- d %>% filter(word != "starbucks") %>% arrange(desc(freq))
+d <- d[which(d$freq>30),]
 
-wordcloud_netflix <- wordcloud2(d)
-
+# making the wordcloud
+wordcloud <- wordcloud2(d)
+wordcloud
 ```
-
-
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
-
