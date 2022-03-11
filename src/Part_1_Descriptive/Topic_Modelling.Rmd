@@ -145,6 +145,7 @@ terms(lda, 20)
 
 
 ```{r}
+lda@gamma[1:20,]
 ```
 
 
