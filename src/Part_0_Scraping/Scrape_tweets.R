@@ -38,7 +38,7 @@ save(tweets2, file = "Scrape5_03Till13_03.RData")
 #https://www.rdocumentation.org/packages/rtweet/versions/0.7.0/topics/search_tweets 
 
 setwd("C:\\Users\\bertj\\OneDrive\\Documenten\\GitHub\\SMWA_Performance\\data")
-save(tweets, file = "Scrape1_10_03_RData")
+save(tweets, file = "Scrape_18_03_RData")
 
 typeof(tweets)
 tweets_table <- as.data.frame(tweets)
