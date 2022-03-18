@@ -16,7 +16,7 @@ token <- get_token()
 
 search.string <- "#Starbucks"
 
-tweets <- search_tweets(search.string, n = 5000, 
+tweets <- search_tweets(search.string, n = 10000, 
                         include_rts = FALSE,
                         retryonratelimit = FALSE,
                         lang = 'en',
@@ -32,7 +32,7 @@ min(list_starbucks$created)
 max(list_starbucks$created)
 
 setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/data")
-save(tweets2, file = "Scrape5_03Till13_03.RData")
+save(tweets, file = "Scrape3_18_03Till13_03.RData")
 
 
 #https://www.rdocumentation.org/packages/rtweet/versions/0.7.0/topics/search_tweets 
