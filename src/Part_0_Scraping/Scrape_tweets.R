@@ -32,7 +32,7 @@ min(list_starbucks$created)
 max(list_starbucks$created)
 
 setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/data")
-save(tweets, file = "Scrape3_18_03Till13_03.RData")
+save(tweets, file = "Scrape3_19_03Till13_03.RData")
 
 
 #https://www.rdocumentation.org/packages/rtweet/versions/0.7.0/topics/search_tweets 
