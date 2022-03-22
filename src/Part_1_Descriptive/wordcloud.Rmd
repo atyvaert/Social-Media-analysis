@@ -8,6 +8,9 @@ output: html_notebook
 if (!require("pacman")) install.packages("pacman") ; require("pacman")
 p_load(rtweet, httr,tidyverse)
 p_load(tm,wordcloud, wordcloud2)
+p_load(stringr)
+p_load(tibble)
+p_load(dplyr)
 ```
 
 ```{r}
