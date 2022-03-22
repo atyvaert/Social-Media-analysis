@@ -56,6 +56,8 @@ all_tweets <- rbind(tweets1, tweets3, tweets4, tweets5, tweets6, tweets7, tweets
                     tweets15, tweets16, tweets17, tweets18, tweets19, tweets20, tweets21, tweets22, tweets23, tweets24)
 colnames(all_tweets) <- c("user_id", "date", "text")
 
+all_tweets$date <- format(as.POSIXct(all_tweets$date,format='%m/%d/%Y %H:%M:%S'),format='%m/%d/%Y')
+
 class(all_tweets)
 
 sum(duplicated(all_tweets))
