@@ -12,9 +12,9 @@ p_load(tidyverse, rtweet, httpuv, stringr, qdap, httr, wordcloud2, tm, tidytext,
 
 ```
 ```{r}
-tweets %>% glimpse() 
+all_tweets %>% glimpse() 
 #only use the text from the tweets 
-text <- tweets_data(tweets) %>% pull(text)
+text <- all_tweets$text
 
 ```
 
@@ -25,7 +25,7 @@ text <- tweets_data(tweets) %>% pull(text)
 
 set.seed(123)
 sample <- sample(unique(text), 
-                              round(length(unique(text))/10), 
+                              round(length(unique(text))/100), 
                               replace = FALSE)
 length(sample)
 ```
@@ -111,7 +111,7 @@ optimal_settings
 
 ```{r}
 grid %>% 
-  filter(alpha==0.4 & beta==0.8) %>% 
+  filter(alpha==0.2 & beta==0.8) %>% 
   ggplot(aes(x = topics, y = UMass)) + geom_line() 
 ```
 
@@ -127,7 +127,7 @@ grid %>%
 lda <- LDA(dtm_new, 
            control = list(alpha = optimal_settings$alpha, 
                           estimate.beta = optimal_settings$beta),
-           k = 10)
+           k = 4)
 
 terms(lda, 20)
 
