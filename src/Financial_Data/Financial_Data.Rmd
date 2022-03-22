@@ -9,6 +9,8 @@ data = read.csv("/Users/wouterdewitte/Downloads/SBUX.csv")
 data$Target = data$Close - data$Open
 
 data
+
+save(data, file = "/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/Financial_Data.RData")
 ```
 
 
