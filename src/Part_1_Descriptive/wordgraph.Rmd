@@ -7,20 +7,21 @@ output: html_notebook
 if (!require("pacman")) install.packages("pacman") ; require("pacman")
 p_load(rtweet, httr,tidyverse)
 p_load(tm,wordcloud, wordcloud2)
+library(parallel)
 ```
 
 ```{r}
-# change to text
-text <- tweets_data(tweets) %>% pull(text)
-text <- iconv(text,'latin1', 'ascii', sub = '')
-
 # filtering out the bot
 
-tweets$is_no_bot <- !grepl("Poshmark",tweets$text)
+all_tweets$is_no_bot <- !grepl("Poshmark",all_tweets$text)
 
-tweets <- tweets[tweets$is_no_bot == TRUE,]
+all_tweets <- all_tweets[all_tweets$is_no_bot == TRUE,]
 
-tweets <- subset(tweets, select = -tweets$is_no_bot)
+all_tweets <- subset(all_tweets, select = -all_tweets$is_no_bot)
+
+# change to text
+text <- all_tweets$text
+text <- iconv(text,'latin1', 'ascii', sub = '')
 
 #creating document term matrix
 
@@ -81,7 +82,7 @@ create_adjacency_matrix <- function(object, probs=0.99){
 
 ```{r}
 #create adjacency matrix
-adj_mat <- create_adjacency_matrix(doc_term_mat)
+adj_mat <- mclapply(doc_term_mat, create_adjacency_matrix(), mc.cores = detectCores())
 ```
 
 ```{r}
@@ -121,7 +122,7 @@ options(warn=0)
 
 ```{r}
 Student.names[grep("E", Student.names)]
-tweets$text[grep("Poshmark",tweets$text)]
+all_tweets$text[grep("Poshmark",all_tweets$text)]
 ```
 
 
