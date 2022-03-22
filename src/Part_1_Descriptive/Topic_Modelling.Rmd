@@ -10,8 +10,8 @@ if (!require("pacman")) install.packages("pacman") ; require("pacman")
 p_load(tidyverse, topicdoc, topicmodels, tm, textcat, rlang, tidytext, ggmap)
 p_load(tidyverse, rtweet, httpuv, stringr, qdap, httr, wordcloud2, tm, tidytext, wordcloud)
 
-```
-```{r}
+
+
 all_tweets %>% glimpse() 
 #only use the text from the tweets 
 text <- all_tweets$text
@@ -25,14 +25,12 @@ text <- all_tweets$text
 
 set.seed(123)
 sample <- sample(unique(text), 
-                              round(length(unique(text))/100), 
-                              replace = FALSE)
+                 round(length(unique(text))/10), 
+                 replace = FALSE)
 length(sample)
 ```
-```{r}
 
-```
-
+Make sure that the sample is not too small 
 
 ```{r}
 #applying pre processing to the smaller sample 
@@ -53,16 +51,12 @@ inspect(dtm1)
 ```
 
 
-```{r}
-lda_basic <- LDA(dtm1, 
-                 control = list(seed = 33), 
-                 k = 5)
-terms(lda_basic, 20)
-```
+
 
 
 ```{r}
 #chose sprasety 
+
 final_dtm <- removeSparseTerms(dtm1, 0.95) 
 final_dtm
 
@@ -97,13 +91,12 @@ for (i in 1:nrow(grid)){
 
 
 ```
+
+
+
 ```{r}
-```
 
-
-```{r}
-
-(optimal_settings <- grid %>% filter(UMass == max(UMass))) 
+optimal_settings <- grid %>% filter(UMass == max(UMass))
 optimal_settings
 
 ```
@@ -111,7 +104,7 @@ optimal_settings
 
 ```{r}
 grid %>% 
-  filter(alpha==0.2 & beta==0.8) %>% 
+  filter(alpha==0.4 & beta==0.2) %>% 
   ggplot(aes(x = topics, y = UMass)) + geom_line() 
 ```
 
@@ -127,7 +120,7 @@ grid %>%
 lda <- LDA(dtm_new, 
            control = list(alpha = optimal_settings$alpha, 
                           estimate.beta = optimal_settings$beta),
-           k = 4)
+           k = 8)
 
 terms(lda, 20)
 
@@ -138,22 +131,104 @@ terms(lda, 20)
 lda <- LDA(dtm_new, 
            control = list(alpha = optimal_settings$alpha, 
                           estimate.beta = optimal_settings$beta),
-           k = 3)
+           k = 2)
+
+terms(lda, 20)
+```
+
+Now we will deploy topic modelling on the full data set 
+
+```{r}
+set.seed(123)
+sample <- sample(unique(text), 
+                 round(length(unique(text))), 
+                 replace = FALSE)
+
+myCorpus <- Corpus(VectorSource(sample)) %>%
+  tm_map(content_transformer(str_to_lower)) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(removeNumbers) %>%
+  tm_map(stripWhitespace) 
+  
+myStopwords <- c(stopwords('english'),"starbucks", "the", "and", "📌")
+myCorpus <- tm_map(myCorpus, removeWords, myStopwords)
+
+dtm1 <- DocumentTermMatrix(myCorpus)
+inspect(dtm1)
+
+#chose sprasety 
+
+final_dtm <- removeSparseTerms(dtm1, 0.95) 
+final_dtm
+
+rowTotals <- apply(final_dtm , 1, sum) #Find the sum of words in each Document
+dtm_new   <- final_dtm[rowTotals> 0, ]
+dtm_new
+
+topics <- seq(2,10,1)
+alpha <- seq(0.2,0.8,0.2)
+beta <- seq(0.2,0.8,0.2)
+grid <- expand.grid(topics, alpha, beta)
+colnames(grid) <- c('topics', 'alpha', 'beta')
+grid$UMass <- rep(-99999999999, nrow(grid))
+grid$LL <- rep(-99999999999, nrow(grid))
+
+#This takes a while ==> best to load fitted grid
+for (i in 1:nrow(grid)){
+  K <- grid[i,'topics']
+  a <- grid[i,'alpha']
+  b <- grid[i,'beta']
+  lda <- LDA(dtm_new, control = list(alpha = a, estimate.beta = b), k = K)
+  grid[i,'UMass'] <- mean(topic_coherence(lda, dtm_new, top_n_tokens = 30))
+}
+
+
+```
+
+
+
+```{r}
+
+optimal_settings <- grid %>% filter(UMass == max(UMass))
+optimal_settings
+
+```
+Lowest UMass for 6 topics but this is too much sparse variables in our final model, for this reason we choose 2
+
+```{r}
+grid %>% 
+  filter(alpha==0.4 & beta==0.4) %>% 
+  ggplot(aes(x = topics, y = UMass)) + geom_line() 
+
+```
+
+
+
+```{r}
+grid %>% 
+  filter(alpha==0.2 & beta==0.2) %>% 
+  ggplot(aes(x = topics, y = UMass)) + geom_line() 
+```
+
+
+```{r}
+lda <- LDA(dtm_new, 
+           control = list(alpha = 0.4, 
+                          estimate.beta = 0.4),
+           k = 2)
 
 terms(lda, 20)
 ```
 
 
 ```{r}
-lda@gamma[1:20,]
+Topics_Frame <- head(as.data.frame(terms(lda, 20)),5)
+Topics_Frame
 ```
 
-
 ```{r}
-```
-
-
-```{r}
+setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/data")
+save(Topics_Frame, file = "Topics_Frame.RData")
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
