@@ -6,7 +6,7 @@ setwd("/Users/konstantinlazarov/Desktop/SMWA/Group_Assignement")
 if (!require("pacman")) install.packages("pacman") ; require("pacman")
 p_load(tidyverse, rtweet, httpuv, stringr, qdap, httr, wordcloud2, tm, tidytext, wordcloud)
 
-#install.packages("twitteR") 
+#install.packages("twitteR")
 library(twitteR)
 
 
