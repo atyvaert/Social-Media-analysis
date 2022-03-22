@@ -12,7 +12,7 @@ p_load(tm,wordcloud, wordcloud2)
 
 ```{r}
 # change to text
-text <- tweets_data(all_tweets) %>% pull(text)
+text <- all_tweets$text
 text <- iconv(text,'latin1', 'ascii', sub = '')
 ```
 

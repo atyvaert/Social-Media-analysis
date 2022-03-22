@@ -82,7 +82,7 @@ create_adjacency_matrix <- function(object, probs=0.99){
 
 ```{r}
 #create adjacency matrix
-adj_mat <- mclapply(doc_term_mat, create_adjacency_matrix(), mc.cores = detectCores())
+adj_mat <- create_adjacency_matrix(doc_term_mat)
 ```
 
 ```{r}
