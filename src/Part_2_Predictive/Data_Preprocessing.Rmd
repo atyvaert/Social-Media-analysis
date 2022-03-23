@@ -1,0 +1,33 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+### Data Preprocessing ###
+
+set.seed(123)
+rm(list = ls())
+
+###### Read Data ######
+load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_train.RData")
+load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_test.RData")
+```
+
+```{r}
+# Detect missing values
+colMeans(is.na(basetable_train))
+colMeans(is.na(basetable_test))
+
+# Handle outliers
+handle_outlier_z <- function(col){
+  col_z <- scale(col)
+  ifelse(abs(col_z)>3,
+         sign(col_z)*3*attr(col_z,"scaled:scale") + attr(col_z,"scaled:center"), col)
+}
+
+num.cols <- sapply(basetable_train, is.numeric)
+basetable_train[, num.cols] <-  sapply(basetable_train[, num.cols], FUN = handle_outlier_z)
+
+```
+

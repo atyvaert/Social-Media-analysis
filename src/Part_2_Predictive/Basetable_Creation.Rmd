@@ -86,13 +86,18 @@ basetable_test <- merge(tweets_test_agg,financial_data,by="date")
 
 ```{r}
 # Splitting in train and test set
-train_x <- subset(train, select = -c(Target))
-train_y <- train$Target
+train_x <- subset(basetable_train, select = -c(Target))
+train_y <- basetable_train$Target
 
-test_x <- subset(test, select = -c(Target))
-test_y <- test$Target
-
+test_x <- subset(basetable_test, select = -c(Target))
+test_y <- basetable_test$Target
 ```
+
+```{r}
+save(basetable_train, file = "/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_train.RData")
+save(basetable_test, file = "/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_test.RData")
+```
+
 
 
 
