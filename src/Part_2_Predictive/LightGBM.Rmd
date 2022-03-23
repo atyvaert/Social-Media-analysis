@@ -1,0 +1,61 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+set.seed(123)
+rm(list = ls())
+
+library(pROC)
+library(ROSE)
+library(MASS)
+library(magrittr)
+library(pROC)
+library(lightgbm)
+
+
+
+load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_train.RData")
+
+load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_test.RData")
+```
+
+```{r}
+train_x <- basetable_train[,-ncol(basetable_train)]
+train_y <- basetable_train[,ncol(basetable_train)]
+
+test_x <- basetable_test[,-ncol(basetable_test)]
+test_y <- basetable_test[,ncol(basetable_test)]
+
+dtrain <- lgb.Dataset(data = as.matrix(train_x), label = train_y)
+test_matrix_x<-as.matrix(test_x)
+```
+
+```{r}
+# Determining the hyperparameters
+lgb.grid<-list(objective="binary",
+                num_leaves=10,
+                max_depth=12,
+                metric="auc",
+                boosting="gbdt",
+                learning_rate=0.005,
+                num_iterations=2950,
+                min_data_in_leaf=40)
+```
+
+```{r}
+# Modeling
+lgb.model <- lgb.train(data = dtrain,params = lgb.grid, )
+preds<-predict(lgb.model,test_matrix_x)
+
+#rounding the values
+preds[preds >= 0.5] <- 1
+preds[preds < 0.5] <- -1
+
+
+#auc
+auc <- auc(test_y,preds)
+```
+
+
