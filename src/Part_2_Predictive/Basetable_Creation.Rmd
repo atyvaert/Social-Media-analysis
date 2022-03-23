@@ -9,30 +9,53 @@ output: html_notebook
 
 set.seed(123)
 rm(list = ls())
+library(quantmod)
 
 ###### Read Data ######
 load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/All_tweets_with_sentiment.RData")
 
-load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/Financial_Data.RData")
 ```
 
 ```{r}
-# Clean financial data
-financial_data <- data
-names(financial_data)[names(financial_data) == "Date"] <- "date"
+# Clean financial data & add technical indicators
+getSymbols("SBUX")
+
+ema <-EMA(Cl(SBUX),n=20)
+bb <-BBands(Cl(SBUX),s.d=2)
+M <- momentum(Cl(SBUX), n=2)
+ROC <- ROC(Cl(SBUX),n=2)
+macd <- MACD(Cl(SBUX), nFast=12, nSlow=26,
+             nSig=9, maType=SMA)
+rsi = RSI(Cl(SBUX), n=14)
+
+financial_data <- Reduce(function(...) merge(..., all=TRUE), list(SBUX, ema, bb,M,ROC,macd,rsi))
+
+financial_data <- data.frame(date=index(financial_data), coredata(financial_data))
+
+financial_data$Target = financial_data$SBUX.Close - financial_data$SBUX.Open
 
 financial_data$Target <- sign(financial_data$Target)
-
 ```
 
 ```{r}
 # Clean tweet data
 all_tweets <- subset(all_tweets, select = -c(text, user_id))
+names(all_tweets)[5] <- "sentiment_by_dictionary"
+
+# Clean date
+all_tweets$date <- strptime(as.character(all_tweets$date), "%m/%d/%Y")
+all_tweets$date <- format(all_tweets$date, "%Y-%m-%d")
+all_tweets$date <- as.Date(all_tweets$date)
+
 
 # Splitting in train and test set
-dt = sample(nrow(all_tweets), nrow(all_tweets)*.8)
-tweets_train <- all_tweets[dt,]
-tweets_test <- all_tweets[-dt,]
+test_dates <- sample(unique(all_tweets$date), length(unique(all_tweets$date))*0.2)
+dates <- unique(all_tweets$date)
+train_dates <- dates[!(dates %in% test_dates)]
+
+tweets_test <- all_tweets[all_tweets$date==test_dates,]
+tweets_train <- all_tweets[all_tweets$date==train_dates,]
+
 
 # MinMaxScale sentiments
 num.cols <- sapply(all_tweets, is.numeric)
@@ -46,22 +69,13 @@ tweets_train[, num.cols] <- scale(tweets_train[, num.cols], center = TRUE, scale
 tweets_test[, num.cols] <- scale(tweets_test[, num.cols], center = mean_train, scale = sd_train)
 
 # Aggregate
-tweets_train_agg <- aggregate(cbind(tweets_train$sentiment_by_basic, tweets_train$sentiment_weighted_mixed, tweets_train$sentiment_average_mean, tweets_train$sentiment_by_dicitonary) ~ tweets_train$date, tweets_train, mean)
+tweets_train_agg <- aggregate(cbind(tweets_train$sentiment_by_basic, tweets_train$sentiment_weighted_mixed, tweets_train$sentiment_average_mean, tweets_train$sentiment_by_dictionary) ~ tweets_train$date, tweets_train, mean)
 
-tweets_test_agg <- aggregate(cbind(tweets_test$sentiment_by_basic, tweets_test$sentiment_weighted_mixed, tweets_test$sentiment_average_mean, tweets_test$sentiment_by_dicitonary) ~ tweets_test$date, tweets_test, mean)
+tweets_test_agg <- aggregate(cbind(tweets_test$sentiment_by_basic, tweets_test$sentiment_weighted_mixed, tweets_test$sentiment_average_mean, tweets_test$sentiment_by_dictionary) ~ tweets_test$date, tweets_test, mean)
 
 # Change colnames
 colnames(tweets_train_agg) <- colnames(all_tweets)
 colnames(tweets_test_agg) <- colnames(all_tweets)
-names(tweets_train_agg)[5] <- "sentiment_by_dictionary"
-names(tweets_test_agg)[5] <- "sentiment_by_dictionary"
-
-# Clean date
-tweets_train_agg$date <- strptime(as.character(tweets_train_agg$date), "%m/%d/%Y")
-tweets_train_agg$date <- format(tweets_train_agg$date, "%Y-%m-%d")
-
-tweets_test_agg$date <- strptime(as.character(tweets_test_agg$date), "%m/%d/%Y")
-tweets_test_agg$date <- format(tweets_test_agg$date, "%Y-%m-%d")
 ```
 
 ```{r}
@@ -72,11 +86,6 @@ basetable_test <- merge(tweets_test_agg,financial_data,by="date")
 
 ```{r}
 # Splitting in train and test set
-
-dt = sample(nrow(data), nrow(data)*.8)
-train <- data[dt,]
-test <- data[-dt,]
-
 train_x <- subset(train, select = -c(Target))
 train_y <- train$Target
 
@@ -86,9 +95,4 @@ test_y <- test$Target
 ```
 
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
