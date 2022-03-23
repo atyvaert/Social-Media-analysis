@@ -1,0 +1,176 @@
+---
+title: "Sentiment_Analysis"
+output: html_document
+---
+
+```{r}
+if (!require("pacman")) install.packages("pacman") ; require("pacman")
+p_load(httr,rtweet,tidyverse)
+all_tweets
+
+
+```
+
+Lets visualize the data 
+
+```{r}
+p_load(ggplot2)
+vis <- all_tweets %>% group_by(date) %>% summarise(aantal = length((user_id)))
+ggplot(data = vis, aes(x = vis$date, y = vis$aantal))
+plot(as.factor(vis$date), vis$aantal)
+vis
+```
+```{r}
+#Clean the text 
+
+```
+
+## 
+Lexicon based approach using a dictionary 
+Dictionary values 
+VALENCE: 1 = sad, 9 = happy
+AROUSAL: 1 = calm, 9 = excited
+DOMINANCE: 1 = controlled, 9 = in control
+
+```{r}
+#ONLY RUN ONCE 
+p_load(skimr)
+text <- all_tweets$text
+#read in the dictionary.Rdata file 
+#rescale the valance arousal and dominance values [-4;4] 
+dictionary <- dictionary %>% mutate(across(where(is.numeric),function(x) x-5 ))
+#visualize the dictionary 
+skim(dictionary)
+
+
+```
+
+Apply the dictionary to the tweets and get a sentiment 
+
+```{r}
+Encoding(text) <- "latin1"
+text <- iconv(text,'latin1', 'ascii', sub = '')
+#making a vector that will store each score tweet value 
+scoretweet <- numeric(length(text))
+for (i in 1:length(text)){
+  
+  #Transform text to lower case
+  text <- tolower(text)
+  
+  #Split the tweet in words
+  tweetsplit <- str_split(text[i]," ")[[1]] 
+  
+  #Find the positions of the words in the Tweet in the dictionary
+  m <- match(tweetsplit, dictionary$Word)
+  
+  #Which words are present in the dictionary?
+  present <- !is.na(m)
+  
+  #Of the words that are present, select their valence
+  wordvalences <- dictionary$VALENCE[m[present]]
+  
+  #Compute the mean valence of the tweet
+  scoretweet[i] <- mean(wordvalences, na.rm=TRUE)
+  
+  #Handle the case when none of the words is in the dictionary
+  if (is.na(scoretweet[i])) scoretweet[i] <- 0 else scoretweet[i] <- scoretweet[i]
+}
+
+head(scoretweet)
+```
+
+```{r}
+hist(scoretweet)
+```
+```{r}
+#adding the scoretweet to all_tweets 
+
+all_tweets["score_tweet"] = scoretweet 
+all_tweets
+
+#saving the file 
+setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/data")
+save(all_tweets, file = "All_tweets_with_sentiment.RData")
+```
+
+```{r}
+#inspect the first few sentiment scores 
+print(all_tweets[,3][1])
+print(all_tweets[,4][1])
+print(" ")
+print(all_tweets[,3][35])
+print(all_tweets[,4][35])
+print(" ")
+print(all_tweets[,3][350])
+print(all_tweets[,4][350])
+
+
+
+```
+
+## SentimentR packages 
+
+```{r}
+p_load(tidyverse,textclean, textstem, sentimentr, lexicon)
+#ranging from -2 (very negative) to 1 (very positive)
+
+text[0:100] %>% get_sentences() %>% replace_emoticon() %>%
+  replace_word_elongation() %>%
+sentiment_by() 
+#By default, the sentiment_by function downweights the zero for averaging. The reason is that you don’t want the neutral sentences to have a strong influence
+
+text[0:100] %>% sentiment_by(averaging.function = average_weighted_mixed_sentiment)
+text[0:100] %>% sentiment_by(averaging.function = average_mean)
+
+text[0:100]
+
+```
+
+```{r}
+#adding these scores to the base table 
+
+sentiment_by <- all_tweets$text %>% replace_emoticon() %>% 
+                                  replace_word_elongation() %>% get_sentences() %>%
+                                          sentiment_by() 
+all_tweets["sentiment_by_basic"] <- sentiment_by$ave_sentiment
+all_tweets
+```
+
+```{r}
+sentiment_by <- all_tweets$text %>% replace_emoticon() %>% 
+                                  replace_word_elongation() %>% get_sentences() %>%
+                              sentiment_by(averaging.function = average_weighted_mixed_sentiment)
+all_tweets["sentiment_weighted_mixed"] <- sentiment_by$ave_sentiment
+all_tweets
+
+```
+
+
+```{r}
+#svaing these values 
+setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/data")
+save(all_tweets, file = "All_tweets_with_sentiment2.RData")
+```
+
+
+
+```{r}
+#merging the 2 files together 
+rm(list = ls())
+score_tweet <-all_tweets$score_tweet
+all_tweets["sentiment_by_dicitonary"] <- score_tweet
+all_tweets
+
+setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/data")
+save(all_tweets, file = "All_tweets_with_sentiment.RData")
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
