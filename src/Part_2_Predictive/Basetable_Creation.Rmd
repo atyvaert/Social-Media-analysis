@@ -35,6 +35,8 @@ financial_data <- data.frame(date=index(financial_data), coredata(financial_data
 financial_data$Target = financial_data$SBUX.Close - financial_data$SBUX.Open
 
 financial_data$Target <- sign(financial_data$Target)
+
+financial_data$date <- financial_data$date - 1
 ```
 
 ```{r}
