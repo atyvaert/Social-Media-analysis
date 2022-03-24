@@ -231,6 +231,35 @@ setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/data")
 save(Topics_Frame, file = "Topics_Frame.RData")
 ```
 
+
+```{r}
+#make a variable for each column that indicates if the variable was mentioned 
+library(tm)
+text <- all_tweets$text
+Topic1 <- Topics_Frame$`Topic 1`
+Topic2 <- Topics_Frame$`Topic 2`
+
+
+Topic1_count <- numeric(length(text))
+Topic2_count <- numeric(length(text))
+
+for(idx in 0:length(text)){
+  split <-removePunctuation(toString(text[idx]))
+  clean  <- strsplit(str_to_lower(split, locale = "en"), split = " ")
+  Topic1_count[idx] <- sum(Topic1 %in% clean[[1]])
+  Topic2_count[idx] <- sum(Topic2 %in% clean[[1]])
+}
+
+#adding these elements to the base table 
+all_tweets["Topic1"] <- Topic1_count
+all_tweets["Topic2"] <- Topic2_count
+all_tweets
+
+```
+
+
+
+
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
 
 When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
