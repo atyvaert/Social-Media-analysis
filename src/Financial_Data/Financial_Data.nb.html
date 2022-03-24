@@ -217,9 +217,26 @@ pre code {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShxdWFudG1vZClcbnJtKGxpc3QgPSBscygpKVxuXG5maW5hbmNpYWxfZGF0YSA9IHJlYWQuY3N2KFwiL1VzZXJzL3dvdXRlcmRld2l0dGUvRG9jdW1lbnRzL0dpdEh1Yi9TTVdBX1BlcmZvcm1hbmNlL3NyYy9GaW5hbmNpYWxfRGF0YS9GaW5hbmNpYWxfRGF0YV9ob3VyLmNzdlwiKVxuYGBgIn0= -->
-<pre class="r"><code>library(quantmod)
-rm(list = ls())
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShxdWFudG1vZClcbmBgYCJ9 -->
+<pre class="r"><code>library(quantmod)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiB4dHNcbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogem9vXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDigJh6b2/igJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmJhc2XigJk6XG5cbiAgICBhcy5EYXRlLCBhcy5EYXRlLm51bWVyaWNcblxuTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBUVFJcblJlZ2lzdGVyZWQgUzMgbWV0aG9kIG92ZXJ3cml0dGVuIGJ5ICdxdWFudG1vZCc6XG4gIG1ldGhvZCAgICAgICAgICAgIGZyb21cbiAgYXMuem9vLmRhdGEuZnJhbWUgem9vIFxuIn0= -->
+<pre><code>Loading required package: xts
+Loading required package: zoo
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+Loading required package: TTR
+Registered S3 method overwritten by &#39;quantmod&#39;:
+  method            from
+  as.zoo.data.frame zoo </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm0obGlzdCA9IGxzKCkpXG5cbmZpbmFuY2lhbF9kYXRhID0gcmVhZC5jc3YoXCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2Uvc3JjL0ZpbmFuY2lhbF9EYXRhL0ZpbmFuY2lhbF9EYXRhX2hvdXIuY3N2XCIpXG5gYGAifQ== -->
+<pre class="r"><code>rm(list = ls())
 
 financial_data = read.csv(&quot;/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/src/Financial_Data/Financial_Data_hour.csv&quot;)</code></pre>
 <!-- rnb-source-end -->

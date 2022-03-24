@@ -7,7 +7,7 @@ output: html_notebook
 ```{r}
 ### Basetable creation and splitting ###
 
-set.seed(420)
+set.seed(123)
 rm(list = ls())
 library(quantmod)
 
