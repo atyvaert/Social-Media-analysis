@@ -7,7 +7,7 @@ output: html_notebook
 ```{r}
 ### Basetable creation and splitting ###
 
-set.seed(123)
+set.seed(420)
 rm(list = ls())
 library(quantmod)
 
@@ -65,7 +65,7 @@ num.cols <- sapply(all_tweets, is.numeric)
 # apply on training set
 mean_train <- colMeans(tweets_train[, num.cols])
 sd_train <- sapply(tweets_train[, num.cols], sd)
-tweets_train[, num.cols] <- scale(tweets_train[, num.cols], center = TRUE, scale = TRUE)
+tweets_train[, num.cols] <- scale(tweets_train[, num.cols], center = mean_train, scale = sd_train)
 
 # apply on test set
 tweets_test[, num.cols] <- scale(tweets_test[, num.cols], center = mean_train, scale = sd_train)

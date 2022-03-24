@@ -272,12 +272,55 @@ lgb.grid&lt;-list(objective=&quot;binary&quot;,
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXVjXG5cbmBgYCJ9 -->
-<pre class="r"><code>auc
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGdiLm1vZGVsXG5cbmBgYCJ9 -->
+<pre class="r"><code>lgb.model
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQXJlYSB1bmRlciB0aGUgY3VydmU6IDAuNVxuIn0= -->
-<pre><code>Area under the curve: 0.5</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiPGxnYi5Cb29zdGVyPlxuICBQdWJsaWM6XG4gICAgYWRkX3ZhbGlkOiBmdW5jdGlvbiAoZGF0YSwgbmFtZSkgXG4gICAgYmVzdF9pdGVyOiAtMVxuICAgIGJlc3Rfc2NvcmU6IE5BXG4gICAgY3VycmVudF9pdGVyOiBmdW5jdGlvbiAoKSBcbiAgICBkdW1wX21vZGVsOiBmdW5jdGlvbiAobnVtX2l0ZXJhdGlvbiA9IE5VTEwsIGZlYXR1cmVfaW1wb3J0YW5jZV90eXBlID0gMEwpIFxuICAgIGV2YWw6IGZ1bmN0aW9uIChkYXRhLCBuYW1lLCBmZXZhbCA9IE5VTEwpIFxuICAgIGV2YWxfdHJhaW46IGZ1bmN0aW9uIChmZXZhbCA9IE5VTEwpIFxuICAgIGV2YWxfdmFsaWQ6IGZ1bmN0aW9uIChmZXZhbCA9IE5VTEwpIFxuICAgIGZpbmFsaXplOiBmdW5jdGlvbiAoKSBcbiAgICBpbml0aWFsaXplOiBmdW5jdGlvbiAocGFyYW1zID0gbGlzdCgpLCB0cmFpbl9zZXQgPSBOVUxMLCBtb2RlbGZpbGUgPSBOVUxMLCBcbiAgICBsb3dlcl9ib3VuZDogZnVuY3Rpb24gKCkgXG4gICAgcGFyYW1zOiBsaXN0XG4gICAgcHJlZGljdDogZnVuY3Rpb24gKGRhdGEsIHN0YXJ0X2l0ZXJhdGlvbiA9IE5VTEwsIG51bV9pdGVyYXRpb24gPSBOVUxMLCBcbiAgICByYXc6IE5BXG4gICAgcmVjb3JkX2V2YWxzOiBsaXN0XG4gICAgcmVzZXRfcGFyYW1ldGVyOiBmdW5jdGlvbiAocGFyYW1zLCAuLi4pIFxuICAgIHJvbGxiYWNrX29uZV9pdGVyOiBmdW5jdGlvbiAoKSBcbiAgICBzYXZlOiBmdW5jdGlvbiAoKSBcbiAgICBzYXZlX21vZGVsOiBmdW5jdGlvbiAoZmlsZW5hbWUsIG51bV9pdGVyYXRpb24gPSBOVUxMLCBmZWF0dXJlX2ltcG9ydGFuY2VfdHlwZSA9IDBMKSBcbiAgICBzYXZlX21vZGVsX3RvX3N0cmluZzogZnVuY3Rpb24gKG51bV9pdGVyYXRpb24gPSBOVUxMLCBmZWF0dXJlX2ltcG9ydGFuY2VfdHlwZSA9IDBMKSBcbiAgICBzZXRfdHJhaW5fZGF0YV9uYW1lOiBmdW5jdGlvbiAobmFtZSkgXG4gICAgdG9fcHJlZGljdG9yOiBmdW5jdGlvbiAoKSBcbiAgICB1cGRhdGU6IGZ1bmN0aW9uICh0cmFpbl9zZXQgPSBOVUxMLCBmb2JqID0gTlVMTCkgXG4gICAgdXBwZXJfYm91bmQ6IGZ1bmN0aW9uICgpIFxuICBQcml2YXRlOlxuICAgIGV2YWxfbmFtZXM6IE5VTExcbiAgICBnZXRfZXZhbF9pbmZvOiBmdW5jdGlvbiAoKSBcbiAgICBoYW5kbGU6IGxnYi5Cb29zdGVyLmhhbmRsZVxuICAgIGhpZ2hlcl9iZXR0ZXJfaW5uZXJfZXZhbDogTlVMTFxuICAgIGluaXRfcHJlZGljdG9yOiBOVUxMXG4gICAgaW5uZXJfZXZhbDogZnVuY3Rpb24gKGRhdGFfbmFtZSwgZGF0YV9pZHgsIGZldmFsID0gTlVMTCkgXG4gICAgaW5uZXJfcHJlZGljdDogZnVuY3Rpb24gKGlkeCkgXG4gICAgaXNfcHJlZGljdGVkX2N1cl9pdGVyOiBsaXN0XG4gICAgbmFtZV90cmFpbl9zZXQ6IHRyYWluaW5nXG4gICAgbmFtZV92YWxpZF9zZXRzOiBsaXN0XG4gICAgbnVtX2NsYXNzOiAxXG4gICAgbnVtX2RhdGFzZXQ6IDFcbiAgICBwcmVkaWN0X2J1ZmZlcjogbGlzdFxuICAgIHNldF9vYmplY3RpdmVfdG9fbm9uZTogRkFMU0VcbiAgICB0cmFpbl9zZXQ6IGxnYi5EYXRhc2V0LCBSNlxuICAgIHRyYWluX3NldF92ZXJzaW9uOiAxXG4gICAgdmFsaWRfc2V0czogbGlzdFxuIn0= -->
+<pre><code>&lt;lgb.Booster&gt;
+  Public:
+    add_valid: function (data, name) 
+    best_iter: -1
+    best_score: NA
+    current_iter: function () 
+    dump_model: function (num_iteration = NULL, feature_importance_type = 0L) 
+    eval: function (data, name, feval = NULL) 
+    eval_train: function (feval = NULL) 
+    eval_valid: function (feval = NULL) 
+    finalize: function () 
+    initialize: function (params = list(), train_set = NULL, modelfile = NULL, 
+    lower_bound: function () 
+    params: list
+    predict: function (data, start_iteration = NULL, num_iteration = NULL, 
+    raw: NA
+    record_evals: list
+    reset_parameter: function (params, ...) 
+    rollback_one_iter: function () 
+    save: function () 
+    save_model: function (filename, num_iteration = NULL, feature_importance_type = 0L) 
+    save_model_to_string: function (num_iteration = NULL, feature_importance_type = 0L) 
+    set_train_data_name: function (name) 
+    to_predictor: function () 
+    update: function (train_set = NULL, fobj = NULL) 
+    upper_bound: function () 
+  Private:
+    eval_names: NULL
+    get_eval_info: function () 
+    handle: lgb.Booster.handle
+    higher_better_inner_eval: NULL
+    init_predictor: NULL
+    inner_eval: function (data_name, data_idx, feval = NULL) 
+    inner_predict: function (idx) 
+    is_predicted_cur_iter: list
+    name_train_set: training
+    name_valid_sets: list
+    num_class: 1
+    num_dataset: 1
+    predict_buffer: list
+    set_objective_to_none: FALSE
+    train_set: lgb.Dataset, R6
+    train_set_version: 1
+    valid_sets: list</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->

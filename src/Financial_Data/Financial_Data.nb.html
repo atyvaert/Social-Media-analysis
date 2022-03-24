@@ -217,23 +217,59 @@ pre code {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YSA9IHJlYWQuY3N2KFwiL1VzZXJzL3dvdXRlcmRld2l0dGUvRG93bmxvYWRzL1NCVVguY3N2XCIpXG5cbmRhdGEkVGFyZ2V0ID0gZGF0YSRDbG9zZSAtIGRhdGEkT3BlblxuXG5kYXRhXG5gYGAifQ== -->
-<pre class="r"><code>data = read.csv(&quot;/Users/wouterdewitte/Downloads/SBUX.csv&quot;)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShxdWFudG1vZClcbnJtKGxpc3QgPSBscygpKVxuXG5maW5hbmNpYWxfZGF0YSA9IHJlYWQuY3N2KFwiL1VzZXJzL3dvdXRlcmRld2l0dGUvRG9jdW1lbnRzL0dpdEh1Yi9TTVdBX1BlcmZvcm1hbmNlL3NyYy9GaW5hbmNpYWxfRGF0YS9GaW5hbmNpYWxfRGF0YV9ob3VyLmNzdlwiKVxuYGBgIn0= -->
+<pre class="r"><code>library(quantmod)
+rm(list = ls())
 
-data$Target = data$Close - data$Open
-
-data</code></pre>
+financial_data = read.csv(&quot;/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/src/Financial_Data/Financial_Data_hour.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTUsIm5jb2wiOjgsInN1bW1hcnkiOltdfSwicmRmIjoiSDRzSUFBQUFBQUFBQTgxVS9VdFRVUmcrZDI0NUozNlVId1JtbVZCVXNMVVBTNE5zWnlnYVpkVHkzcXVHaVRjMzU5YmN4dHd3L0NHbmxnVlNRZVVYZ1o5SVFTR0VGR1hoUmg5a0VmMVFQNnpDMUJHRm1lUUhDUkdsbmUyY2E3YjdEM1RoY3Q3em5QYzk3L004NTk1ek5MZFlJeXVXQVFBaWdKaWlRSVFFaFVEQzBIbnlMQURFSWpTaGdCaEVCY2RUS0NrQkJWTDB4cU0zaml6STFFcTFXcTVVeTlWWi95SWF1VklsUU5RQ1JDTkFNZ1JJcGdBUjl0b1RqcWlVQWtUQVJ5WG9wZG9sUUhZTEVBRWZGYklMeEFaZGdlenJTK1hIaG01Q2RxSTA3WEtlRjdLMzgzdnJkZHRoVWRtOU1zK0lIN0lqaWZVSmtqYklOdUk4UnRrL1VYMWZCNW1lb1BjQU1tY2ZuVzVWTVpCTnJpd1RUYmRCK21wZElIOHdFZEpwZUowRkpQK0RvM3VnZ0lITXVjSE44U2xncFg5UmdwOTY5LzBOWkNkeFhwSCtxMmZtcHdVV2xaUDZGOWtObGxlSVg1TkdPMnFkZ2N4d1FIdWdBODJsK3ZIWlQ2aS9YNmJyNHhCdkRkNkhic1Y4NkxGdFMxdWo1WkFsL0poZkwzMlpWeEloNndEa0lmcXZoL2hBMXR6Wit6dkpBdGtCb3VmcFJ0OGRFeHBMY1IzRDY1c2plbHJ4T2xOSjhEN3NUeUhoUjYvRk9oZ1QzcC94a0xwOUlWLy85bDhnL3A5ZkhEbmVoZlNyc1A5c0FOZXpEV1NmVk9JZklMNS94bjBaNGc4OWlNK3JrSnduL1l6MGZZL1htV25pSStiN0gvU1BDZjJWVGJHandGcXlBZlMzRndEREdTbW92cmdlakgvWkMvcTM5SUJtMXhIUXN1NGhtRlpOVVVsRFl1RGxTcW1jYTZXZ3Nma3RaUW5jNERWb0p6RW43MkpueDRVZG16eVFITEIzV1pOcG1FK0IzbStoVHhqNGt2VXowYXk3M0R1bG43MDcxdVBSem5lMmU0WUgwQmc2U284dnVXN2lSL3FET1o4MDI1SGFmU2dOaWhlZnBFZVVBKzlIelU3S2ZSQm9uM2MrYmhIZkFqRGFIOWxWc3VBTHUzSWtOcTdhV0VPdUd5a0J4Ym1jeThqSGh4MUdHeC92TjV1cVNCeFJZSy9sOThpeDJtdjQvQ2lkd2FKWURheGg3VlozOWNxTTVwd21veXVNUlpUVFhxdmdtUVF0Rm5td0czSGhkQ3VzWEExUGx3ZGxCczdGS1NxZHFCN05sc0pLSXUwT2w5bHVRMFdpNE5VcUNTdW1uR0ZBdk5zV1pHS1FWMVM1YlNmbDZveGdoOUE2Zm1KSUhMY3FsdUtlb21XeWw0UlhhN1NaekRaZXU4VEtuVEJheVNRV1NRNHBWamljWnB1TGw0TFFHb1hMN3VMNFBGbUYzY29qSVhGZzZRK1pvNm5IVWdZQUFBPT0ifQ== -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Date"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Open"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["High"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Low"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Close"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Adj.Close"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Volume"],"name":[7],"type":["int"],"align":["right"]},{"label":["Target"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"2022-02-28","2":"91.29","3":"92.31","4":"90.62","5":"91.79","6":"91.79","7":"8589000","8":"0.500000"},{"1":"2022-03-01","2":"91.49","3":"91.51","4":"89.65","5":"90.14","6":"90.14","7":"7100700","8":"-1.349999"},{"1":"2022-03-02","2":"90.77","3":"93.28","4":"90.59","5":"92.77","6":"92.77","7":"10721100","8":"2.000000"},{"1":"2022-03-03","2":"93.48","3":"93.50","4":"91.08","5":"91.53","6":"91.53","7":"6587400","8":"-1.950004"},{"1":"2022-03-04","2":"90.97","3":"91.16","4":"89.45","5":"90.03","6":"90.03","7":"7179800","8":"-0.940002"},{"1":"2022-03-07","2":"90.04","3":"90.05","4":"84.35","5":"84.46","6":"84.46","7":"14608700","8":"-5.580002"},{"1":"2022-03-08","2":"84.76","3":"86.92","4":"83.76","5":"84.00","6":"84.00","7":"10692000","8":"-0.760002"},{"1":"2022-03-09","2":"86.50","3":"88.13","4":"86.33","5":"87.60","6":"87.60","7":"8811600","8":"1.099998"},{"1":"2022-03-10","2":"86.09","3":"87.36","4":"85.60","5":"87.16","6":"87.16","7":"9114300","8":"1.070008"},{"1":"2022-03-11","2":"88.35","3":"88.81","4":"82.54","5":"82.73","6":"82.73","7":"15348200","8":"-5.619995"},{"1":"2022-03-14","2":"82.32","3":"82.34","4":"78.92","5":"79.29","6":"79.29","7":"18199300","8":"-3.029999"},{"1":"2022-03-15","2":"80.50","3":"83.44","4":"80.28","5":"83.12","6":"83.12","7":"12542300","8":"2.620003"},{"1":"2022-03-16","2":"88.01","3":"90.09","4":"85.62","5":"87.41","6":"87.41","7":"21207900","8":"-0.599998"},{"1":"2022-03-17","2":"87.46","3":"87.95","4":"86.01","5":"87.66","6":"87.66","7":"8554200","8":"0.200005"},{"1":"2022-03-18","2":"86.12","3":"89.75","4":"84.98","5":"89.60","6":"89.60","7":"23781800","8":"3.479995"}],"options":{"columns":{"min":{},"max":[10],"total":[8]},"rows":{"min":[10],"max":[10],"total":[15]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmluYW5jaWFsX2RhdGEkZGF0ZSA8LSBhcy5QT1NJWGN0KGZpbmFuY2lhbF9kYXRhJGRhdGUpXG5maW5hbmNpYWxfZGF0YSRUYXJnZXQgPC0gZmluYW5jaWFsX2RhdGEkY2xvc2UgLSBmaW5hbmNpYWxfZGF0YSRvcGVuXG5cbiMgc2V0IHRpbWUgZXF1YWwgKyA0XG5cbmZpbmFuY2lhbF9kYXRhJGRhdGUgPC0gZmluYW5jaWFsX2RhdGEkZGF0ZSArIDQqNjAqNjBcbmZpbmFuY2lhbF9kYXRhJFRhcmdldCA8LSBzaWduKGZpbmFuY2lhbF9kYXRhJFRhcmdldClcbmZpbmFuY2lhbF9kYXRhJFRhcmdldCA8LSBzaWduKGZpbmFuY2lhbF9kYXRhJFRhcmdldClcbmBgYCJ9 -->
+<pre class="r"><code>financial_data$date &lt;- as.POSIXct(financial_data$date)
+financial_data$Target &lt;- financial_data$close - financial_data$open
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRmluYW5jaWFsIERhdGEgU0JVWCIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmRhdGEgPSByZWFkLmNzdigiL1VzZXJzL3dvdXRlcmRld2l0dGUvRG93bmxvYWRzL1NCVVguY3N2IikKCmRhdGEkVGFyZ2V0ID0gZGF0YSRDbG9zZSAtIGRhdGEkT3BlbgoKZGF0YQoKc2F2ZShkYXRhLCBmaWxlID0gIi9Vc2Vycy93b3V0ZXJkZXdpdHRlL0RvY3VtZW50cy9HaXRIdWIvU01XQV9QZXJmb3JtYW5jZS9kYXRhL0ZpbmFuY2lhbF9EYXRhLlJEYXRhIikKYGBg</div>
+# set time equal + 4
+
+financial_data$date &lt;- financial_data$date + 4*60*60
+financial_data$Target &lt;- sign(financial_data$Target)
+financial_data$Target &lt;- sign(financial_data$Target)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyB0ZWNobmljYWwgaW5kaWNhdG9yc1xuZW1hIDwtRU1BKGZpbmFuY2lhbF9kYXRhJGNsb3NlLG49MjApXG5iYiA8LUJCYW5kcyhmaW5hbmNpYWxfZGF0YSRjbG9zZSxzLmQ9Milcbk0gPC0gbW9tZW50dW0oZmluYW5jaWFsX2RhdGEkY2xvc2UsIG49MilcblJPQyA8LSBST0MoZmluYW5jaWFsX2RhdGEkY2xvc2Usbj0yKVxubWFjZCA8LSBNQUNEKGZpbmFuY2lhbF9kYXRhJGNsb3NlLCBuRmFzdD0xMiwgblNsb3c9MjYsXG4gICAgICAgICAgICAgblNpZz05LCBtYVR5cGU9U01BKVxucnNpID0gUlNJKGZpbmFuY2lhbF9kYXRhJGNsb3NlLCBuPTE0KVxuXG5maW5hbmNpYWxfZGF0YSRlbWEgPC0gZW1hXG5maW5hbmNpYWxfZGF0YSRiYiA8LSBiYlxuZmluYW5jaWFsX2RhdGEkTSA8LSBNXG5maW5hbmNpYWxfZGF0YSRST0MgPC0gUk9DXG5maW5hbmNpYWxfZGF0YSRtYWNkIDwtIG1hY2RcbmZpbmFuY2lhbF9kYXRhJHJzaSA8LSByc2lcbmBgYCJ9 -->
+<pre class="r"><code># technical indicators
+ema &lt;-EMA(financial_data$close,n=20)
+bb &lt;-BBands(financial_data$close,s.d=2)
+M &lt;- momentum(financial_data$close, n=2)
+ROC &lt;- ROC(financial_data$close,n=2)
+macd &lt;- MACD(financial_data$close, nFast=12, nSlow=26,
+             nSig=9, maType=SMA)
+rsi = RSI(financial_data$close, n=14)
+
+financial_data$ema &lt;- ema
+financial_data$bb &lt;- bb
+financial_data$M &lt;- M
+financial_data$ROC &lt;- ROC
+financial_data$macd &lt;- macd
+financial_data$rsi &lt;- rsi</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2F2ZShmaW5hbmNpYWxfZGF0YSwgZmlsZSA9IFwiL1VzZXJzL3dvdXRlcmRld2l0dGUvRG9jdW1lbnRzL0dpdEh1Yi9TTVdBX1BlcmZvcm1hbmNlL2RhdGEvRmluYW5jaWFsX0RhdGEuUkRhdGFcIilcbmBgYCJ9 -->
+<pre class="r"><code>save(financial_data, file = &quot;/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/Financial_Data.RData&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRmluYW5jaWFsIERhdGEgU0JVWCIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkocXVhbnRtb2QpCnJtKGxpc3QgPSBscygpKQoKZmluYW5jaWFsX2RhdGEgPSByZWFkLmNzdigiL1VzZXJzL3dvdXRlcmRld2l0dGUvRG9jdW1lbnRzL0dpdEh1Yi9TTVdBX1BlcmZvcm1hbmNlL3NyYy9GaW5hbmNpYWxfRGF0YS9GaW5hbmNpYWxfRGF0YV9ob3VyLmNzdiIpCmBgYAoKCmBgYHtyfQpmaW5hbmNpYWxfZGF0YSRkYXRlIDwtIGFzLlBPU0lYY3QoZmluYW5jaWFsX2RhdGEkZGF0ZSkKZmluYW5jaWFsX2RhdGEkVGFyZ2V0IDwtIGZpbmFuY2lhbF9kYXRhJGNsb3NlIC0gZmluYW5jaWFsX2RhdGEkb3BlbgoKIyBzZXQgdGltZSBlcXVhbCArIDQKCmZpbmFuY2lhbF9kYXRhJGRhdGUgPC0gZmluYW5jaWFsX2RhdGEkZGF0ZSArIDQqNjAqNjAKZmluYW5jaWFsX2RhdGEkVGFyZ2V0IDwtIHNpZ24oZmluYW5jaWFsX2RhdGEkVGFyZ2V0KQpmaW5hbmNpYWxfZGF0YSRUYXJnZXQgPC0gc2lnbihmaW5hbmNpYWxfZGF0YSRUYXJnZXQpCmBgYAoKYGBge3J9CiMgdGVjaG5pY2FsIGluZGljYXRvcnMKZW1hIDwtRU1BKGZpbmFuY2lhbF9kYXRhJGNsb3NlLG49MjApCmJiIDwtQkJhbmRzKGZpbmFuY2lhbF9kYXRhJGNsb3NlLHMuZD0yKQpNIDwtIG1vbWVudHVtKGZpbmFuY2lhbF9kYXRhJGNsb3NlLCBuPTIpClJPQyA8LSBST0MoZmluYW5jaWFsX2RhdGEkY2xvc2Usbj0yKQptYWNkIDwtIE1BQ0QoZmluYW5jaWFsX2RhdGEkY2xvc2UsIG5GYXN0PTEyLCBuU2xvdz0yNiwKICAgICAgICAgICAgIG5TaWc9OSwgbWFUeXBlPVNNQSkKcnNpID0gUlNJKGZpbmFuY2lhbF9kYXRhJGNsb3NlLCBuPTE0KQoKZmluYW5jaWFsX2RhdGEkZW1hIDwtIGVtYQpmaW5hbmNpYWxfZGF0YSRiYiA8LSBiYgpmaW5hbmNpYWxfZGF0YSRNIDwtIE0KZmluYW5jaWFsX2RhdGEkUk9DIDwtIFJPQwpmaW5hbmNpYWxfZGF0YSRtYWNkIDwtIG1hY2QKZmluYW5jaWFsX2RhdGEkcnNpIDwtIHJzaQpgYGAKCmBgYHtyfQpzYXZlKGZpbmFuY2lhbF9kYXRhLCBmaWxlID0gIi9Vc2Vycy93b3V0ZXJkZXdpdHRlL0RvY3VtZW50cy9HaXRIdWIvU01XQV9QZXJmb3JtYW5jZS9kYXRhL0ZpbmFuY2lhbF9EYXRhLlJEYXRhIikKYGBgCgo=</div>
 
 
 

@@ -4,11 +4,43 @@ output: html_notebook
 ---
 
 ```{r}
-data = read.csv("/Users/wouterdewitte/Downloads/SBUX.csv")
+library(quantmod)
+rm(list = ls())
 
-data$Target = data$Close - data$Open
-
-data
-
-save(data, file = "/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/Financial_Data.RData")
+financial_data = read.csv("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/src/Financial_Data/Financial_Data_hour.csv")
 ```
+
+
+```{r}
+financial_data$date <- as.POSIXct(financial_data$date)
+financial_data$Target <- financial_data$close - financial_data$open
+
+# set time equal + 4
+
+financial_data$date <- financial_data$date + 4*60*60
+financial_data$Target <- sign(financial_data$Target)
+financial_data$Target <- sign(financial_data$Target)
+```
+
+```{r}
+# technical indicators
+ema <-EMA(financial_data$close,n=20)
+bb <-BBands(financial_data$close,s.d=2)
+M <- momentum(financial_data$close, n=2)
+ROC <- ROC(financial_data$close,n=2)
+macd <- MACD(financial_data$close, nFast=12, nSlow=26,
+             nSig=9, maType=SMA)
+rsi = RSI(financial_data$close, n=14)
+
+financial_data$ema <- ema
+financial_data$bb <- bb
+financial_data$M <- M
+financial_data$ROC <- ROC
+financial_data$macd <- macd
+financial_data$rsi <- rsi
+```
+
+```{r}
+save(financial_data, file = "/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/Financial_Data.RData")
+```
+
