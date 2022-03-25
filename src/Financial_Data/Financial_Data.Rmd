@@ -19,7 +19,6 @@ financial_data$Target <- financial_data$close - financial_data$open
 
 financial_data$date <- financial_data$date + 4*60*60
 financial_data$Target <- sign(financial_data$Target)
-financial_data$Target <- sign(financial_data$Target)
 ```
 
 ```{r}

@@ -18,7 +18,6 @@ load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/All_tweets_all
 ```{r}
 # Financial data
 load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/Financial_Data.RData")
-
 ```
 
 ```{r}
@@ -33,7 +32,6 @@ train_dates <- dates[!(dates %in% test_dates)]
 
 tweets_test <- all_tweets[all_tweets$date %in% test_dates,]
 tweets_train <- all_tweets[all_tweets$date %in% train_dates,]
-
 
 # MinMaxScale sentiments
 num.cols <- sapply(all_tweets, is.numeric)
@@ -59,13 +57,6 @@ colnames(tweets_test_agg) <- colnames(tweets_test)
 ```
 
 ```{r}
-# choosing a sentiment column
-tweets_train <- subset(tweets_train, select = -c(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean))
-
-tweets_test <- subset(tweets_test, select = -c(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean))
-```
-
-```{r}
 # Making basetable
 basetable_train <- merge(tweets_train_agg,financial_data,by="date")
 basetable_test <- merge(tweets_test_agg,financial_data,by="date")
@@ -81,6 +72,13 @@ lines(basetable_train$date, basetable_train$sentiment_avg_mean, type = "o", col 
 lines(basetable_train$date, basetable_train$sentiment_by_basic, type = "o", col = "green")
 
 lines(basetable_train$date, basetable_train$sentiment_weighted_mixed, type = "o", col = "orange")
+```
+
+```{r}
+# choosing a sentiment column
+basetable_train <- subset(basetable_train, select = -c(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean))
+
+basetable_test <- subset(basetable_test, select = -c(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean))
 ```
 
 ```{r}

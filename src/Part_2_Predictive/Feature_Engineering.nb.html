@@ -217,131 +217,22 @@ pre code {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0LnNlZWQoMTIzKVxucm0obGlzdCA9IGxzKCkpXG5saWJyYXJ5KEFVQylcbmxpYnJhcnkocFJPQylcbmxpYnJhcnkobWxiZW5jaClcbmxpYnJhcnkoY2FyZXQpXG5cbmxvYWQoXCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9iYXNldGFibGVfdHJhaW4uUkRhdGFcIilcbmxvYWQoXCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9iYXNldGFibGVfdGVzdC5SRGF0YVwiKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0LnNlZWQoMTIzKVxucm0obGlzdCA9IGxzKCkpXG5cbmxpYnJhcnkobWxiZW5jaClcbmxpYnJhcnkoY2FyZXQpXG5cbmxvYWQoXCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9iYXNldGFibGVfdHJhaW4uUkRhdGFcIilcbmxvYWQoXCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9iYXNldGFibGVfdGVzdC5SRGF0YVwiKVxuXG5cbmBgYCJ9 -->
 <pre class="r"><code>set.seed(123)
 rm(list = ls())
-library(AUC)
-library(pROC)
+
 library(mlbench)
 library(caret)
 
 load(&quot;/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_train.RData&quot;)
-load(&quot;/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_test.RData&quot;)</code></pre>
+load(&quot;/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_test.RData&quot;)
+</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2RlbGV0ZSBkYXRlIGNvbHVtblxuYmFzZXRhYmxlX3RyYWluIDwtIHN1YnNldChiYXNldGFibGVfdHJhaW4sIHNlbGVjdCA9IC1kYXRlKVxuYmFzZXRhYmxlX3Rlc3QgPC0gc3Vic2V0KGJhc2V0YWJsZV90ZXN0LCBzZWxlY3QgPSAtZGF0ZSlcblxuI21ha2UgdmFyaWFibGVzXG50ZXN0X3ggPC0gc3Vic2V0KGJhc2V0YWJsZV90ZXN0LCBzZWxlY3QgPSAtVGFyZ2V0KVxudGVzdF95IDwtIGJhc2V0YWJsZV90ZXN0JFRhcmdldFxuXG5iYXNldGFibGVfdHJhaW4kVGFyZ2V0IDwtIGlmZWxzZShiYXNldGFibGVfdHJhaW4kVGFyZ2V0IDwgMCwgMCwgMSlcbnRlc3RfeSA8LSBpZmVsc2UodGVzdF95IDwgMCwgMCwgMSlcbmBgYCJ9 -->
-<pre class="r"><code>#delete date column
-basetable_train &lt;- subset(basetable_train, select = -date)
-basetable_test &lt;- subset(basetable_test, select = -date)
 
-#make variables
-test_x &lt;- subset(basetable_test, select = -Target)
-test_y &lt;- basetable_test$Target
-
-basetable_train$Target &lt;- ifelse(basetable_train$Target &lt; 0, 0, 1)
-test_y &lt;- ifelse(test_y &lt; 0, 0, 1)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2J1aWxkIG1vZGVsXG5tb2RlbF9iaW5vbWlhbCA8LSAgZ2xtKFRhcmdldCB+IC4sIGRhdGEgPSBiYXNldGFibGVfdHJhaW4sIGZhbWlseSA9IFwiYmlub21pYWxcIilcbmBgYCJ9 -->
-<pre class="r"><code>#build model
-model_binomial &lt;-  glm(Target ~ ., data = basetable_train, family = &quot;binomial&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogZ2xtLmZpdDogYWxnb3JpdGhtIGRpZCBub3QgY29udmVyZ2Vcbldhcm5pbmc6IGdsbS5maXQ6IGZpdHRlZCBwcm9iYWJpbGl0aWVzIG51bWVyaWNhbGx5IDAgb3IgMSBvY2N1cnJlZFxuIn0= -->
-<pre><code>Warning: glm.fit: algorithm did not converge
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShtb2RlbF9iaW5vbWlhbClcbmBgYCJ9 -->
-<pre class="r"><code>summary(model_binomial)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxuZ2xtKGZvcm11bGEgPSBUYXJnZXQgfiAuLCBmYW1pbHkgPSBcImJpbm9taWFsXCIsIGRhdGEgPSBiYXNldGFibGVfdHJhaW4pXG5cbkRldmlhbmNlIFJlc2lkdWFsczogXG4gICAgICAgTWluICAgICAgICAgIDFRICAgICAgTWVkaWFuICAgICAgICAgIDNRICAgICAgICAgTWF4ICBcbi0zLjcyMWUtMDUgIC0yLjEwMGUtMDggIC0yLjEwMGUtMDggICAyLjEwMGUtMDggICAzLjQ4MWUtMDUgIFxuXG5Db2VmZmljaWVudHM6ICgyIG5vdCBkZWZpbmVkIGJlY2F1c2Ugb2Ygc2luZ3VsYXJpdGllcylcbiAgICAgICAgICAgICAgICAgICAgICAgICAgRXN0aW1hdGUgU3RkLiBFcnJvciB6IHZhbHVlIFByKD58enwpXG4oSW50ZXJjZXB0KSAgICAgICAgICAgICAtMy4zOTRlKzAyICAzLjkwMGUrMDYgICAwLjAwMCAgICAxLjAwMFxuc2VudGltZW50X2J5X2RpY3Rpb25hcnkgLTEuMjY5ZSswMSAgMS44ODFlKzA1ICAgMC4wMDAgICAgMS4wMDBcblRvcGljXzEgICAgICAgICAgICAgICAgIC0zLjUzM2UrMDEgIDMuMDgzZSswNSAgIDAuMDAwICAgIDEuMDAwXG5Ub3BpY18yICAgICAgICAgICAgICAgICAgMS44MjJlKzAxICAyLjAyOWUrMDUgICAwLjAwMCAgICAxLjAwMFxuY2xvc2UgICAgICAgICAgICAgICAgICAgIDMuMDY1ZSswMiAgNC4xOTRlKzA1ICAgMC4wMDEgICAgMC45OTlcbnZvbHVtZSAgICAgICAgICAgICAgICAgICAyLjc2N2UtMDYgIDEuODgwZS0wMSAgIDAuMDAwICAgIDEuMDAwXG5vcGVuICAgICAgICAgICAgICAgICAgICAtMS42NjhlKzAyICA1LjY0OGUrMDUgICAwLjAwMCAgICAxLjAwMFxuaGlnaCAgICAgICAgICAgICAgICAgICAgLTMuNDE5ZSswMSAgNS44MjllKzA1ICAgMC4wMDAgICAgMS4wMDBcbmxvdyAgICAgICAgICAgICAgICAgICAgIC04Ljg0NWUrMDEgIDQuOTE2ZSswNSAgIDAuMDAwICAgIDEuMDAwXG5kaXZpZGVuZHMgICAgICAgICAgICAgICAgICAgICAgIE5BICAgICAgICAgTkEgICAgICBOQSAgICAgICBOQVxuZW1hICAgICAgICAgICAgICAgICAgICAgLTguNDU1ZSswMSAgNS45NTZlKzA1ICAgMC4wMDAgICAgMS4wMDBcbmJiZG4gICAgICAgICAgICAgICAgICAgICAxLjUzOGUrMDAgIDcuMDI0ZSswNCAgIDAuMDAwICAgIDEuMDAwXG5iYm1hdmcgICAgICAgICAgICAgICAgICAgNy4wMzllKzAxICA3LjkyM2UrMDUgICAwLjAwMCAgICAxLjAwMFxuYmJ1cCAgICAgICAgICAgICAgICAgICAgICAgICAgICBOQSAgICAgICAgIE5BICAgICAgTkEgICAgICAgTkFcbmJicGN0QiAgICAgICAgICAgICAgICAgIC01LjkwOWUrMDEgIDUuOTI4ZSswNSAgIDAuMDAwICAgIDEuMDAwXG5NICAgICAgICAgICAgICAgICAgICAgICAtNS4wMzllKzAxICAyLjg0N2UrMDYgICAwLjAwMCAgICAxLjAwMFxuUk9DICAgICAgICAgICAgICAgICAgICAgIDMuOTUwZSswMyAgMi41NTVlKzA4ICAgMC4wMDAgICAgMS4wMDBcbm1hY2RtYWNkICAgICAgICAgICAgICAgICAzLjg2MmUrMDEgIDQuNTY0ZSswNSAgIDAuMDAwICAgIDEuMDAwXG5tYWNkc2lnbmFsICAgICAgICAgICAgICAtNC45ODZlKzAxICA1LjA4NGUrMDUgICAwLjAwMCAgICAxLjAwMFxucnNpICAgICAgICAgICAgICAgICAgICAgLTYuMjQ5ZS0wMSAgMi42OThlKzA0ICAgMC4wMDAgICAgMS4wMDBcblxuKERpc3BlcnNpb24gcGFyYW1ldGVyIGZvciBiaW5vbWlhbCBmYW1pbHkgdGFrZW4gdG8gYmUgMSlcblxuICAgIE51bGwgZGV2aWFuY2U6IDEuMTg4MGUrMDIgIG9uIDg1ICBkZWdyZWVzIG9mIGZyZWVkb21cblJlc2lkdWFsIGRldmlhbmNlOiA5LjU1ODJlLTA5ICBvbiA2OCAgZGVncmVlcyBvZiBmcmVlZG9tXG5BSUM6IDM2XG5cbk51bWJlciBvZiBGaXNoZXIgU2NvcmluZyBpdGVyYXRpb25zOiAyNVxuIn0= -->
-<pre><code>
-Call:
-glm(formula = Target ~ ., family = &quot;binomial&quot;, data = basetable_train)
-
-Deviance Residuals: 
-       Min          1Q      Median          3Q         Max  
--3.721e-05  -2.100e-08  -2.100e-08   2.100e-08   3.481e-05  
-
-Coefficients: (2 not defined because of singularities)
-                          Estimate Std. Error z value Pr(&gt;|z|)
-(Intercept)             -3.394e+02  3.900e+06   0.000    1.000
-sentiment_by_dictionary -1.269e+01  1.881e+05   0.000    1.000
-Topic_1                 -3.533e+01  3.083e+05   0.000    1.000
-Topic_2                  1.822e+01  2.029e+05   0.000    1.000
-close                    3.065e+02  4.194e+05   0.001    0.999
-volume                   2.767e-06  1.880e-01   0.000    1.000
-open                    -1.668e+02  5.648e+05   0.000    1.000
-high                    -3.419e+01  5.829e+05   0.000    1.000
-low                     -8.845e+01  4.916e+05   0.000    1.000
-dividends                       NA         NA      NA       NA
-ema                     -8.455e+01  5.956e+05   0.000    1.000
-bbdn                     1.538e+00  7.024e+04   0.000    1.000
-bbmavg                   7.039e+01  7.923e+05   0.000    1.000
-bbup                            NA         NA      NA       NA
-bbpctB                  -5.909e+01  5.928e+05   0.000    1.000
-M                       -5.039e+01  2.847e+06   0.000    1.000
-ROC                      3.950e+03  2.555e+08   0.000    1.000
-macdmacd                 3.862e+01  4.564e+05   0.000    1.000
-macdsignal              -4.986e+01  5.084e+05   0.000    1.000
-rsi                     -6.249e-01  2.698e+04   0.000    1.000
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 1.1880e+02  on 85  degrees of freedom
-Residual deviance: 9.5582e-09  on 68  degrees of freedom
-AIC: 36
-
-Number of Fisher Scoring iterations: 25</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3J1biBtb2RlbFxubW9kZWxfcHJvcG9ydGlvbnMgPC0gcHJlZGljdChtb2RlbF9iaW5vbWlhbCwgbmV3ZGF0YSA9IHRlc3RfeCwgdHlwZSA9IFwicmVzcG9uc2VcIilcbmBgYCJ9 -->
-<pre class="r"><code>#run model
-model_proportions &lt;- predict(model_binomial, newdata = test_x, type = &quot;response&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZyBpbiBwcmVkaWN0LmxtKG9iamVjdCwgbmV3ZGF0YSwgc2UuZml0LCBzY2FsZSA9IDEsIHR5cGUgPSBpZiAodHlwZSA9PSAgOlxuICBwcmVkaWN0aW9uIGZyb20gYSByYW5rLWRlZmljaWVudCBmaXQgbWF5IGJlIG1pc2xlYWRpbmdcbiJ9 -->
-<pre><code>Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type ==  :
-  prediction from a rank-deficient fit may be misleading</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxfcHJvcG9ydGlvbnNbbW9kZWxfcHJvcG9ydGlvbnMgPj0gMC41XSA8LSAxXG5tb2RlbF9wcm9wb3J0aW9uc1ttb2RlbF9wcm9wb3J0aW9ucyA8IDAuNV0gPC0gMFxuXG4jZXZhbHVhdGlvblxucFJPQzo6YXVjKHRlc3RfeSxtb2RlbF9wcm9wb3J0aW9ucylcbmBgYCJ9 -->
-<pre class="r"><code>model_proportions[model_proportions &gt;= 0.5] &lt;- 1
-model_proportions[model_proportions &lt; 0.5] &lt;- 0
-
-#evaluation
-pROC::auc(test_y,model_proportions)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiU2V0dGluZyBsZXZlbHM6IGNvbnRyb2wgPSAwLCBjYXNlID0gMVxuU2V0dGluZyBkaXJlY3Rpb246IGNvbnRyb2xzIDwgY2FzZXNcbiJ9 -->
-<pre><code>Setting levels: control = 0, case = 1
-Setting direction: controls &lt; cases</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQXJlYSB1bmRlciB0aGUgY3VydmU6IDAuNjg0NlxuIn0= -->
-<pre><code>Area under the curve: 0.6846</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2xvb2sgYXQgaW1wb3J0YW5jZSBmZWF0dXJlc1xuZmVhdHVyZV9pbXBvcnRhbmNlIDwtIHZhckltcChtb2RlbF9iaW5vbWlhbCwgc2NhbGUgPSBGQUxTRSlcbmZlYXR1cmVfaW1wb3J0YW5jZVxuYGBgIn0= -->
-<pre class="r"><code>#look at importance features
-feature_importance &lt;- varImp(model_binomial, scale = FALSE)
-feature_importance</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTcsIm5jb2wiOjEsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGYgWzE3IMOXIDFdIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQXd0eWlURG1pdUJpWUdCZ1ptQmhaR1JnWmdVeUdWaERROXgwTFJnWVdKaUFIRVlHRmdaT0VGMEJWQ1FNRm1CZzRBTmlRWHZCRGJrV3p6d2YyOHR4cVJkWlRHYXlGKytSK1pUN09OamUvVlBOdEJpaHlYYnY3bFhxTE56eDM5NDQrdndHKzM5dTluejdHM1BUOGdUczFhZGNOWnNmdU1WZWFkWWZOd21XcjNiZnZueElMSnZ5eTE3Y2kvM2wvTG5uN0tVVWwzTnl1Tyt3K3pUQlBJcHg5MlM3RDJaTXJ5SW5XOW1MNmNlN2ZQd3BaUys1WmNXdXJxWWF1eCtlTXZJSkwvYWpPWlExTHpFM3RSaklFRUFTWlBjdlN5MUt6TWxCVTh0WmxGK3VoNnhlRUNvaFhweWFWNUtaQ3lUaWt5cmpVektUU3pMejh4S0xLbUhHaGVRWFpDYkhHNkp5aldBdVNNN0pMMDZGY3RqSzhuTktjMkU4bHZ5QzFEd1lPeU16UFFQS1pzN0pMNGN4VTNNVFlTcVNrbEpncXRtU2tuSVR5OUlSdklMa0VpZFkzUGpDOUFiNU8wT1pITG1KeVNrZ0RPVnpnZGpGbWVsNWlUa3d4VVhGbWVoaGw1eVRXSXdlZGx3cGlTV0plbWxGd0dBQzh2NmhhV0hQTHdDRkRWQVRFeWgxc0tKcFppeENFeEFvelFNRmVJcHVja1pwWHJhdXNTWElCbWl5QW1GZUtDMkl4R2FFMk1uMEgyb1dLeXdVVXZQU00vTmdZY3VhazVpVUN2TWNIekJtd1JHclYxQ1VtVmNDOHdwUXRGaXZKTDhFSGdoY3lmazVNQkd3NXhqK0FRRHFyZmFpRlFNQUFBPT0ifQ== -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Overall"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"6.747882e-05","_rn_":"sentiment_by_dictionary"},{"1":"1.145922e-04","_rn_":"Topic_1"},{"1":"8.982588e-05","_rn_":"Topic_2"},{"1":"7.308110e-04","_rn_":"close"},{"1":"1.471950e-05","_rn_":"volume"},{"1":"2.953894e-04","_rn_":"open"},{"1":"5.864729e-05","_rn_":"high"},{"1":"1.799116e-04","_rn_":"low"},{"1":"1.419480e-04","_rn_":"ema"},{"1":"2.189330e-05","_rn_":"bbdn"},{"1":"8.884118e-05","_rn_":"bbmavg"},{"1":"9.968359e-05","_rn_":"bbpctB"},{"1":"1.770338e-05","_rn_":"M"},{"1":"1.546000e-05","_rn_":"ROC"},{"1":"8.462924e-05","_rn_":"macdmacd"},{"1":"9.805946e-05","_rn_":"macdsignal"},{"1":"2.316054e-05","_rn_":"rsi"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[17]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CnNldC5zZWVkKDEyMykKcm0obGlzdCA9IGxzKCkpCmxpYnJhcnkoQVVDKQpsaWJyYXJ5KHBST0MpCmxpYnJhcnkobWxiZW5jaCkKbGlicmFyeShjYXJldCkKCmxvYWQoIi9Vc2Vycy93b3V0ZXJkZXdpdHRlL0RvY3VtZW50cy9HaXRIdWIvU01XQV9QZXJmb3JtYW5jZS9kYXRhL2Jhc2V0YWJsZV90cmFpbi5SRGF0YSIpCmxvYWQoIi9Vc2Vycy93b3V0ZXJkZXdpdHRlL0RvY3VtZW50cy9HaXRIdWIvU01XQV9QZXJmb3JtYW5jZS9kYXRhL2Jhc2V0YWJsZV90ZXN0LlJEYXRhIikKYGBgCgpgYGB7cn0KI2RlbGV0ZSBkYXRlIGNvbHVtbgpiYXNldGFibGVfdHJhaW4gPC0gc3Vic2V0KGJhc2V0YWJsZV90cmFpbiwgc2VsZWN0ID0gLWRhdGUpCmJhc2V0YWJsZV90ZXN0IDwtIHN1YnNldChiYXNldGFibGVfdGVzdCwgc2VsZWN0ID0gLWRhdGUpCgojbWFrZSB2YXJpYWJsZXMKdGVzdF94IDwtIHN1YnNldChiYXNldGFibGVfdGVzdCwgc2VsZWN0ID0gLVRhcmdldCkKdGVzdF95IDwtIGJhc2V0YWJsZV90ZXN0JFRhcmdldAoKYmFzZXRhYmxlX3RyYWluJFRhcmdldCA8LSBpZmVsc2UoYmFzZXRhYmxlX3RyYWluJFRhcmdldCA8IDAsIDAsIDEpCnRlc3RfeSA8LSBpZmVsc2UodGVzdF95IDwgMCwgMCwgMSkKYGBgCgpgYGB7cn0KI2J1aWxkIG1vZGVsCm1vZGVsX2Jpbm9taWFsIDwtICBnbG0oVGFyZ2V0IH4gLiwgZGF0YSA9IGJhc2V0YWJsZV90cmFpbiwgZmFtaWx5ID0gImJpbm9taWFsIikKc3VtbWFyeShtb2RlbF9iaW5vbWlhbCkKCiNydW4gbW9kZWwKbW9kZWxfcHJvcG9ydGlvbnMgPC0gcHJlZGljdChtb2RlbF9iaW5vbWlhbCwgbmV3ZGF0YSA9IHRlc3RfeCwgdHlwZSA9ICJyZXNwb25zZSIpCm1vZGVsX3Byb3BvcnRpb25zW21vZGVsX3Byb3BvcnRpb25zID49IDAuNV0gPC0gMQptb2RlbF9wcm9wb3J0aW9uc1ttb2RlbF9wcm9wb3J0aW9ucyA8IDAuNV0gPC0gMAoKI2V2YWx1YXRpb24KcFJPQzo6YXVjKHRlc3RfeSxtb2RlbF9wcm9wb3J0aW9ucykKYGBgCgpgYGB7cn0KI2xvb2sgYXQgaW1wb3J0YW5jZSBmZWF0dXJlcwpmZWF0dXJlX2ltcG9ydGFuY2UgPC0gdmFySW1wKG1vZGVsX2Jpbm9taWFsLCBzY2FsZSA9IEZBTFNFKQpmZWF0dXJlX2ltcG9ydGFuY2UKYGBgCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CnNldC5zZWVkKDEyMykKcm0obGlzdCA9IGxzKCkpCgpsaWJyYXJ5KG1sYmVuY2gpCmxpYnJhcnkoY2FyZXQpCgpsb2FkKCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9iYXNldGFibGVfdHJhaW4uUkRhdGEiKQpsb2FkKCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9iYXNldGFibGVfdGVzdC5SRGF0YSIpCgoKYGBgCgo=</div>
 
 
 
@@ -388,7 +279,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("Logistic_Regression.Rmd");
+  window.initializeSourceEmbed("Feature_Engineering.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

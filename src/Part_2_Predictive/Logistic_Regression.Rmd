@@ -8,34 +8,43 @@ set.seed(123)
 rm(list = ls())
 library(AUC)
 library(pROC)
+library(mlbench)
+library(caret)
 
 load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_train.RData")
-
 load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_test.RData")
 ```
 
 ```{r}
-#make variables
-train_x <- subset(basetable_train, select = -Target)
-train_y <- basetable_train$Target
+#delete date column
+basetable_train <- subset(basetable_train, select = -date)
+basetable_test <- subset(basetable_test, select = -date)
 
+#make variables
 test_x <- subset(basetable_test, select = -Target)
 test_y <- basetable_test$Target
 
+basetable_train$Target <- ifelse(basetable_train$Target < 0, 0, 1)
 test_y <- ifelse(test_y < 0, 0, 1)
-train_y <- ifelse(train_y < 0, 0, 1)
 ```
 
 ```{r}
 #build model
-model_binomial <-  glm(train_y ~ ., data = train_x, family = "binomial")
+model_binomial <-  glm(Target ~ ., data = basetable_train, family = "binomial")
+summary(model_binomial)
 
+#run model
 model_proportions <- predict(model_binomial, newdata = test_x, type = "response")
-
 model_proportions[model_proportions >= 0.5] <- 1
 model_proportions[model_proportions < 0.5] <- 0
 
+#evaluation
 pROC::auc(test_y,model_proportions)
+```
 
+```{r}
+#look at importance features
+feature_importance <- varImp(model_binomial, scale = FALSE)
+feature_importance
 ```
 
