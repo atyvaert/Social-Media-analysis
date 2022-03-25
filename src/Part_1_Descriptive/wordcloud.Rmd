@@ -12,10 +12,18 @@ p_load(tm,wordcloud, wordcloud2)
 p_load(stringr)
 p_load(tibble)
 p_load(dplyr)
+p_load(webshot)
+library(htmlwidgets)
 ```
 
 ```{r}
 load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/All_tweets_all_features.RData")
+#filtering out the bot
+all_tweets$is_no_bot <- !grepl("Poshmark",all_tweets$text)
+
+all_tweets <- all_tweets[all_tweets$is_no_bot == TRUE,]
+
+all_tweets <- subset(all_tweets, select = -all_tweets$is_no_bot)
 ```
 
 ```{r}
@@ -34,7 +42,6 @@ myCorpus <- Corpus(VectorSource(text)) %>%
 myStopwords <- c(stopwords('english'))
 myCorpus <- tm_map(myCorpus, removeWords, myStopwords)
 
-
 tdm <- TermDocumentMatrix(myCorpus)
 m <- as.matrix(tdm)
 v <- sort(rowSums(m),decreasing=TRUE)
@@ -47,4 +54,6 @@ d <- d[which(d$freq>30),]
 # making the wordcloud
 wordcloud <- wordcloud2(d)
 wordcloud
+saveWidget(wordcloud,"/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/figures/wordcloud.html",selfcontained = F)
+webshot("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/figures/wordcloud.html","/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/figures/wordcloud.png",vwidth = 1000, vheight = 800, delay =10)
 ```
