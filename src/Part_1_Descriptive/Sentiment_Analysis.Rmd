@@ -81,6 +81,7 @@ head(scoretweet)
 
 ```{r}
 hist(scoretweet)
+
 ```
 ```{r}
 #adding the scoretweet to all_tweets 
@@ -145,11 +146,18 @@ all_tweets
 
 ```
 
+```{r}
+sentiment_by <- all_tweets$text %>% replace_emoticon() %>% 
+                                  replace_word_elongation() %>% get_sentences() %>%
+                              sentiment_by(averaging.function = average_mean)
+all_tweets["sentiment_avg_mean"] <- sentiment_by$ave_sentiment
+all_tweets
+```
 
 ```{r}
 #svaing these values 
 setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/data")
-save(all_tweets, file = "All_tweets_with_sentiment2.RData")
+save(all_tweets, file = "All_tweets_with_sentiment.RData")
 ```
 
 
@@ -166,6 +174,20 @@ save(all_tweets, file = "All_tweets_with_sentiment.RData")
 ```
 
 ## Including Plots
+```{r}
+#merge the 2 feature table together 
+listTopic1 <- all_tweets$Topic1
+listTopic2 <- all_tweets$Topic2
+
+all_tweets["Topic_1"] <- listTopic1 
+all_tweets["Topic_2"] <- listTopic2 
+
+all_tweets
+
+setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/data")
+save(all_tweets, file = "All_tweets_all_features.RData")
+
+```
 
 You can also embed plots, for example:
 
