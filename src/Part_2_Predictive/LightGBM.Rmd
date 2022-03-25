@@ -22,10 +22,10 @@ load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_test
 ```
 
 ```{r}
-train_x <- basetable_train[,-ncol(basetable_train)]
+train_x <- subset(basetable_train, select = -Target)
 train_y <- basetable_train$Target
 
-test_x <- basetable_test[,-ncol(basetable_test)]
+test_x <- subset(basetable_test, select = -Target)
 test_y <- basetable_test$Target
 
 dtrain <- lgb.Dataset(data = as.matrix(train_x), label = train_y)
@@ -46,12 +46,16 @@ lgb.grid<-list(objective="binary",
 
 ```{r}
 # Modeling
-lgb.model <- lgb.train(data = dtrain,params = lgb.grid, )
+lgb.model <- lgb.train(data = dtrain,params = lgb.grid)
 preds<-predict(lgb.model,test_matrix_x)
+
+
 
 #rounding the values
 preds[preds >= 0.5] <- 1
 preds[preds < 0.5] <- -1
+
+auc <- pROC::auc(test_y,preds)
 
 #confusion matrix
 cm = as.matrix(table(Actual = test_y, Predicted = preds))

@@ -13,7 +13,6 @@ library(quantmod)
 
 ###### Read Data ######
 load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/All_tweets_all_features.RData")
-
 ```
 
 ```{r}
@@ -46,7 +45,9 @@ tweets_train[, num.cols] <- scale(tweets_train[, num.cols], center = mean_train,
 
 # apply on test set
 tweets_test[, num.cols] <- scale(tweets_test[, num.cols], center = mean_train, scale = sd_train)
+```
 
+```{r}
 # aggregate
 tweets_train_agg <- aggregate(cbind(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean, tweets_train$sentiment_by_dictionary,Topic_1,Topic_2) ~ tweets_train$date, tweets_train, mean)
 
@@ -55,26 +56,14 @@ tweets_test_agg <- aggregate(cbind(sentiment_by_basic,sentiment_weighted_mixed,s
 # change colnames
 colnames(tweets_train_agg) <- colnames(tweets_train)
 colnames(tweets_test_agg) <- colnames(tweets_test)
+```
 
+```{r}
 # choosing a sentiment column
 tweets_train <- subset(tweets_train, select = -c(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean))
 
 tweets_test <- subset(tweets_test, select = -c(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean))
 ```
-
-```{r}
-plot(tweets_train_agg$date, tweets_train_agg$sentiment_by_dictionary,type = "o", col = "red", xlab = "Date", ylab = "Average Sentiment per Hour", main = "Sentiment")
-
-legend("bottomleft", legend=c("Dictionary", "Avg_Mean", "Basic","Weighted_mixed"), col=c("red", "blue", "green", "orange"), lty=1, cex=0.8)
-
-lines(tweets_train_agg$date, tweets_train_agg$sentiment_avg_mean, type = "o", col = "blue")
-
-lines(tweets_train_agg$date, tweets_train_agg$sentiment_by_basic, type = "o", col = "green")
-
-lines(tweets_train_agg$date, tweets_train_agg$sentiment_weighted_mixed, type = "o", col = "orange")
-
-```
-
 
 ```{r}
 # Making basetable
@@ -83,28 +72,29 @@ basetable_test <- merge(tweets_test_agg,financial_data,by="date")
 ```
 
 ```{r}
-# Splitting in train and test set
-train_x <- subset(basetable_train, select = -c(Target))
-train_y <- basetable_train$Target
+plot(basetable_train$date, basetable_train$sentiment_by_dictionary,type = "o", col = "red", xlab = "Date", ylab = "Average Sentiment per Hour", main = "Sentiment")
 
-test_x <- subset(basetable_test, select = -c(Target))
-test_y <- basetable_test$Target
+legend("bottomleft", legend=c("Dictionary", "Avg_Mean", "Basic","Weighted_mixed"), col=c("red", "blue", "green", "orange"), lty=1, cex=0.8)
+
+lines(basetable_train$date, basetable_train$sentiment_avg_mean, type = "o", col = "blue")
+
+lines(basetable_train$date, basetable_train$sentiment_by_basic, type = "o", col = "green")
+
+lines(basetable_train$date, basetable_train$sentiment_weighted_mixed, type = "o", col = "orange")
 ```
 
 ```{r}
-# Detect missing values
+# missing values
 colMeans(is.na(basetable_train))
 colMeans(is.na(basetable_test))
 
 # Handle outliers
-handle_outlier_z <- function(col){
-  col_z <- scale(col)
-  ifelse(abs(col_z)>3,
-         sign(col_z)*3*attr(col_z,"scaled:scale") + attr(col_z,"scaled:center"), col)
-}
-
-num.cols <- sapply(basetable_train, is.numeric)
-basetable_train[, num.cols] <-  sapply(basetable_train[, num.cols], FUN = handle_outlier_z)
+# handle_outlier_z <- function(col){
+#   col_z <- scale(col)
+#   ifelse(abs(col_z)>3,
+#          sign(col_z)*3*attr(col_z,"scaled:scale") + attr(col_z,"scaled:center"), col)
+# }
+# basetable_train[, num.cols] <-  sapply(basetable_train[, num.cols], FUN = handle_outlier_z)
 ```
 
 
