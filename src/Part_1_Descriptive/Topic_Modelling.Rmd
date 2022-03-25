@@ -255,6 +255,10 @@ all_tweets["Topic1"] <- Topic1_count
 all_tweets["Topic2"] <- Topic2_count
 all_tweets
 
+#save the new dataset 
+setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/data")
+save(all_tweets, file = "All_tweets_with_Topics.RData")
+
 ```
 
 
