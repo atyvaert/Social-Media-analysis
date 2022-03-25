@@ -22,7 +22,7 @@ all_tweets <- all_tweets[all_tweets$is_no_bot == TRUE,]
 all_tweets <- subset(all_tweets, select = -all_tweets$is_no_bot)
 
 set.seed(123)
-all_tweets <- all_tweets[sample(nrow(all_tweets), size = 500, replace = FALSE),]  
+all_tweets <- all_tweets[sample(nrow(all_tweets), size = 1000, replace = FALSE),]  
 # change to text
 text <- all_tweets$text
 text <- iconv(text,'latin1', 'ascii', sub = '')
