@@ -23,10 +23,10 @@ load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_test
 
 ```{r}
 train_x <- basetable_train[,-ncol(basetable_train)]
-train_y <- basetable_train[,ncol(basetable_train)]
+train_y <- basetable_train$Target
 
 test_x <- basetable_test[,-ncol(basetable_test)]
-test_y <- basetable_test[,ncol(basetable_test)]
+test_y <- basetable_test$Target
 
 dtrain <- lgb.Dataset(data = as.matrix(train_x), label = train_y)
 test_matrix_x<-as.matrix(test_x)
@@ -35,12 +35,12 @@ test_matrix_x<-as.matrix(test_x)
 ```{r}
 # Determining the hyperparameters
 lgb.grid<-list(objective="binary",
-                num_leaves=10,
-                max_depth=12,
+                num_leaves=8,
+                max_depth=14,
                 metric="auc",
                 boosting="gbdt",
                 learning_rate=0.005,
-                num_iterations=2950,
+                num_iterations=5000,
                 min_data_in_leaf=40)
 ```
 
@@ -53,9 +53,20 @@ preds<-predict(lgb.model,test_matrix_x)
 preds[preds >= 0.5] <- 1
 preds[preds < 0.5] <- -1
 
+#confusion matrix
+cm = as.matrix(table(Actual = test_y, Predicted = preds))
+n = sum(cm) # number of instances
+nc = nrow(cm) # number of classes
+diag = diag(cm) # number of correctly classified instances per class 
+rowsums = apply(cm, 1, sum) # number of instances per class
+colsums = apply(cm, 2, sum) # number of predictions per class
+p = rowsums / n # distribution of instances over the actual classes
+q = colsums / n # distribution of instances over the predicted classes
 
-#auc
-auc <- auc(test_y,preds)
+#accuracy (fraction of instances that is correctly classified)
+accuracy = sum(diag) / n
 ```
+
+
 
 

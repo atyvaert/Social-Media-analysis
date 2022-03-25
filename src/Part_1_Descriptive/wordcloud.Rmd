@@ -4,6 +4,7 @@ output: html_notebook
 ---
 
 ```{r}
+rm(list=ls())
 # necessary packages
 if (!require("pacman")) install.packages("pacman") ; require("pacman")
 p_load(rtweet, httr,tidyverse)
@@ -11,6 +12,10 @@ p_load(tm,wordcloud, wordcloud2)
 p_load(stringr)
 p_load(tibble)
 p_load(dplyr)
+```
+
+```{r}
+load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/All_tweets_all_features.RData")
 ```
 
 ```{r}

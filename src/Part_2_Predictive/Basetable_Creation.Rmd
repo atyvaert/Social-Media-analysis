@@ -12,51 +12,28 @@ rm(list = ls())
 library(quantmod)
 
 ###### Read Data ######
-load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/All_tweets_with_sentiment.RData")
+load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/All_tweets_all_features.RData")
 
 ```
 
 ```{r}
-# Clean financial data & add technical indicators
-getSymbols("SBUX")
+# Financial data
+load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/Financial_Data.RData")
 
-ema <-EMA(Cl(SBUX),n=20)
-bb <-BBands(Cl(SBUX),s.d=2)
-M <- momentum(Cl(SBUX), n=2)
-ROC <- ROC(Cl(SBUX),n=2)
-macd <- MACD(Cl(SBUX), nFast=12, nSlow=26,
-             nSig=9, maType=SMA)
-rsi = RSI(Cl(SBUX), n=14)
-
-financial_data <- Reduce(function(...) merge(..., all=TRUE), list(SBUX, ema, bb,M,ROC,macd,rsi))
-
-financial_data <- data.frame(date=index(financial_data), coredata(financial_data))
-
-financial_data$Target = financial_data$SBUX.Close - financial_data$SBUX.Open
-
-financial_data$Target <- sign(financial_data$Target)
-
-financial_data$date <- financial_data$date - 1
 ```
 
 ```{r}
 # Clean tweet data
 all_tweets <- subset(all_tweets, select = -c(text, user_id))
-names(all_tweets)[5] <- "sentiment_by_dictionary"
-
-# Clean date
-all_tweets$date <- strptime(as.character(all_tweets$date), "%m/%d/%Y")
-all_tweets$date <- format(all_tweets$date, "%Y-%m-%d")
-all_tweets$date <- as.Date(all_tweets$date)
-
+names(all_tweets)[2] <- "sentiment_by_dictionary"
 
 # Splitting in train and test set
 test_dates <- sample(unique(all_tweets$date), length(unique(all_tweets$date))*0.2)
 dates <- unique(all_tweets$date)
 train_dates <- dates[!(dates %in% test_dates)]
 
-tweets_test <- all_tweets[all_tweets$date==test_dates,]
-tweets_train <- all_tweets[all_tweets$date==train_dates,]
+tweets_test <- all_tweets[all_tweets$date %in% test_dates,]
+tweets_train <- all_tweets[all_tweets$date %in% train_dates,]
 
 
 # MinMaxScale sentiments
@@ -70,15 +47,34 @@ tweets_train[, num.cols] <- scale(tweets_train[, num.cols], center = mean_train,
 # apply on test set
 tweets_test[, num.cols] <- scale(tweets_test[, num.cols], center = mean_train, scale = sd_train)
 
-# Aggregate
-tweets_train_agg <- aggregate(cbind(tweets_train$sentiment_by_basic, tweets_train$sentiment_weighted_mixed, tweets_train$sentiment_average_mean, tweets_train$sentiment_by_dictionary) ~ tweets_train$date, tweets_train, mean)
+# aggregate
+tweets_train_agg <- aggregate(cbind(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean, tweets_train$sentiment_by_dictionary,Topic_1,Topic_2) ~ tweets_train$date, tweets_train, mean)
 
-tweets_test_agg <- aggregate(cbind(tweets_test$sentiment_by_basic, tweets_test$sentiment_weighted_mixed, tweets_test$sentiment_average_mean, tweets_test$sentiment_by_dictionary) ~ tweets_test$date, tweets_test, mean)
+tweets_test_agg <- aggregate(cbind(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean,sentiment_by_dictionary,Topic_1,Topic_2) ~ tweets_test$date, tweets_test, mean)
 
-# Change colnames
-colnames(tweets_train_agg) <- colnames(all_tweets)
-colnames(tweets_test_agg) <- colnames(all_tweets)
+# change colnames
+colnames(tweets_train_agg) <- colnames(tweets_train)
+colnames(tweets_test_agg) <- colnames(tweets_test)
+
+# choosing a sentiment column
+tweets_train <- subset(tweets_train, select = -c(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean))
+
+tweets_test <- subset(tweets_test, select = -c(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean))
 ```
+
+```{r}
+plot(tweets_train_agg$date, tweets_train_agg$sentiment_by_dictionary,type = "o", col = "red", xlab = "Date", ylab = "Average Sentiment per Hour", main = "Sentiment")
+
+legend("bottomleft", legend=c("Dictionary", "Avg_Mean", "Basic","Weighted_mixed"), col=c("red", "blue", "green", "orange"), lty=1, cex=0.8)
+
+lines(tweets_train_agg$date, tweets_train_agg$sentiment_avg_mean, type = "o", col = "blue")
+
+lines(tweets_train_agg$date, tweets_train_agg$sentiment_by_basic, type = "o", col = "green")
+
+lines(tweets_train_agg$date, tweets_train_agg$sentiment_weighted_mixed, type = "o", col = "orange")
+
+```
+
 
 ```{r}
 # Making basetable
