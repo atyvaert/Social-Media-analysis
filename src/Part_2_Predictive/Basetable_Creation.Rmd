@@ -38,14 +38,7 @@ lines(tweets_agg$date, tweets_agg$sentiment_weighted_mixed, type = "o", col = "o
 
 ```
 ```{r}
-tweets_sum <- aggregate(cbind(Topic_1,Topic_2) ~ all_tweets$date, all_tweets, sum)
-colnames(tweets_sum)[1] <- "date"
 
-plot(tweets_sum$date, tweets_sum$Topic_1,type = "o", col = "red", xlab = "Date", ylab = "average topics occurence", main = "Sentiment", ylim = c(0,20000))
-
-legend("topright", legend=c("Topic1: coffee experiences", "Topic2: Ukraine conflict"), col=c("red", "blue"), lty=1, cex=0.8)
-
-lines(tweets_sum$date, tweets_sum$Topic_2, type = "o", col = "blue")
 
 
 ```
