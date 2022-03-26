@@ -12,12 +12,12 @@ rm(list = ls())
 library(quantmod)
 
 ###### Read Data ######
-load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/All_tweets_all_features.RData")
+load("C:\\Users\\bertj\\OneDrive\\Documenten\\GitHub\\SMWA_Performance\\data\\All_tweets_all_features.RData")
 ```
 
 ```{r}
 # Financial data
-load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/Financial_Data.RData")
+load("C:\\Users\\bertj\\OneDrive\\Documenten\\GitHub\\SMWA_Performance\\data\\Financial_Data.RData")
 ```
 
 
@@ -172,19 +172,23 @@ basetable_test <- subset(basetable_test, select = -c(close, open, high, low, div
 
 fin_cols <- c("volume", "ema", "bb", "M", "ROC", "macd", "rsi")
 
+fin_avg_cols_train <- colMeans(basetable_train[, fin_cols])
+
 for (i in 1:(nrow(basetable_train) - 1)) {
   basetable_train[i, fin_cols] <- basetable_train[i + 1, fin_cols]
 }
 
-fin_cols_train_avgs <- colMeans(basetable_train[, fin_cols])
-basetable_train[nrow(basetable_train, fin_cols)] <- fin_cols_train_avgs
+for (col in fin_cols) {
+  basetable_train[nrow(basetable_train), col] <- fin_avg_cols_train[col]
+}
 
 for (i in 1:(nrow(basetable_test) - 1)) {
   basetable_test[i, fin_cols] <- basetable_test[i + 1, fin_cols]
 }
 
-basetable_test[nrow(basetable_test, fin_cols)] <- fin_cols_train_avgs
-
+for (col in fin_cols) {
+  basetable_test[nrow(basetable_test), col] <- fin_avg_cols_train[col]
+}
 
 ```
 
