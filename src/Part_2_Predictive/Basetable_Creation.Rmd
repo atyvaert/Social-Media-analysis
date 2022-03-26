@@ -167,6 +167,23 @@ colMeans(is.na(basetable_test))
 ```
 
 ```{r}
+basetable_train <- subset(basetable_train, select = -c(close, open, high, low, dividends))
+basetable_test <- subset(basetable_test, select = -c(close, open, high, low, dividends))
+
+fin_cols <- c("volume", "ema", "bb", "M", "ROC", "macd", "rsi")
+
+for (i in 1:(nrow(basetable_train) - 1)) {
+  basetable_train[i, fin_cols] <- basetable_train[i + 1, fin_cols]
+}
+
+fin_cols_train_avgs <- colMeans(basetable_train[, fin_cols])
+basetable_train[nrow(basetable_train, fin_cols)] <- fin_cols_train_avgs
+
+for (i in 1:(nrow(basetable_test) - 1)) {
+  basetable_test[i, fin_cols] <- basetable_test[i + 1, fin_cols]
+}
+
+basetable_test[nrow(basetable_test, fin_cols)] <- fin_cols_train_avgs
 
 
 ```
