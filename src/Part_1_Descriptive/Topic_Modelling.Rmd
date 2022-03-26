@@ -40,7 +40,7 @@ myCorpus <- Corpus(VectorSource(sample)) %>%
   tm_map(removeNumbers) %>%
   tm_map(stripWhitespace) 
   
-myStopwords <- c(stopwords('english'),"starbucks", "the", "and", "📌")
+myStopwords <- c(stopwords('english'),"the", "and",)
 myCorpus <- tm_map(myCorpus, removeWords, myStopwords)
 
 ```
@@ -150,7 +150,7 @@ myCorpus <- Corpus(VectorSource(sample)) %>%
   tm_map(removeNumbers) %>%
   tm_map(stripWhitespace) 
   
-myStopwords <- c(stopwords('english'),"starbucks", "the", "and", "📌")
+myStopwords <- c(stopwords('english'), "the", "and")
 myCorpus <- tm_map(myCorpus, removeWords, myStopwords)
 
 dtm1 <- DocumentTermMatrix(myCorpus)

@@ -20,6 +20,32 @@ load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/All_tweets_all
 load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/Financial_Data.RData")
 ```
 
+
+```{r}
+names(all_tweets)[2] <- "sentiment_by_dictionary"
+tweets_agg <- aggregate(cbind(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean, tweets_train$sentiment_by_dictionary,Topic_1,Topic_2) ~ all_tweets$date, all_tweets, mean)
+colnames(tweets_agg) <- colnames(all_tweets)
+
+plot(tweets_agg$date, tweets_agg$sentiment_by_dictionary,type = "o", col = "red", xlab = "Date", ylab = "Average Sentiment per Hour", main = "Sentiment", ylim = c(-1.1,1.1))
+
+legend("bottomleft", legend=c("Dictionary", "Avg_Mean", "Basic","Weighted_mixed"), col=c("red", "blue", "green", "orange"), lty=1, cex=0.8)
+
+lines(tweets_agg$date, tweets_agg$sentiment_avg_mean, type = "o", col = "blue")
+
+lines(tweets_agg$date, tweets_agg$sentiment_by_basic, type = "o", col = "green")
+
+lines(tweets_agg$date, tweets_agg$sentiment_weighted_mixed, type = "o", col = "orange")
+
+```
+
+```{r}
+#plot only where topic 2 is mentioned 
+
+#select where topic 2 is different from 0 
+
+
+```
+
 ```{r}
 # Clean tweet data
 all_tweets <- subset(all_tweets, select = -c(text, user_id))
@@ -33,17 +59,24 @@ train_dates <- dates[!(dates %in% test_dates)]
 tweets_test <- all_tweets[all_tweets$date %in% test_dates,]
 tweets_train <- all_tweets[all_tweets$date %in% train_dates,]
 
-# MinMaxScale sentiments
+# Scale 
 num.cols <- sapply(all_tweets, is.numeric)
 
 # apply on training set
 mean_train <- colMeans(tweets_train[, num.cols])
 sd_train <- sapply(tweets_train[, num.cols], sd)
-tweets_train[, num.cols] <- scale(tweets_train[, num.cols], center = mean_train, scale = sd_train)
+#tweets_train[, num.cols] <- scale(tweets_train[, num.cols], center = mean_train, scale = sd_train)
+tweets_train[, num.cols] <- scale(tweets_train[, num.cols], center = TRUE, scale = TRUE)
 
 # apply on test set
 tweets_test[, num.cols] <- scale(tweets_test[, num.cols], center = mean_train, scale = sd_train)
+
+
 ```
+
+
+
+
 
 ```{r}
 # aggregate
@@ -56,6 +89,8 @@ colnames(tweets_train_agg) <- colnames(tweets_train)
 colnames(tweets_test_agg) <- colnames(tweets_test)
 ```
 
+
+
 ```{r}
 # Making basetable
 basetable_train <- merge(tweets_train_agg,financial_data,by="date")
@@ -63,16 +98,42 @@ basetable_test <- merge(tweets_test_agg,financial_data,by="date")
 ```
 
 ```{r}
-plot(basetable_train$date, basetable_train$sentiment_by_dictionary,type = "o", col = "red", xlab = "Date", ylab = "Average Sentiment per Hour", main = "Sentiment")
+#impute the missing values  
+print(sum(is.na(basetable_train))) #no missing values
+print(sum(is.na(basetable_test))) #no missing values
 
-legend("bottomleft", legend=c("Dictionary", "Avg_Mean", "Basic","Weighted_mixed"), col=c("red", "blue", "green", "orange"), lty=1, cex=0.8)
 
-lines(basetable_train$date, basetable_train$sentiment_avg_mean, type = "o", col = "blue")
-
-lines(basetable_train$date, basetable_train$sentiment_by_basic, type = "o", col = "green")
-
-lines(basetable_train$date, basetable_train$sentiment_weighted_mixed, type = "o", col = "orange")
 ```
+
+
+
+
+
+
+```{r}
+#scaling the financial data 
+names(basetable_train[,15:20])
+
+# MinMaxScale sentiments
+
+# apply on training set
+mean_train <- colMeans(basetable_train[, 15:20])
+sd_train <- sapply(basetable_train[, 15:20], sd)
+#tweets_train[, num.cols] <- scale(tweets_train[, num.cols], center = mean_train, scale = sd_train)
+basetable_train[, 15:20] <- scale(basetable_train[, 15:20], center = TRUE, scale = TRUE)
+
+# apply on test set
+basetable_test[, 15:20] <- scale(basetable_test[, 15:20], center = mean_train, scale = sd_train)
+
+
+```
+
+```{r}
+
+
+```
+
+
 
 ```{r}
 # choosing a sentiment column
@@ -95,6 +156,10 @@ colMeans(is.na(basetable_test))
 # basetable_train[, num.cols] <-  sapply(basetable_train[, num.cols], FUN = handle_outlier_z)
 ```
 
+```{r}
+
+
+```
 
 ```{r}
 save(basetable_train, file = "/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_train.RData")
