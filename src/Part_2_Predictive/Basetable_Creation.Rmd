@@ -26,7 +26,7 @@ names(all_tweets)[2] <- "sentiment_by_dictionary"
 tweets_agg <- aggregate(cbind(sentiment_by_basic,sentiment_weighted_mixed,sentiment_avg_mean, tweets_train$sentiment_by_dictionary,Topic_1,Topic_2) ~ all_tweets$date, all_tweets, mean)
 colnames(tweets_agg) <- colnames(all_tweets)
 
-plot(tweets_agg$date, tweets_agg$sentiment_by_dictionary,type = "o", col = "red", xlab = "Date", ylab = "Average Sentiment per Hour", main = "Sentiment", ylim = c(-1.1,1.1))
+plot(tweets_agg$date, tweets_agg$sentiment_by_dictionary,type = "o", col = "red", xlab = "Date", ylab = "Average Sentiment per Hour", main = "Sentiment", ylim = c(-2,2.1))
 
 legend("bottomleft", legend=c("Dictionary", "Avg_Mean", "Basic","Weighted_mixed"), col=c("red", "blue", "green", "orange"), lty=1, cex=0.8)
 
@@ -37,11 +37,28 @@ lines(tweets_agg$date, tweets_agg$sentiment_by_basic, type = "o", col = "green")
 lines(tweets_agg$date, tweets_agg$sentiment_weighted_mixed, type = "o", col = "orange")
 
 ```
+```{r}
+tweets_sum <- aggregate(cbind(Topic_1,Topic_2) ~ all_tweets$date, all_tweets, sum)
+colnames(tweets_sum)[1] <- "date"
+
+plot(tweets_sum$date, tweets_sum$Topic_1,type = "o", col = "red", xlab = "Date", ylab = "average topics occurence", main = "Sentiment", ylim = c(0,20000))
+
+legend("topright", legend=c("Topic1: coffee experiences", "Topic2: Ukraine conflict"), col=c("red", "blue"), lty=1, cex=0.8)
+
+lines(tweets_sum$date, tweets_sum$Topic_2, type = "o", col = "blue")
+
+
+```
 
 ```{r}
 #plot only where topic 2 is mentioned 
 
-#select where topic 2 is different from 0 
+plot(tweets_agg$date, tweets_agg$Topic_1,type = "o", col = "red", xlab = "Date", ylab = "average topics occurence", main = "Sentiment", ylim = c(0,2))
+
+legend("topright", legend=c("Topic1: coffee experiences", "Topic2: Ukraine conflict"), col=c("red", "blue"), lty=1, cex=0.8)
+
+lines(tweets_agg$date, tweets_agg$Topic_2, type = "o", col = "blue")
+
 
 
 ```
