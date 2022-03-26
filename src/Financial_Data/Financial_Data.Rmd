@@ -19,6 +19,7 @@ financial_data$Target <- financial_data$close - financial_data$open
 
 financial_data$date <- financial_data$date + 4*60*60
 financial_data$Target <- sign(financial_data$Target)
+financial_data$Target <- ifelse(financial_data$Target < 0, 0, 1)
 ```
 
 ```{r}
