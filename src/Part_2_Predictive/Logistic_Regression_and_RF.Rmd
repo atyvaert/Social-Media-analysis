@@ -1,0 +1,122 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+set.seed(123)
+rm(list = ls())
+library(AUC)
+library(pROC)
+library(mlbench)
+library(caret)
+
+#Load in the train and test basetable 
+
+#load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_train.RData")
+#load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_test.RData")
+```
+
+```{r}
+#delete date column
+basetable_train <- subset(basetable_train, select = -date)
+basetable_test <- subset(basetable_test, select = -date)
+
+#make variables
+test_x <- subset(basetable_test, select = -Target)
+test_y <- basetable_test$Target
+
+basetable_train$Target <- ifelse(basetable_train$Target < 0, 0, 1)
+test_y <- ifelse(test_y < 0, 0, 1)
+```
+
+```{r}
+#build model on only the twitter data 
+Log_Model_Twitterdata <-  glm(as.factor(basetable_train$Target) ~ sentiment_by_dictionary + 
+                         Topic_1 + Topic_2 + sentiment_by_basic +sentiment_weighted_mixed 
+                         + sentiment_avg_mean , data = basetable_train, 
+                            family ="binomial")
+print(summary(Log_Model_Twitterdata))
+twitter_predicitons <- predict(Log_Model_Twitterdata,newdata = test_x, type = "response" )
+auc(test_y, twitter_predicitons)
+plot.roc(test_y,twitter_predicitons, print.auc = TRUE, col = "red", ylim = c(0,1))
+twitter_predicitons[twitter_predicitons>=0.5] <- 1
+twitter_predicitons[twitter_predicitons<0.5] <- 0
+
+confusionMatrix(test_y, as.data.frame(twitter_predicitons)$twitter_predicitons)
+
+```
+
+
+```{r}
+Log_Model_whole_dataset <- glm(as.factor(basetable_train$Target) ~ sentiment_by_dictionary + 
+                         Topic_1 + Topic_2 + sentiment_by_basic +sentiment_weighted_mixed 
+                         + sentiment_avg_mean + ema + M + ROC + rsi,
+                         data = basetable_train, 
+                            family ="binomial")
+summary(Log_Model_whole_dataset)
+
+
+#run model
+model_proportions <- predict(Log_Model_whole_dataset, newdata = test_x, type = "response")
+print(auc(test_y, model_proportions))
+model_proportions[model_proportions >= 0.5] <- 1
+model_proportions[model_proportions < 0.5] <- 0
+
+#evaluation
+pROC::auc(test_y,model_proportions)
+```
+
+```{r}
+#look at importance features of the Twitter data model 
+feature_importance <- varImp(Log_Model_Twitterdata, scale = FALSE)
+feature_importance
+```
+```{r}
+#look at importance features of the whole data model 
+feature_importance <- varImp(Log_Model_whole_dataset, scale = FALSE)
+feature_importance
+```
+
+CONCLUSION OF THE LINEAR MODEL 
+Our feature dot not have any explanatory power over the changes of the Starbucks stock. 
+Looking at the bigger picture, this was to be expected: stock volatility is not only driven by individuals tweeting positive or negative comments of the company. 
+Furthermore, we were limited by the twitter API in the amount of data we could obtain. 
+
+```{r}
+#time for RF CMOOOOOON 
+
+library(randomForest)
+library(datasets)
+library(caret)
+
+#building RF on the twitter data 
+
+RF_twitter_data <- randomForest(as.factor(basetable_train$Target) ~ sentiment_by_dictionary + 
+                         Topic_1 + Topic_2 + sentiment_by_basic +sentiment_weighted_mixed 
+                         + sentiment_avg_mean, data = basetable_train)
+print(RF_twitter_data) # this performs worse than coin flipping hahaahha 
+
+RF_all_data <- randomForest(as.factor(basetable_train$Target) ~ sentiment_by_dictionary + 
+                         Topic_1 + Topic_2 + sentiment_by_basic +sentiment_weighted_mixed 
+                         + sentiment_avg_mean + ema + M + ROC + rsi,
+                         data = basetable_train)
+print(RF_all_data) #this model performs a bit better 
+
+```
+CONCLUSION OF THE RANDOM FOREST 
+The model using all the data set performs a bit better 
+
+Ma keb het eig echt gehad 
+Gr 
+K 
+
+
+
+
+
+
+
+
+
+
