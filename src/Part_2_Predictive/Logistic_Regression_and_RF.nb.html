@@ -217,7 +217,7 @@ pre code {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0LnNlZWQoMTIzKVxucm0obGlzdCA9IGxzKCkpXG5saWJyYXJ5KEFVQylcbmxpYnJhcnkocFJPQylcbmxpYnJhcnkobWxiZW5jaClcbmxpYnJhcnkoY2FyZXQpXG5cbiNMb2FkIGluIHRoZSB0cmFpbiBhbmQgdGVzdCBiYXNldGFibGUgXG5cbmJhc2V0YWJsZV90ZXN0ID0gcmVhZC5jc3YoXCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9maW5hbF9iYXNldGFibGVfdGVzdC5jc3ZcIilcbmJhc2V0YWJsZV90cmFpbiA9cmVhZC5jc3YoXCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9maW5hbF9iYXNldGFibGVfdHJhaW4uY3N2XCIpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0LnNlZWQoMTIzKVxucm0obGlzdCA9IGxzKCkpXG5saWJyYXJ5KEFVQylcbmxpYnJhcnkocFJPQylcbmxpYnJhcnkobWxiZW5jaClcbmxpYnJhcnkoY2FyZXQpXG5cbiNMb2FkIGluIHRoZSB0cmFpbiBhbmQgdGVzdCBiYXNldGFibGUgXG5cbmJhc2V0YWJsZV90ZXN0ID0gcmVhZC5jc3YoXCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9maW5hbF9iYXNldGFibGVfdGVzdC5jc3ZcIilcbmJhc2V0YWJsZV90cmFpbiA9cmVhZC5jc3YoXCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9maW5hbF9iYXNldGFibGVfdHJhaW4uY3N2XCIpXG5cbmBgYCJ9 -->
 <pre class="r"><code>set.seed(123)
 rm(list = ls())
 library(AUC)
@@ -228,175 +228,97 @@ library(caret)
 #Load in the train and test basetable 
 
 basetable_test = read.csv(&quot;/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/final_basetable_test.csv&quot;)
-basetable_train =read.csv(&quot;/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/final_basetable_train.csv&quot;)</code></pre>
+basetable_train =read.csv(&quot;/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/final_basetable_train.csv&quot;)
+</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2RlbGV0ZSBkYXRlIGNvbHVtblxuYmFzZXRhYmxlX3RyYWluIDwtIHN1YnNldChiYXNldGFibGVfdHJhaW4sIHNlbGVjdCA9IC1kYXRlKVxuYmFzZXRhYmxlX3Rlc3QgPC0gc3Vic2V0KGJhc2V0YWJsZV90ZXN0LCBzZWxlY3QgPSAtZGF0ZSlcblxuI21ha2UgdmFyaWFibGVzXG50ZXN0X3ggPC0gc3Vic2V0KGJhc2V0YWJsZV90ZXN0LCBzZWxlY3QgPSAtVGFyZ2V0KVxudGVzdF95IDwtIGJhc2V0YWJsZV90ZXN0JFRhcmdldFxuXG5iYXNldGFibGVfdHJhaW4kVGFyZ2V0IDwtIGlmZWxzZShiYXNldGFibGVfdHJhaW4kVGFyZ2V0IDwgMCwgMCwgMSlcbnRlc3RfeSA8LSBpZmVsc2UodGVzdF95IDwgMCwgMCwgMSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2RlbGV0ZSBkYXRlIGNvbHVtblxuYmFzZXRhYmxlX3RyYWluIDwtIHN1YnNldChiYXNldGFibGVfdHJhaW4sIHNlbGVjdCA9IC1kYXRlKVxuYmFzZXRhYmxlX3Rlc3QgPC0gc3Vic2V0KGJhc2V0YWJsZV90ZXN0LCBzZWxlY3QgPSAtZGF0ZSlcblxuI21ha2UgdmFyaWFibGVzXG50ZXN0X3ggPC0gc3Vic2V0KGJhc2V0YWJsZV90ZXN0LCBzZWxlY3QgPSAtVGFyZ2V0KVxudGVzdF95IDwtIGJhc2V0YWJsZV90ZXN0JFRhcmdldFxuYGBgIn0= -->
 <pre class="r"><code>#delete date column
 basetable_train &lt;- subset(basetable_train, select = -date)
 basetable_test &lt;- subset(basetable_test, select = -date)
 
 #make variables
 test_x &lt;- subset(basetable_test, select = -Target)
-test_y &lt;- basetable_test$Target
-
-basetable_train$Target &lt;- ifelse(basetable_train$Target &lt; 0, 0, 1)
-test_y &lt;- ifelse(test_y &lt; 0, 0, 1)</code></pre>
+test_y &lt;- basetable_test$Target</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoc3VtbWFyeShMb2dfTW9kZWxfVHdpdHRlcmRhdGEpKVxuXG5gYGAifQ== -->
-<pre class="r"><code>print(summary(Log_Model_Twitterdata))
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2J1aWxkIG1vZGVsIG9uIG9ubHkgdGhlIHR3aXR0ZXIgZGF0YSBcbkxvZ19Nb2RlbF9Ud2l0dGVyZGF0YSA8LSAgZ2xtKGFzLmZhY3RvcihiYXNldGFibGVfdHJhaW4kVGFyZ2V0KSB+IHNlbnRpbWVudF9ieV9kaWN0aW9uYXJ5ICsgXG4gICAgICAgICAgICAgICAgICAgICAgICAgVG9waWNfMSArIFRvcGljXzIgKyBzZW50aW1lbnRfYnlfYmFzaWMgK3NlbnRpbWVudF93ZWlnaHRlZF9taXhlZCBcbiAgICAgICAgICAgICAgICAgICAgICAgICArIHNlbnRpbWVudF9hdmdfbWVhbiAsIGRhdGEgPSBiYXNldGFibGVfdHJhaW4sIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZhbWlseSA9XCJiaW5vbWlhbFwiKVxucHJpbnQoc3VtbWFyeShMb2dfTW9kZWxfVHdpdHRlcmRhdGEpKVxudHdpdHRlcl9wcmVkaWNpdG9ucyA8LSBwcmVkaWN0KExvZ19Nb2RlbF9Ud2l0dGVyZGF0YSxuZXdkYXRhID0gdGVzdF94LCB0eXBlID0gXCJyZXNwb25zZVwiIClcbmF1Yyh0ZXN0X3ksIHR3aXR0ZXJfcHJlZGljaXRvbnMpXG5wbG90LnJvYyh0ZXN0X3ksdHdpdHRlcl9wcmVkaWNpdG9ucywgcHJpbnQuYXVjID0gVFJVRSwgY29sID0gXCJyZWRcIiwgeWxpbSA9IGMoMCwxKSlcbnR3aXR0ZXJfcHJlZGljaXRvbnNbdHdpdHRlcl9wcmVkaWNpdG9ucz49MC41XSA8LSAxXG50d2l0dGVyX3ByZWRpY2l0b25zW3R3aXR0ZXJfcHJlZGljaXRvbnM8MC41XSA8LSAwXG5cbnR3aXR0ZXJfcHJlZGljaXRvbnMgPC0gYXMudmVjdG9yKHR3aXR0ZXJfcHJlZGljaXRvbnMpXG50ZXN0X3kgPC0gYXMudmVjdG9yKHRlc3RfeSlcblxuY29uZnVzaW9uTWF0cml4KGFzLmZhY3Rvcih0ZXN0X3kpLCBhcy5mYWN0b3IodHdpdHRlcl9wcmVkaWNpdG9ucykpXG5gYGAifQ== -->
+<pre class="r"><code>#build model on only the twitter data 
+Log_Model_Twitterdata &lt;-  glm(as.factor(basetable_train$Target) ~ sentiment_by_dictionary + 
+                         Topic_1 + Topic_2 + sentiment_by_basic +sentiment_weighted_mixed 
+                         + sentiment_avg_mean , data = basetable_train, 
+                            family =&quot;binomial&quot;)
+print(summary(Log_Model_Twitterdata))
+twitter_predicitons &lt;- predict(Log_Model_Twitterdata,newdata = test_x, type = &quot;response&quot; )
+auc(test_y, twitter_predicitons)
+plot.roc(test_y,twitter_predicitons, print.auc = TRUE, col = &quot;red&quot;, ylim = c(0,1))
+twitter_predicitons[twitter_predicitons&gt;=0.5] &lt;- 1
+twitter_predicitons[twitter_predicitons&lt;0.5] &lt;- 0
+
+twitter_predicitons &lt;- as.vector(twitter_predicitons)
+test_y &lt;- as.vector(test_y)
+
+confusionMatrix(as.factor(test_y), as.factor(twitter_predicitons))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2V2YWx1YXRpb25cbnBST0M6OmF1Yyh0ZXN0X3ksbW9kZWxfcHJvcG9ydGlvbnMpXG5cbmBgYCJ9 -->
+<pre class="r"><code>#evaluation
+pROC::auc(test_y,model_proportions)
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxuZ2xtKGZvcm11bGEgPSBhcy5mYWN0b3IoYmFzZXRhYmxlX3RyYWluJFRhcmdldCkgfiBzZW50aW1lbnRfYnlfZGljdGlvbmFyeSArIFxuICAgIFRvcGljXzEgKyBUb3BpY18yICsgc2VudGltZW50X2J5X2Jhc2ljICsgc2VudGltZW50X3dlaWdodGVkX21peGVkICsgXG4gICAgc2VudGltZW50X2F2Z19tZWFuLCBmYW1pbHkgPSBcImJpbm9taWFsXCIsIGRhdGEgPSBiYXNldGFibGVfdHJhaW4pXG5cbkRldmlhbmNlIFJlc2lkdWFsczogXG4gICAgICAgTWluICAgICAgICAgIDFRICAgICAgTWVkaWFuICAgICAgICAgIDNRICAgICAgICAgTWF4ICBcbi0yLjQwOWUtMDYgIC0yLjQwOWUtMDYgIC0yLjQwOWUtMDYgIC0yLjQwOWUtMDYgIC0yLjQwOWUtMDYgIFxuXG5Db2VmZmljaWVudHM6XG4gICAgICAgICAgICAgICAgICAgICAgICAgICBFc3RpbWF0ZSBTdGQuIEVycm9yIHogdmFsdWUgUHIoPnx6fClcbihJbnRlcmNlcHQpICAgICAgICAgICAgICAtMi42NTdlKzAxICA2LjY1M2UrMDQgICAgICAgMCAgICAgICAgMVxuc2VudGltZW50X2J5X2RpY3Rpb25hcnkgICAzLjgyM2UtMTIgIDIuMzUyZSswNiAgICAgICAwICAgICAgICAxXG5Ub3BpY18xICAgICAgICAgICAgICAgICAgIDIuMjI2ZS0xMyAgMS43MThlKzA1ICAgICAgIDAgICAgICAgIDFcblRvcGljXzIgICAgICAgICAgICAgICAgICAtMS40NjFlLTE0ICAxLjI4MGUrMDUgICAgICAgMCAgICAgICAgMVxuc2VudGltZW50X2J5X2Jhc2ljICAgICAgICA5LjUwNmUtMTQgIDEuODY1ZSswNSAgICAgICAwICAgICAgICAxXG5zZW50aW1lbnRfd2VpZ2h0ZWRfbWl4ZWQgLTMuOTk1ZS0xMiAgMi4zNTRlKzA2ICAgICAgIDAgICAgICAgIDFcbnNlbnRpbWVudF9hdmdfbWVhbiAgICAgICAtNS40MDhlLTE0ICAyLjA2OWUrMDUgICAgICAgMCAgICAgICAgMVxuXG4oRGlzcGVyc2lvbiBwYXJhbWV0ZXIgZm9yIGJpbm9taWFsIGZhbWlseSB0YWtlbiB0byBiZSAxKVxuXG4gICAgTnVsbCBkZXZpYW5jZTogMC4wMDAwZSswMCAgb24gODIgIGRlZ3JlZXMgb2YgZnJlZWRvbVxuUmVzaWR1YWwgZGV2aWFuY2U6IDQuODE1M2UtMTAgIG9uIDc2ICBkZWdyZWVzIG9mIGZyZWVkb21cbkFJQzogMTRcblxuTnVtYmVyIG9mIEZpc2hlciBTY29yaW5nIGl0ZXJhdGlvbnM6IDI1XG4ifQ== -->
-<pre><code>
-Call:
-glm(formula = as.factor(basetable_train$Target) ~ sentiment_by_dictionary + 
-    Topic_1 + Topic_2 + sentiment_by_basic + sentiment_weighted_mixed + 
-    sentiment_avg_mean, family = &quot;binomial&quot;, data = basetable_train)
-
-Deviance Residuals: 
-       Min          1Q      Median          3Q         Max  
--2.409e-06  -2.409e-06  -2.409e-06  -2.409e-06  -2.409e-06  
-
-Coefficients:
-                           Estimate Std. Error z value Pr(&gt;|z|)
-(Intercept)              -2.657e+01  6.653e+04       0        1
-sentiment_by_dictionary   3.823e-12  2.352e+06       0        1
-Topic_1                   2.226e-13  1.718e+05       0        1
-Topic_2                  -1.461e-14  1.280e+05       0        1
-sentiment_by_basic        9.506e-14  1.865e+05       0        1
-sentiment_weighted_mixed -3.995e-12  2.354e+06       0        1
-sentiment_avg_mean       -5.408e-14  2.069e+05       0        1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 0.0000e+00  on 82  degrees of freedom
-Residual deviance: 4.8153e-10  on 76  degrees of freedom
-AIC: 14
-
-Number of Fisher Scoring iterations: 25</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiU2V0dGluZyBsZXZlbHM6IGNvbnRyb2wgPSAwLCBjYXNlID0gMVxuU2V0dGluZyBkaXJlY3Rpb246IGNvbnRyb2xzIDwgY2FzZXNcbiJ9 -->
+<pre><code>Setting levels: control = 0, case = 1
+Setting direction: controls &lt; cases</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQXJlYSB1bmRlciB0aGUgY3VydmU6IDAuNVxuIn0= -->
+<pre><code>Area under the curve: 0.5</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShMb2dfTW9kZWxfd2hvbGVfZGF0YXNldClcblxuYGBgIn0= -->
-<pre class="r"><code>summary(Log_Model_whole_dataset)
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxuZ2xtKGZvcm11bGEgPSBhcy5mYWN0b3IoYmFzZXRhYmxlX3RyYWluJFRhcmdldCkgfiBzZW50aW1lbnRfYnlfZGljdGlvbmFyeSArIFxuICAgIFRvcGljXzEgKyBUb3BpY18yICsgc2VudGltZW50X2J5X2Jhc2ljICsgc2VudGltZW50X3dlaWdodGVkX21peGVkICsgXG4gICAgc2VudGltZW50X2F2Z19tZWFuICsgZW1hICsgTSArIFJPQyArIHJzaSwgZmFtaWx5ID0gXCJiaW5vbWlhbFwiLCBcbiAgICBkYXRhID0gYmFzZXRhYmxlX3RyYWluKVxuXG5EZXZpYW5jZSBSZXNpZHVhbHM6IFxuICAgIE1pbiAgICAgICAxUSAgIE1lZGlhbiAgICAgICAzUSAgICAgIE1heCAgXG4tMS43NjI3ICAtMC45ODYxICAtMC41MTc4ICAgMC45NTA5ICAgMi40Mzc0ICBcblxuQ29lZmZpY2llbnRzOlxuICAgICAgICAgICAgICAgICAgICAgICAgICAgRXN0aW1hdGUgU3RkLiBFcnJvciB6IHZhbHVlIFByKD58enwpICBcbihJbnRlcmNlcHQpICAgICAgICAgICAgICAgIC02LjcxNzUwICAgMTAuMDIxMzEgIC0wLjY3MCAgIDAuNTAyNyAgXG5zZW50aW1lbnRfYnlfZGljdGlvbmFyeSAgICAyMS4yNDE4NSAgIDE2LjY0MjA4ICAgMS4yNzYgICAwLjIwMTggIFxuVG9waWNfMSAgICAgICAgICAgICAgICAgICAgIDAuMDM3NjAgICAgMS4xODc3OCAgIDAuMDMyICAgMC45NzQ3ICBcblRvcGljXzIgICAgICAgICAgICAgICAgICAgICAxLjI4MDY2ICAgIDAuOTc1MzQgICAxLjMxMyAgIDAuMTg5MiAgXG5zZW50aW1lbnRfYnlfYmFzaWMgICAgICAgICAgMC40NzgzMCAgICAxLjIxMjk2ICAgMC4zOTQgICAwLjY5MzMgIFxuc2VudGltZW50X3dlaWdodGVkX21peGVkICAtMjEuMTg0MDQgICAxNi42Njk4MiAgLTEuMjcxICAgMC4yMDM4ICBcbnNlbnRpbWVudF9hdmdfbWVhbiAgICAgICAgICAwLjkxOTc3ICAgIDEuMzUyNDggICAwLjY4MCAgIDAuNDk2NSAgXG5lbWEgICAgICAgICAgICAgICAgICAgICAgICAgMC4wNDY3NCAgICAwLjExNDQ2ICAgMC40MDggICAwLjY4MzEgIFxuTSAgICAgICAgICAgICAgICAgICAgICAgICAgIDguMjYwNzIgICAgNy4yNDk3MiAgIDEuMTM5ICAgMC4yNTQ1ICBcblJPQyAgICAgICAgICAgICAgICAgICAgICAtNjc3LjMzMjI2ICA2MjAuODYxODAgIC0xLjA5MSAgIDAuMjc1MyAgXG5yc2kgICAgICAgICAgICAgICAgICAgICAgICAgMC4wNjAyNCAgICAwLjAyNzgxICAgMi4xNjYgICAwLjAzMDMgKlxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG5cbihEaXNwZXJzaW9uIHBhcmFtZXRlciBmb3IgYmlub21pYWwgZmFtaWx5IHRha2VuIHRvIGJlIDEpXG5cbiAgICBOdWxsIGRldmlhbmNlOiAxMTQuMDg1ICBvbiA4MiAgZGVncmVlcyBvZiBmcmVlZG9tXG5SZXNpZHVhbCBkZXZpYW5jZTogIDk0Ljg3NyAgb24gNzIgIGRlZ3JlZXMgb2YgZnJlZWRvbVxuQUlDOiAxMTYuODhcblxuTnVtYmVyIG9mIEZpc2hlciBTY29yaW5nIGl0ZXJhdGlvbnM6IDRcbiJ9 -->
-<pre><code>
-Call:
-glm(formula = as.factor(basetable_train$Target) ~ sentiment_by_dictionary + 
-    Topic_1 + Topic_2 + sentiment_by_basic + sentiment_weighted_mixed + 
-    sentiment_avg_mean + ema + M + ROC + rsi, family = &quot;binomial&quot;, 
-    data = basetable_train)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.7627  -0.9861  -0.5178   0.9509   2.4374  
-
-Coefficients:
-                           Estimate Std. Error z value Pr(&gt;|z|)  
-(Intercept)                -6.71750   10.02131  -0.670   0.5027  
-sentiment_by_dictionary    21.24185   16.64208   1.276   0.2018  
-Topic_1                     0.03760    1.18778   0.032   0.9747  
-Topic_2                     1.28066    0.97534   1.313   0.1892  
-sentiment_by_basic          0.47830    1.21296   0.394   0.6933  
-sentiment_weighted_mixed  -21.18404   16.66982  -1.271   0.2038  
-sentiment_avg_mean          0.91977    1.35248   0.680   0.4965  
-ema                         0.04674    0.11446   0.408   0.6831  
-M                           8.26072    7.24972   1.139   0.2545  
-ROC                      -677.33226  620.86180  -1.091   0.2753  
-rsi                         0.06024    0.02781   2.166   0.0303 *
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 114.085  on 82  degrees of freedom
-Residual deviance:  94.877  on 72  degrees of freedom
-AIC: 116.88
-
-Number of Fisher Scoring iterations: 4</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI2xvb2sgYXQgaW1wb3J0YW5jZSBmZWF0dXJlc1xuZmVhdHVyZV9pbXBvcnRhbmNlIDwtIHZhckltcChMb2dfTW9kZWxfVHdpdHRlcmRhdGEsIHNjYWxlID0gRkFMU0UpXG5mZWF0dXJlX2ltcG9ydGFuY2VcbmBgYFxuYGBgIn0= -->
-<pre class="r"><code>```r
-#look at importance features
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2xvb2sgYXQgaW1wb3J0YW5jZSBmZWF0dXJlcyBvZiB0aGUgVHdpdHRlciBkYXRhIG1vZGVsIFxuZmVhdHVyZV9pbXBvcnRhbmNlIDwtIHZhckltcChMb2dfTW9kZWxfVHdpdHRlcmRhdGEsIHNjYWxlID0gRkFMU0UpXG5mZWF0dXJlX2ltcG9ydGFuY2VcbmBgYCJ9 -->
+<pre class="r"><code>#look at importance features of the Twitter data model 
 feature_importance &lt;- varImp(Log_Model_Twitterdata, scale = FALSE)
 feature_importance</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjoiZGF0YS5mcmFtZSIsIm5yb3ciOjYsIm5jb2wiOjEsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOiJkZiBbNiDDlyAxXSJ9fSwicmRmIjoiSDRzSUFBQUFBQUFBQXd0eWlURG1pdUJpWUdCZ1ptQmhaR0pnWmdVeUdWaERROXgwTFJnWVdKaUFIRVlHRmdaT0VGMEJWQ1FNRm1CZzRBTmlOdnZYdHFGMTdncHA5bzlzSFBiRUhkU3dmNjZ0T09YazMvMzI3K2M5blBTcHhkZis5YmM5N3orYzhMVi9vOUV6TC9GK01wcUJySG1KdWFuRlFJWUFraUM3ZjFscVVXSk9EcHBhenFMOGNqMWs5V3hRQ2ZIaTFMeVN6RndnRVo5VUdaK1NtVnlTbVorWFdGUUpNeTRrdnlBek9kNFFsV3NFNVFxaGFFNUtMTTVNaHNwSUlHVEtVelBUTTBwU1UrSnpNeXRTVXpCMUpwYWx4K2VtSnVhaCt5NDVKN0VZM1hkY0tZa2xpWHBwUlVDUEFIbi8wTFN3NXhlQVhBL1V4QVFLWjFZMHpZeEZhQUw4cFhtZ0lFblJUYzRvemN2V05RSlpBSTBmRU9hRjBteEliRWFJbFV6L29VYXhRbzFpUzgxTHo4eExoYms5SnpFcE5RZks0UU1HUFRqazlRcUtNdk5LWUQ0QmloYnJsZVNYSk1MVWNTWG41OEJFd0g1aitBY0FmbTNiOWw0Q0FBQT0ifQ== --&gt;
-
-&lt;div data-pagedtable=&quot;false&quot;&gt;
-  &lt;script data-pagedtable-source type=&quot;application/json&quot;&gt;
-{&quot;columns&quot;:[{&quot;label&quot;:[&quot;&quot;],&quot;name&quot;:[&quot;_rn_&quot;],&quot;type&quot;:[&quot;&quot;],&quot;align&quot;:[&quot;left&quot;]},{&quot;label&quot;:[&quot;Overall&quot;],&quot;name&quot;:[1],&quot;type&quot;:[&quot;dbl&quot;],&quot;align&quot;:[&quot;right&quot;]}],&quot;data&quot;:[{&quot;1&quot;:&quot;0.8512371&quot;,&quot;_rn_&quot;:&quot;sentiment_by_dictionary&quot;},{&quot;1&quot;:&quot;0.5698551&quot;,&quot;_rn_&quot;:&quot;Topic_1&quot;},{&quot;1&quot;:&quot;0.7240150&quot;,&quot;_rn_&quot;:&quot;Topic_2&quot;},{&quot;1&quot;:&quot;0.9881447&quot;,&quot;_rn_&quot;:&quot;sentiment_by_basic&quot;},{&quot;1&quot;:&quot;0.8738694&quot;,&quot;_rn_&quot;:&quot;sentiment_weighted_mixed&quot;},{&quot;1&quot;:&quot;0.8799499&quot;,&quot;_rn_&quot;:&quot;sentiment_avg_mean&quot;}],&quot;options&quot;:{&quot;columns&quot;:{&quot;min&quot;:{},&quot;max&quot;:[10],&quot;total&quot;:[1]},&quot;rows&quot;:{&quot;min&quot;:[10],&quot;max&quot;:[10],&quot;total&quot;:[6]},&quot;pages&quot;:{}}}
-  &lt;/script&gt;
-&lt;/div&gt;
-
-&lt;!-- rnb-frame-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI2xvb2sgYXQgaW1wb3J0YW5jZSBmZWF0dXJlcyBvZiB0aGUgd2hvbGUgZGF0YSBtb2RlbCBcbmZlYXR1cmVfaW1wb3J0YW5jZSA8LSB2YXJJbXAoTG9nX01vZGVsX3dob2xlX2RhdGFzZXQsIHNjYWxlID0gRkFMU0UpXG5mZWF0dXJlX2ltcG9ydGFuY2VcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-#look at importance features of the whole data model 
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NiwibmNvbCI6MSwic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbNiDDlyAxXSJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUF3dHlpVERtaXVCaVlHQmdabUJoWkdSZ1pnVXlHVmhEUTl4MExSZ1lXSmlBSEVZR0ZnWk9FRjBCVkNRTUZtQmc0QU5pTnZ2WHRxRjE3Z3J6N1IvWk9PeUpPeGhzLzF4YmNjckp2MWZzMzg5N09PbFRpNy85NjI5NzNuODQwVzcvUnFOblh1TDlJalFEV2ZNU2MxT0xnUXdCSkVGMi83TFVvc1NjSERTMW5FWDU1WHJJNnRtZ0V1TEZxWGtsbWJsQUlqNnBNajRsTTdra016OHZzYWdTWmx4SWZrRm1jcndoS3RjSXloVkMwWnlVV0p5WkRKV1JRTWlVcDJhbVo1U2twc1RuWmxha3BtRHFUQ3hMajg5TlRjeEQ5MTF5VG1JeHV1KzRVaEpMRXZYU2lvQWVBZkwrb1dsaHp5OEF1UjZvaVFrVXpxeG9taG1MMEFUNFMvTkFRWktpbTV4Um1wZXRhd1N5QUJvL0lNd0xwZG1RMkl3UUs1bitRNDFpaFJyRmxwcVhucG1YQ25ON1RtSlNhZzZVd3djTWVuREk2eFVVWmVhVndId0NGQzNXSzhrdlNZU3A0MHJPejRHSmdQM0c4QThBYVZXVkJGNENBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Overall"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.8512371","_rn_":"sentiment_by_dictionary"},{"1":"0.5698551","_rn_":"Topic_1"},{"1":"0.7240150","_rn_":"Topic_2"},{"1":"0.9881447","_rn_":"sentiment_by_basic"},{"1":"0.8738694","_rn_":"sentiment_weighted_mixed"},{"1":"0.8799499","_rn_":"sentiment_avg_mean"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2xvb2sgYXQgaW1wb3J0YW5jZSBmZWF0dXJlcyBvZiB0aGUgd2hvbGUgZGF0YSBtb2RlbCBcbmZlYXR1cmVfaW1wb3J0YW5jZSA8LSB2YXJJbXAoTG9nX01vZGVsX3dob2xlX2RhdGFzZXQsIHNjYWxlID0gRkFMU0UpXG5mZWF0dXJlX2ltcG9ydGFuY2VcbmBgYCJ9 -->
+<pre class="r"><code>#look at importance features of the whole data model 
 feature_importance &lt;- varImp(Log_Model_whole_dataset, scale = FALSE)
 feature_importance</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjoiZGF0YS5mcmFtZSIsIm5yb3ciOjEwLCJuY29sIjoxLCJzdW1tYXJ5Ijp7IkRlc2NyaXB0aW9uIjoiZGYgWzEwIMOXIDFdIn19LCJyZGYiOiJINHNJQUFBQUFBQUFBd3R5aVREbWl1QmlZR0JnWm1CaFpHSmdaZ1V5R1ZoRFE5eDBMUmdZV0ppQUhFWUdGZ1pPRUYwQlZDUU1GbUJnNEFOaUx2c3ZPVEloR2M5aTdCZVlpcC8xVDQyMS84cGtrZFB4ME5QK3BzMnlMWmRPVjl0L0NUWHA4cm42eXY3cFljbUFrNWVzN0c4cFRteWYwOFp2LzhuYStHWkM0aVQ3anlXOWhxd2Zyam93QnNkK1A3S3dFTTFDMXJ6RTNOUmlJRU1BU1pEZHZ5eTFLREVuQjAwdFoxRit1UjZ5ZWk2b2hIaHhhbDVKWmk2UWlFK3FqRS9KVEM3SnpNOUxMS3FFR1JlU1g1Q1pIRytJeWpXQ2NvVlFOQ2NsRm1jbVEyVWtFRExscVpucEdTV3BLZkc1bVJXcEtaZzZFOHZTNDNOVEUvT2dNc3lwdVltd0VQV0ZpUVg1TzhPWVJjV1o2T0dRbkpOWWpCNE9YQ21KSllsNmFVVkFMd041LzlDMHNPY1hnUHdKMU1RRWlqRldOTTJNUldnQy9LVjVvTUJMMFUzT0tNM0wxalVFQnlBa3BrR1lGMHB6SWJFWklWWXkvWWNheFFvMWlpMDFMejB6THhYbTlwekVwTlFjS0ljUEdFbmdPTklyS01yTUs0SDVCQ2hhckZlU1g1SUlVOGVWbko4REV3SDdqZUVmQUdFTmg2Mm9BZ0FBIn0= --&gt;
-
-&lt;div data-pagedtable=&quot;false&quot;&gt;
-  &lt;script data-pagedtable-source type=&quot;application/json&quot;&gt;
-{&quot;columns&quot;:[{&quot;label&quot;:[&quot;&quot;],&quot;name&quot;:[&quot;_rn_&quot;],&quot;type&quot;:[&quot;&quot;],&quot;align&quot;:[&quot;left&quot;]},{&quot;label&quot;:[&quot;Overall&quot;],&quot;name&quot;:[1],&quot;type&quot;:[&quot;dbl&quot;],&quot;align&quot;:[&quot;right&quot;]}],&quot;data&quot;:[{&quot;1&quot;:&quot;1.27639420&quot;,&quot;_rn_&quot;:&quot;sentiment_by_dictionary&quot;},{&quot;1&quot;:&quot;0.03165507&quot;,&quot;_rn_&quot;:&quot;Topic_1&quot;},{&quot;1&quot;:&quot;1.31304209&quot;,&quot;_rn_&quot;:&quot;Topic_2&quot;},{&quot;1&quot;:&quot;0.39432686&quot;,&quot;_rn_&quot;:&quot;sentiment_by_basic&quot;},{&quot;1&quot;:&quot;1.27080206&quot;,&quot;_rn_&quot;:&quot;sentiment_weighted_mixed&quot;},{&quot;1&quot;:&quot;0.68006578&quot;,&quot;_rn_&quot;:&quot;sentiment_avg_mean&quot;},{&quot;1&quot;:&quot;0.40829886&quot;,&quot;_rn_&quot;:&quot;ema&quot;},{&quot;1&quot;:&quot;1.13945374&quot;,&quot;_rn_&quot;:&quot;M&quot;},{&quot;1&quot;:&quot;1.09095496&quot;,&quot;_rn_&quot;:&quot;ROC&quot;},{&quot;1&quot;:&quot;2.16570657&quot;,&quot;_rn_&quot;:&quot;rsi&quot;}],&quot;options&quot;:{&quot;columns&quot;:{&quot;min&quot;:{},&quot;max&quot;:[10],&quot;total&quot;:[1]},&quot;rows&quot;:{&quot;min&quot;:[10],&quot;max&quot;:[10],&quot;total&quot;:[10]},&quot;pages&quot;:{}}}
-  &lt;/script&gt;
-&lt;/div&gt;
-
-&lt;!-- rnb-frame-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-CONCLUSION OF THE LINEAR MODEL 
-Our feature dot not have any explanatory power over the changes of the Starbucks stock. 
-Looking at the bigger picture, this was to be expected: stock volatility is not only driven by individuals tweeting positive or negative comments of the company. 
-Furthermore, we were limited by the twitter API in the amount of data we could obtain. 
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI3RpbWUgZm9yIFJGIENNT09PT09PTiBcblxubGlicmFyeShyYW5kb21Gb3Jlc3QpXG5saWJyYXJ5KGRhdGFzZXRzKVxubGlicmFyeShjYXJldClcblxuI2J1aWxkaW5nIFJGIG9uIHRoZSB0d2l0dGVyIGRhdGEgXG5cblJGX3R3aXR0ZXJfZGF0YSA8LSByYW5kb21Gb3Jlc3QoYXMuZmFjdG9yKGJhc2V0YWJsZV90cmFpbiRUYXJnZXQpIH4gc2VudGltZW50X2J5X2RpY3Rpb25hcnkgKyBcbiAgICAgICAgICAgICAgICAgICAgICAgICBUb3BpY18xICsgVG9waWNfMiArIHNlbnRpbWVudF9ieV9iYXNpYyArc2VudGltZW50X3dlaWdodGVkX21peGVkIFxuICAgICAgICAgICAgICAgICAgICAgICAgICsgc2VudGltZW50X2F2Z19tZWFuLCBkYXRhID0gYmFzZXRhYmxlX3RyYWluKVxucHJpbnQoUkZfdHdpdHRlcl9kYXRhKSAjIHRoaXMgcGVyZm9ybXMgd29yc2UgdGhhbiBjb2luIGZsaXBwaW5nIGhhaGFhaGhhIFxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTAsIm5jb2wiOjEsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGYgWzEwIMOXIDFdIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQXd0eWlURG1pdUJpWUdCZ1ptQmhaR1JnWmdVeUdWaERROXgwTFJnWVdKaUFIRVlHRmdaT0VGMEJWQ1FNRm1CZzRBTmlMdnN2T1RJaEdjOUU3UmVZaXAvMWoxOXYvNVhKSXFmaklaZjlUWnRsV3k2ZGRiVC9FbXJTNVhOMXVmM1R3NUlCSnk5WjJ0OVNuTmcrcDYzVy9wTzE4YzJFcE5QMkgwdDZEVmsvQ1Rnd0JzZCtQN0l3RjgxQzFyekUzTlJpSUVNQVNaRGR2eXkxS0RFbkIwMHRaMUYrdVI2eWVpNm9oSGh4YWw1SlppNlFpRStxakUvSlRDN0p6TTlMTEtxRUdSZVNYNUNaSEcrSXlqV0Njb1ZRTkNjbEZtY21RMlVrRURMbHFabnBHU1dwS2ZHNW1SV3BLWmc2RTh2UzQzTlRFL09nTXN5cHVZbXdFUFdGaVFYNU84T1lSY1daNk9HUW5KTllqQjRPWENtSkpZbDZhVVZBTHdONS85QzBzT2NYZ1B3SjFNUUVpakZXTk0yTVJXZ0MvS1Y1b01CTDBVM09LTTNMMWpVR0J5QWtwa0dZRjBwekliRVpJVll5L1ljYXhRbzFpaTAxTHowekx4WG05cHpFcE5RY0tJY1BHRW5nT05JcktNck1LNEg1QkNoYXJGZVNYNUlJVThlVm5KOERFd0g3amVFZkFBS1FLRktvQWdBQSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Overall"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"1.27639420","_rn_":"sentiment_by_dictionary"},{"1":"0.03165507","_rn_":"Topic_1"},{"1":"1.31304209","_rn_":"Topic_2"},{"1":"0.39432686","_rn_":"sentiment_by_basic"},{"1":"1.27080206","_rn_":"sentiment_weighted_mixed"},{"1":"0.68006578","_rn_":"sentiment_avg_mean"},{"1":"0.40829886","_rn_":"ema"},{"1":"1.13945374","_rn_":"M"},{"1":"1.09095496","_rn_":"ROC"},{"1":"2.16570657","_rn_":"rsi"}],"options":{"columns":{"min":{},"max":[10],"total":[1]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>CONCLUSION OF THE LINEAR MODEL Our feature dot not have any explanatory power over the changes of the Starbucks stock. Looking at the bigger picture, this was to be expected: stock volatility is not only driven by individuals tweeting positive or negative comments of the company. Furthermore, we were limited by the twitter API in the amount of data we could obtain.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI3RpbWUgZm9yIFJGIENNT09PT09PTiBcblxubGlicmFyeShyYW5kb21Gb3Jlc3QpXG5saWJyYXJ5KGRhdGFzZXRzKVxubGlicmFyeShjYXJldClcblxuI2J1aWxkaW5nIFJGIG9uIHRoZSB0d2l0dGVyIGRhdGEgXG5cblJGX3R3aXR0ZXJfZGF0YSA8LSByYW5kb21Gb3Jlc3QoYXMuZmFjdG9yKGJhc2V0YWJsZV90cmFpbiRUYXJnZXQpIH4gc2VudGltZW50X2J5X2RpY3Rpb25hcnkgKyBcbiAgICAgICAgICAgICAgICAgICAgICAgICBUb3BpY18xICsgVG9waWNfMiArIHNlbnRpbWVudF9ieV9iYXNpYyArc2VudGltZW50X3dlaWdodGVkX21peGVkIFxuICAgICAgICAgICAgICAgICAgICAgICAgICsgc2VudGltZW50X2F2Z19tZWFuLCBkYXRhID0gYmFzZXRhYmxlX3RyYWluKVxucHJpbnQoUkZfdHdpdHRlcl9kYXRhKSAjIHRoaXMgcGVyZm9ybXMgd29yc2UgdGhhbiBjb2luIGZsaXBwaW5nIGhhaGFhaGhhIFxuYGBgXG5gYGAifQ== -->
+<pre class="r"><code>```r
 #time for RF CMOOOOOON 
 
 library(randomForest)
@@ -446,7 +368,7 @@ print(RF_all_data) #this model performs a bit better </code></pre>
 <p>Ma keb het eig echt gehad Gr K</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CnNldC5zZWVkKDEyMykKcm0obGlzdCA9IGxzKCkpCmxpYnJhcnkoQVVDKQpsaWJyYXJ5KHBST0MpCmxpYnJhcnkobWxiZW5jaCkKbGlicmFyeShjYXJldCkKCiNMb2FkIGluIHRoZSB0cmFpbiBhbmQgdGVzdCBiYXNldGFibGUgCgojIGJhc2V0YWJsZV90ZXN0ID0gcmVhZC5jc3YoIi9Vc2Vycy93b3V0ZXJkZXdpdHRlL0RvY3VtZW50cy9HaXRIdWIvU01XQV9QZXJmb3JtYW5jZS9kYXRhL2ZpbmFsX2Jhc2V0YWJsZV90ZXN0LmNzdiIpCiMgYmFzZXRhYmxlX3RyYWluID1yZWFkLmNzdigiL1VzZXJzL3dvdXRlcmRld2l0dGUvRG9jdW1lbnRzL0dpdEh1Yi9TTVdBX1BlcmZvcm1hbmNlL2RhdGEvZmluYWxfYmFzZXRhYmxlX3RyYWluLmNzdiIpCgpgYGAKCmBgYHtyfQojZGVsZXRlIGRhdGUgY29sdW1uCmJhc2V0YWJsZV90cmFpbiA8LSBzdWJzZXQoYmFzZXRhYmxlX3RyYWluLCBzZWxlY3QgPSAtZGF0ZSkKYmFzZXRhYmxlX3Rlc3QgPC0gc3Vic2V0KGJhc2V0YWJsZV90ZXN0LCBzZWxlY3QgPSAtZGF0ZSkKCiNtYWtlIHZhcmlhYmxlcwp0ZXN0X3ggPC0gc3Vic2V0KGJhc2V0YWJsZV90ZXN0LCBzZWxlY3QgPSAtVGFyZ2V0KQp0ZXN0X3kgPC0gYmFzZXRhYmxlX3Rlc3QkVGFyZ2V0CgpiYXNldGFibGVfdHJhaW4kVGFyZ2V0IDwtIGlmZWxzZShiYXNldGFibGVfdHJhaW4kVGFyZ2V0IDwgMCwgMCwgMSkKdGVzdF95IDwtIGlmZWxzZSh0ZXN0X3kgPCAwLCAwLCAxKQpgYGAKCmBgYHtyfQojYnVpbGQgbW9kZWwgb24gb25seSB0aGUgdHdpdHRlciBkYXRhIApMb2dfTW9kZWxfVHdpdHRlcmRhdGEgPC0gIGdsbShhcy5mYWN0b3IoYmFzZXRhYmxlX3RyYWluJFRhcmdldCkgfiBzZW50aW1lbnRfYnlfZGljdGlvbmFyeSArIAogICAgICAgICAgICAgICAgICAgICAgICAgVG9waWNfMSArIFRvcGljXzIgKyBzZW50aW1lbnRfYnlfYmFzaWMgK3NlbnRpbWVudF93ZWlnaHRlZF9taXhlZCAKICAgICAgICAgICAgICAgICAgICAgICAgICsgc2VudGltZW50X2F2Z19tZWFuICwgZGF0YSA9IGJhc2V0YWJsZV90cmFpbiwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBmYW1pbHkgPSJiaW5vbWlhbCIpCnByaW50KHN1bW1hcnkoTG9nX01vZGVsX1R3aXR0ZXJkYXRhKSkKdHdpdHRlcl9wcmVkaWNpdG9ucyA8LSBwcmVkaWN0KExvZ19Nb2RlbF9Ud2l0dGVyZGF0YSxuZXdkYXRhID0gdGVzdF94LCB0eXBlID0gInJlc3BvbnNlIiApCmF1Yyh0ZXN0X3ksIHR3aXR0ZXJfcHJlZGljaXRvbnMpCnBsb3Qucm9jKHRlc3RfeSx0d2l0dGVyX3ByZWRpY2l0b25zLCBwcmludC5hdWMgPSBUUlVFLCBjb2wgPSAicmVkIiwgeWxpbSA9IGMoMCwxKSkKdHdpdHRlcl9wcmVkaWNpdG9uc1t0d2l0dGVyX3ByZWRpY2l0b25zPj0wLjVdIDwtIDEKdHdpdHRlcl9wcmVkaWNpdG9uc1t0d2l0dGVyX3ByZWRpY2l0b25zPDAuNV0gPC0gMAoKY29uZnVzaW9uTWF0cml4KHRlc3RfeSwgYXMuZGF0YS5mcmFtZSh0d2l0dGVyX3ByZWRpY2l0b25zKSR0d2l0dGVyX3ByZWRpY2l0b25zKQpzdW1tYXJ5KExvZ19Nb2RlbF9Ud2l0dGVyZGF0YSkKYGBgCgoKYGBge3J9CkxvZ19Nb2RlbF93aG9sZV9kYXRhc2V0IDwtIGdsbShhcy5mYWN0b3IoYmFzZXRhYmxlX3RyYWluJFRhcmdldCkgfiBzZW50aW1lbnRfYnlfZGljdGlvbmFyeSArIAogICAgICAgICAgICAgICAgICAgICAgICAgVG9waWNfMSArIFRvcGljXzIgKyBzZW50aW1lbnRfYnlfYmFzaWMgK3NlbnRpbWVudF93ZWlnaHRlZF9taXhlZCAKICAgICAgICAgICAgICAgICAgICAgICAgICsgc2VudGltZW50X2F2Z19tZWFuICsgZW1hICsgTSArIFJPQyArIHJzaSwKICAgICAgICAgICAgICAgICAgICAgICAgIGRhdGEgPSBiYXNldGFibGVfdHJhaW4sIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgZmFtaWx5ID0iYmlub21pYWwiKQpzdW1tYXJ5KExvZ19Nb2RlbF93aG9sZV9kYXRhc2V0KQoKCiNydW4gbW9kZWwKbW9kZWxfcHJvcG9ydGlvbnMgPC0gcHJlZGljdChMb2dfTW9kZWxfd2hvbGVfZGF0YXNldCwgbmV3ZGF0YSA9IHRlc3RfeCwgdHlwZSA9ICJyZXNwb25zZSIpCnByaW50KGF1Yyh0ZXN0X3ksIG1vZGVsX3Byb3BvcnRpb25zKSkKbW9kZWxfcHJvcG9ydGlvbnNbbW9kZWxfcHJvcG9ydGlvbnMgPj0gMC41XSA8LSAxCm1vZGVsX3Byb3BvcnRpb25zW21vZGVsX3Byb3BvcnRpb25zIDwgMC41XSA8LSAwCgojZXZhbHVhdGlvbgpwUk9DOjphdWModGVzdF95LG1vZGVsX3Byb3BvcnRpb25zKQoKc3VtbWFyeShMb2dfTW9kZWxfd2hvbGVfZGF0YXNldCkKYGBgCgpgYGB7cn0KI2xvb2sgYXQgaW1wb3J0YW5jZSBmZWF0dXJlcyBvZiB0aGUgVHdpdHRlciBkYXRhIG1vZGVsIApmZWF0dXJlX2ltcG9ydGFuY2UgPC0gdmFySW1wKExvZ19Nb2RlbF9Ud2l0dGVyZGF0YSwgc2NhbGUgPSBGQUxTRSkKZmVhdHVyZV9pbXBvcnRhbmNlCmBgYApgYGB7cn0KI2xvb2sgYXQgaW1wb3J0YW5jZSBmZWF0dXJlcyBvZiB0aGUgd2hvbGUgZGF0YSBtb2RlbCAKZmVhdHVyZV9pbXBvcnRhbmNlIDwtIHZhckltcChMb2dfTW9kZWxfd2hvbGVfZGF0YXNldCwgc2NhbGUgPSBGQUxTRSkKZmVhdHVyZV9pbXBvcnRhbmNlCmBgYAoKQ09OQ0xVU0lPTiBPRiBUSEUgTElORUFSIE1PREVMIApPdXIgZmVhdHVyZSBkb3Qgbm90IGhhdmUgYW55IGV4cGxhbmF0b3J5IHBvd2VyIG92ZXIgdGhlIGNoYW5nZXMgb2YgdGhlIFN0YXJidWNrcyBzdG9jay4gCkxvb2tpbmcgYXQgdGhlIGJpZ2dlciBwaWN0dXJlLCB0aGlzIHdhcyB0byBiZSBleHBlY3RlZDogc3RvY2sgdm9sYXRpbGl0eSBpcyBub3Qgb25seSBkcml2ZW4gYnkgaW5kaXZpZHVhbHMgdHdlZXRpbmcgcG9zaXRpdmUgb3IgbmVnYXRpdmUgY29tbWVudHMgb2YgdGhlIGNvbXBhbnkuIApGdXJ0aGVybW9yZSwgd2Ugd2VyZSBsaW1pdGVkIGJ5IHRoZSB0d2l0dGVyIEFQSSBpbiB0aGUgYW1vdW50IG9mIGRhdGEgd2UgY291bGQgb2J0YWluLiAKCmBgYHtyfQojdGltZSBmb3IgUkYgQ01PT09PT09OIAoKbGlicmFyeShyYW5kb21Gb3Jlc3QpCmxpYnJhcnkoZGF0YXNldHMpCmxpYnJhcnkoY2FyZXQpCgojYnVpbGRpbmcgUkYgb24gdGhlIHR3aXR0ZXIgZGF0YSAKClJGX3R3aXR0ZXJfZGF0YSA8LSByYW5kb21Gb3Jlc3QoYXMuZmFjdG9yKGJhc2V0YWJsZV90cmFpbiRUYXJnZXQpIH4gc2VudGltZW50X2J5X2RpY3Rpb25hcnkgKyAKICAgICAgICAgICAgICAgICAgICAgICAgIFRvcGljXzEgKyBUb3BpY18yICsgc2VudGltZW50X2J5X2Jhc2ljICtzZW50aW1lbnRfd2VpZ2h0ZWRfbWl4ZWQgCiAgICAgICAgICAgICAgICAgICAgICAgICArIHNlbnRpbWVudF9hdmdfbWVhbiwgZGF0YSA9IGJhc2V0YWJsZV90cmFpbikKcHJpbnQoUkZfdHdpdHRlcl9kYXRhKSAjIHRoaXMgcGVyZm9ybXMgd29yc2UgdGhhbiBjb2luIGZsaXBwaW5nIGhhaGFhaGhhIAoKUkZfYWxsX2RhdGEgPC0gcmFuZG9tRm9yZXN0KGFzLmZhY3RvcihiYXNldGFibGVfdHJhaW4kVGFyZ2V0KSB+IHNlbnRpbWVudF9ieV9kaWN0aW9uYXJ5ICsgCiAgICAgICAgICAgICAgICAgICAgICAgICBUb3BpY18xICsgVG9waWNfMiArIHNlbnRpbWVudF9ieV9iYXNpYyArc2VudGltZW50X3dlaWdodGVkX21peGVkIAogICAgICAgICAgICAgICAgICAgICAgICAgKyBzZW50aW1lbnRfYXZnX21lYW4gKyBlbWEgKyBNICsgUk9DICsgcnNpLAogICAgICAgICAgICAgICAgICAgICAgICAgZGF0YSA9IGJhc2V0YWJsZV90cmFpbikKcHJpbnQoUkZfYWxsX2RhdGEpICN0aGlzIG1vZGVsIHBlcmZvcm1zIGEgYml0IGJldHRlciAKCmBgYApDT05DTFVTSU9OIE9GIFRIRSBSQU5ET00gRk9SRVNUIApUaGUgbW9kZWwgdXNpbmcgYWxsIHRoZSBkYXRhIHNldCBwZXJmb3JtcyBhIGJpdCBiZXR0ZXIgCgpNYSBrZWIgaGV0IGVpZyBlY2h0IGdlaGFkIApHciAKSyAKCgoKCgoKCgoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CnNldC5zZWVkKDEyMykKcm0obGlzdCA9IGxzKCkpCmxpYnJhcnkoQVVDKQpsaWJyYXJ5KHBST0MpCmxpYnJhcnkobWxiZW5jaCkKbGlicmFyeShjYXJldCkKCiNMb2FkIGluIHRoZSB0cmFpbiBhbmQgdGVzdCBiYXNldGFibGUgCgpiYXNldGFibGVfdGVzdCA9IHJlYWQuY3N2KCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9maW5hbF9iYXNldGFibGVfdGVzdC5jc3YiKQpiYXNldGFibGVfdHJhaW4gPXJlYWQuY3N2KCIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9maW5hbF9iYXNldGFibGVfdHJhaW4uY3N2IikKCmBgYAoKYGBge3J9CiNkZWxldGUgZGF0ZSBjb2x1bW4KYmFzZXRhYmxlX3RyYWluIDwtIHN1YnNldChiYXNldGFibGVfdHJhaW4sIHNlbGVjdCA9IC1kYXRlKQpiYXNldGFibGVfdGVzdCA8LSBzdWJzZXQoYmFzZXRhYmxlX3Rlc3QsIHNlbGVjdCA9IC1kYXRlKQoKI21ha2UgdmFyaWFibGVzCnRlc3RfeCA8LSBzdWJzZXQoYmFzZXRhYmxlX3Rlc3QsIHNlbGVjdCA9IC1UYXJnZXQpCnRlc3RfeSA8LSBiYXNldGFibGVfdGVzdCRUYXJnZXQKYGBgCgpgYGB7cn0KI2J1aWxkIG1vZGVsIG9uIG9ubHkgdGhlIHR3aXR0ZXIgZGF0YSAKTG9nX01vZGVsX1R3aXR0ZXJkYXRhIDwtICBnbG0oYXMuZmFjdG9yKGJhc2V0YWJsZV90cmFpbiRUYXJnZXQpIH4gc2VudGltZW50X2J5X2RpY3Rpb25hcnkgKyAKICAgICAgICAgICAgICAgICAgICAgICAgIFRvcGljXzEgKyBUb3BpY18yICsgc2VudGltZW50X2J5X2Jhc2ljICtzZW50aW1lbnRfd2VpZ2h0ZWRfbWl4ZWQgCiAgICAgICAgICAgICAgICAgICAgICAgICArIHNlbnRpbWVudF9hdmdfbWVhbiAsIGRhdGEgPSBiYXNldGFibGVfdHJhaW4sIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgZmFtaWx5ID0iYmlub21pYWwiKQpwcmludChzdW1tYXJ5KExvZ19Nb2RlbF9Ud2l0dGVyZGF0YSkpCnR3aXR0ZXJfcHJlZGljaXRvbnMgPC0gcHJlZGljdChMb2dfTW9kZWxfVHdpdHRlcmRhdGEsbmV3ZGF0YSA9IHRlc3RfeCwgdHlwZSA9ICJyZXNwb25zZSIgKQphdWModGVzdF95LCB0d2l0dGVyX3ByZWRpY2l0b25zKQpwbG90LnJvYyh0ZXN0X3ksdHdpdHRlcl9wcmVkaWNpdG9ucywgcHJpbnQuYXVjID0gVFJVRSwgY29sID0gInJlZCIsIHlsaW0gPSBjKDAsMSkpCnR3aXR0ZXJfcHJlZGljaXRvbnNbdHdpdHRlcl9wcmVkaWNpdG9ucz49MC41XSA8LSAxCnR3aXR0ZXJfcHJlZGljaXRvbnNbdHdpdHRlcl9wcmVkaWNpdG9uczwwLjVdIDwtIDAKCnR3aXR0ZXJfcHJlZGljaXRvbnMgPC0gYXMudmVjdG9yKHR3aXR0ZXJfcHJlZGljaXRvbnMpCnRlc3RfeSA8LSBhcy52ZWN0b3IodGVzdF95KQoKY29uZnVzaW9uTWF0cml4KGFzLmZhY3Rvcih0ZXN0X3kpLCBhcy5mYWN0b3IodHdpdHRlcl9wcmVkaWNpdG9ucykpCmBgYAoKCmBgYHtyfQpMb2dfTW9kZWxfd2hvbGVfZGF0YXNldCA8LSBnbG0oYXMuZmFjdG9yKGJhc2V0YWJsZV90cmFpbiRUYXJnZXQpIH4gc2VudGltZW50X2J5X2RpY3Rpb25hcnkgKyAKICAgICAgICAgICAgICAgICAgICAgICAgIFRvcGljXzEgKyBUb3BpY18yICsgc2VudGltZW50X2J5X2Jhc2ljICtzZW50aW1lbnRfd2VpZ2h0ZWRfbWl4ZWQgCiAgICAgICAgICAgICAgICAgICAgICAgICArIHNlbnRpbWVudF9hdmdfbWVhbiArIGVtYSArIE0gKyBST0MgKyByc2ksCiAgICAgICAgICAgICAgICAgICAgICAgICBkYXRhID0gYmFzZXRhYmxlX3RyYWluLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZhbWlseSA9ImJpbm9taWFsIikKCiNydW4gbW9kZWwKbW9kZWxfcHJvcG9ydGlvbnMgPC0gcHJlZGljdChMb2dfTW9kZWxfd2hvbGVfZGF0YXNldCwgbmV3ZGF0YSA9IHRlc3RfeCwgdHlwZSA9ICJyZXNwb25zZSIpCnByaW50KGF1Yyh0ZXN0X3ksIG1vZGVsX3Byb3BvcnRpb25zKSkKbW9kZWxfcHJvcG9ydGlvbnNbbW9kZWxfcHJvcG9ydGlvbnMgPj0gMC41XSA8LSAxCm1vZGVsX3Byb3BvcnRpb25zW21vZGVsX3Byb3BvcnRpb25zIDwgMC41XSA8LSAwCgojZXZhbHVhdGlvbgpwUk9DOjphdWModGVzdF95LG1vZGVsX3Byb3BvcnRpb25zKQoKbW9kZWxfcHJvcG9ydGlvbnMgPC0gYXMudmVjdG9yKG1vZGVsX3Byb3BvcnRpb25zKQp0ZXN0X3kgPC0gYXMudmVjdG9yKHRlc3RfeSkKY29uZnVzaW9uTWF0cml4KGFzLmZhY3Rvcih0ZXN0X3kpLCBhcy5mYWN0b3IobW9kZWxfcHJvcG9ydGlvbnMpKQpgYGAKCmBgYHtyfQojbG9vayBhdCBpbXBvcnRhbmNlIGZlYXR1cmVzIG9mIHRoZSBUd2l0dGVyIGRhdGEgbW9kZWwgCmZlYXR1cmVfaW1wb3J0YW5jZSA8LSB2YXJJbXAoTG9nX01vZGVsX1R3aXR0ZXJkYXRhLCBzY2FsZSA9IEZBTFNFKQpmZWF0dXJlX2ltcG9ydGFuY2UKYGBgCmBgYHtyfQojbG9vayBhdCBpbXBvcnRhbmNlIGZlYXR1cmVzIG9mIHRoZSB3aG9sZSBkYXRhIG1vZGVsIApmZWF0dXJlX2ltcG9ydGFuY2UgPC0gdmFySW1wKExvZ19Nb2RlbF93aG9sZV9kYXRhc2V0LCBzY2FsZSA9IEZBTFNFKQpmZWF0dXJlX2ltcG9ydGFuY2UKYGBgCgpDT05DTFVTSU9OIE9GIFRIRSBMSU5FQVIgTU9ERUwgCk91ciBmZWF0dXJlIGRvdCBub3QgaGF2ZSBhbnkgZXhwbGFuYXRvcnkgcG93ZXIgb3ZlciB0aGUgY2hhbmdlcyBvZiB0aGUgU3RhcmJ1Y2tzIHN0b2NrLiAKTG9va2luZyBhdCB0aGUgYmlnZ2VyIHBpY3R1cmUsIHRoaXMgd2FzIHRvIGJlIGV4cGVjdGVkOiBzdG9jayB2b2xhdGlsaXR5IGlzIG5vdCBvbmx5IGRyaXZlbiBieSBpbmRpdmlkdWFscyB0d2VldGluZyBwb3NpdGl2ZSBvciBuZWdhdGl2ZSBjb21tZW50cyBvZiB0aGUgY29tcGFueS4gCkZ1cnRoZXJtb3JlLCB3ZSB3ZXJlIGxpbWl0ZWQgYnkgdGhlIHR3aXR0ZXIgQVBJIGluIHRoZSBhbW91bnQgb2YgZGF0YSB3ZSBjb3VsZCBvYnRhaW4uIAoKYGBge3J9CiN0aW1lIGZvciBSRiBDTU9PT09PT04gCgpsaWJyYXJ5KHJhbmRvbUZvcmVzdCkKbGlicmFyeShkYXRhc2V0cykKbGlicmFyeShjYXJldCkKCiNidWlsZGluZyBSRiBvbiB0aGUgdHdpdHRlciBkYXRhIAoKUkZfdHdpdHRlcl9kYXRhIDwtIHJhbmRvbUZvcmVzdChhcy5mYWN0b3IoYmFzZXRhYmxlX3RyYWluJFRhcmdldCkgfiBzZW50aW1lbnRfYnlfZGljdGlvbmFyeSArIAogICAgICAgICAgICAgICAgICAgICAgICAgVG9waWNfMSArIFRvcGljXzIgKyBzZW50aW1lbnRfYnlfYmFzaWMgK3NlbnRpbWVudF93ZWlnaHRlZF9taXhlZCAKICAgICAgICAgICAgICAgICAgICAgICAgICsgc2VudGltZW50X2F2Z19tZWFuLCBkYXRhID0gYmFzZXRhYmxlX3RyYWluKQpwcmludChSRl90d2l0dGVyX2RhdGEpICMgdGhpcyBwZXJmb3JtcyB3b3JzZSB0aGFuIGNvaW4gZmxpcHBpbmcgaGFoYWFoaGEgCgpSRl9hbGxfZGF0YSA8LSByYW5kb21Gb3Jlc3QoYXMuZmFjdG9yKGJhc2V0YWJsZV90cmFpbiRUYXJnZXQpIH4gc2VudGltZW50X2J5X2RpY3Rpb25hcnkgKyAKICAgICAgICAgICAgICAgICAgICAgICAgIFRvcGljXzEgKyBUb3BpY18yICsgc2VudGltZW50X2J5X2Jhc2ljICtzZW50aW1lbnRfd2VpZ2h0ZWRfbWl4ZWQgCiAgICAgICAgICAgICAgICAgICAgICAgICArIHNlbnRpbWVudF9hdmdfbWVhbiArIGVtYSArIE0gKyBST0MgKyByc2ksCiAgICAgICAgICAgICAgICAgICAgICAgICBkYXRhID0gYmFzZXRhYmxlX3RyYWluKQpwcmludChSRl9hbGxfZGF0YSkgI3RoaXMgbW9kZWwgcGVyZm9ybXMgYSBiaXQgYmV0dGVyIAoKYGBgCkNPTkNMVVNJT04gT0YgVEhFIFJBTkRPTSBGT1JFU1QgClRoZSBtb2RlbCB1c2luZyBhbGwgdGhlIGRhdGEgc2V0IHBlcmZvcm1zIGEgYml0IGJldHRlciAKCk1hIGtlYiBoZXQgZWlnIGVjaHQgZ2VoYWQgCkdyIApLIAoKCgoKCgoKCgoK</div>
 
 
 

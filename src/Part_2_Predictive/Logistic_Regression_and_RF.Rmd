@@ -13,8 +13,8 @@ library(caret)
 
 #Load in the train and test basetable 
 
-# basetable_test = read.csv("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/final_basetable_test.csv")
-# basetable_train =read.csv("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/final_basetable_train.csv")
+basetable_test = read.csv("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/final_basetable_test.csv")
+basetable_train =read.csv("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/final_basetable_train.csv")
 
 ```
 
@@ -26,9 +26,6 @@ basetable_test <- subset(basetable_test, select = -date)
 #make variables
 test_x <- subset(basetable_test, select = -Target)
 test_y <- basetable_test$Target
-
-basetable_train$Target <- ifelse(basetable_train$Target < 0, 0, 1)
-test_y <- ifelse(test_y < 0, 0, 1)
 ```
 
 ```{r}
@@ -44,8 +41,10 @@ plot.roc(test_y,twitter_predicitons, print.auc = TRUE, col = "red", ylim = c(0,1
 twitter_predicitons[twitter_predicitons>=0.5] <- 1
 twitter_predicitons[twitter_predicitons<0.5] <- 0
 
-confusionMatrix(test_y, as.data.frame(twitter_predicitons)$twitter_predicitons)
-summary(Log_Model_Twitterdata)
+twitter_predicitons <- as.vector(twitter_predicitons)
+test_y <- as.vector(test_y)
+
+confusionMatrix(as.factor(test_y), as.factor(twitter_predicitons))
 ```
 
 
@@ -55,8 +54,6 @@ Log_Model_whole_dataset <- glm(as.factor(basetable_train$Target) ~ sentiment_by_
                          + sentiment_avg_mean + ema + M + ROC + rsi,
                          data = basetable_train, 
                             family ="binomial")
-summary(Log_Model_whole_dataset)
-
 
 #run model
 model_proportions <- predict(Log_Model_whole_dataset, newdata = test_x, type = "response")
@@ -67,7 +64,9 @@ model_proportions[model_proportions < 0.5] <- 0
 #evaluation
 pROC::auc(test_y,model_proportions)
 
-summary(Log_Model_whole_dataset)
+model_proportions <- as.vector(model_proportions)
+test_y <- as.vector(test_y)
+confusionMatrix(as.factor(test_y), as.factor(model_proportions))
 ```
 
 ```{r}
