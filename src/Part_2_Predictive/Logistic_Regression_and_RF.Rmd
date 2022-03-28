@@ -36,7 +36,7 @@ Log_Model_Twitterdata <-  glm(as.factor(basetable_train$Target) ~ sentiment_by_d
                             family ="binomial")
 print(summary(Log_Model_Twitterdata))
 twitter_predicitons <- predict(Log_Model_Twitterdata,newdata = test_x, type = "response" )
-auc(test_y, twitter_predicitons)
+auc <- auc(test_y, twitter_predicitons)
 plot.roc(test_y,twitter_predicitons, print.auc = TRUE, col = "red", ylim = c(0,1))
 twitter_predicitons[twitter_predicitons>=0.5] <- 1
 twitter_predicitons[twitter_predicitons<0.5] <- 0
@@ -66,7 +66,7 @@ pROC::auc(test_y,model_proportions)
 
 model_proportions <- as.vector(model_proportions)
 test_y <- as.vector(test_y)
-confusionMatrix(as.factor(test_y), as.factor(model_proportions))
+confusionMatrix(test_y, as.factor(model_proportions))
 ```
 
 ```{r}
