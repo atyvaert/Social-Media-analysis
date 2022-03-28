@@ -13,8 +13,9 @@ library(caret)
 
 #Load in the train and test basetable 
 
-#load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_train.RData")
-#load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_test.RData")
+# basetable_test = read.csv("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/final_basetable_test.csv")
+# basetable_train =read.csv("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/final_basetable_train.csv")
+
 ```
 
 ```{r}
@@ -44,7 +45,7 @@ twitter_predicitons[twitter_predicitons>=0.5] <- 1
 twitter_predicitons[twitter_predicitons<0.5] <- 0
 
 confusionMatrix(test_y, as.data.frame(twitter_predicitons)$twitter_predicitons)
-
+summary(Log_Model_Twitterdata)
 ```
 
 
@@ -65,6 +66,8 @@ model_proportions[model_proportions < 0.5] <- 0
 
 #evaluation
 pROC::auc(test_y,model_proportions)
+
+summary(Log_Model_whole_dataset)
 ```
 
 ```{r}
