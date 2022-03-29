@@ -86,7 +86,7 @@ Looking at the bigger picture, this was to be expected: stock volatility is not 
 Furthermore, we were limited by the twitter API in the amount of data we could obtain. 
 
 ```{r}
-#time for RF CMOOOOOON 
+#RF
 
 library(randomForest)
 library(datasets)
@@ -106,12 +106,7 @@ RF_all_data <- randomForest(as.factor(basetable_train$Target) ~ sentiment_by_dic
 print(RF_all_data) #this model performs a bit better 
 
 ```
-CONCLUSION OF THE RANDOM FOREST 
-The model using all the data set performs a bit better 
 
-Ma keb het eig echt gehad 
-Gr 
-K 
 
 
 
