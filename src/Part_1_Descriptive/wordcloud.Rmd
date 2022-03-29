@@ -5,7 +5,7 @@ output: html_notebook
 
 ```{r}
 rm(list=ls())
-# necessary packages
+# load in necessary packages
 if (!require("pacman")) install.packages("pacman") ; require("pacman")
 p_load(rtweet, httr,tidyverse)
 p_load(tm,wordcloud, wordcloud2)
@@ -17,6 +17,7 @@ library(htmlwidgets)
 ```
 
 ```{r}
+#loading in the data
 load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/All_tweets_all_features.RData")
 #filtering out the bot
 all_tweets$is_no_bot <- !grepl("Poshmark",all_tweets$text)
@@ -33,7 +34,7 @@ text <- iconv(text,'latin1', 'ascii', sub = '')
 ```
 
 ```{r}
-#creating corpus
+#creating corpus and cleaning
 myCorpus <- Corpus(VectorSource(text)) %>%
   tm_map(content_transformer(str_to_lower)) %>%
   tm_map(removePunctuation) %>%
@@ -54,6 +55,8 @@ d <- d[which(d$freq>30),]
 # making the wordcloud
 wordcloud <- wordcloud2(d)
 wordcloud
+
+#saving
 saveWidget(wordcloud,"/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/figures/wordcloud.html",selfcontained = F)
 webshot("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/figures/wordcloud.html","/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/figures/wordcloud.png",vwidth = 1000, vheight = 800, delay =10)
 ```

@@ -9,19 +9,21 @@ p_load(tidyverse, rtweet, httpuv, stringr, qdap, httr, wordcloud2, tm, tidytext,
 #install.packages("twitteR")
 library(twitteR)
 
-
+#load tokens
 source('tokensandkeys.R')
 token <- get_token()
 
+#determine hashtags
 search.string <- "#Starbucks"
 
+#scrape
 tweets <- search_tweets(search.string, n = 10000, 
                         include_rts = FALSE,
                         retryonratelimit = FALSE,
                         lang = 'en',
                         token = get_token())
 
-
+# try other method to scrape
 #https://developer.twitter.com/en/portal/projects/1495455141645926414/apps
 tweets2 <- searchTwitter(search.string, n = 18000, 
                         since = "2022-03-01") 
@@ -30,6 +32,7 @@ plot(list_starbucks$created)
 min(list_starbucks$created)
 max(list_starbucks$created)
 
+#save the tweets
 setwd("/Users/konstantinlazarov/Documents/GitHub/SMWA_Performance/data")
 save(tweets, file = "Scrape_23_03.RData")
 
@@ -42,6 +45,7 @@ save(tweets, file = "Scrape_18_03_RData")
 typeof(tweets)
 tweets_table <- as.data.frame(tweets)
 
+#plot distribution
 p_load(ggplot2)
 plot(tweets$created_at) 
 hist(tweets$created_at)

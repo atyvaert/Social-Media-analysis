@@ -7,6 +7,7 @@ output: html_notebook
 set.seed(123)
 rm(list = ls())
 
+#load in the necessary packages
 library(pROC)
 library(ROSE)
 library(MASS)
@@ -14,8 +15,7 @@ library(magrittr)
 library(pROC)
 library(lightgbm)
 
-
-
+#load in the data
 load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_train.RData")
 
 load("/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/basetable_test.RData")

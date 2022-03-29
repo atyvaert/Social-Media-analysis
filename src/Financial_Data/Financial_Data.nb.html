@@ -217,62 +217,35 @@ pre code {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubGlicmFyeShxdWFudG1vZClcbnJtKGxpc3QgPSBscygpKVxuXG5maW5hbmNpYWxfZGF0YSA9IHJlYWQuY3N2KFxcL1VzZXJzL3dvdXRlcmRld2l0dGUvRG9jdW1lbnRzL0dpdEh1Yi9TTVdBX1BlcmZvcm1hbmNlL3NyYy9GaW5hbmNpYWxfRGF0YS9GaW5hbmNpYWxfRGF0YV9ob3VyLmNzdlxcKVxuYGBgXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYGBgclxubGlicmFyeShxdWFudG1vZClcbnJtKGxpc3QgPSBscygpKVxuXG5maW5hbmNpYWxfZGF0YSA9IHJlYWQuY3N2KFxcL1VzZXJzL3dvdXRlcmRld2l0dGUvRG9jdW1lbnRzL0dpdEh1Yi9TTVdBX1BlcmZvcm1hbmNlL3NyYy9GaW5hbmNpYWxfRGF0YS9GaW5hbmNpYWxfRGF0YV9ob3VyLmNzdlxcKVxuYGBgXG5gYGBcbmBgYCJ9 -->
 <pre class="r"><code>```r
+```r
 library(quantmod)
 rm(list = ls())
 
 financial_data = read.csv(\/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/src/Financial_Data/Financial_Data_hour.csv\)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZmluYW5jaWFsX2RhdGEkZGF0ZSA8LSBhcy5QT1NJWGN0KGZpbmFuY2lhbF9kYXRhJGRhdGUpXG5maW5hbmNpYWxfZGF0YSRUYXJnZXQgPC0gZmluYW5jaWFsX2RhdGEkY2xvc2UgLSBmaW5hbmNpYWxfZGF0YSRvcGVuXG5cbiMgc2V0IHRpbWUgZXF1YWwgKyA0XG5cbmZpbmFuY2lhbF9kYXRhJGRhdGUgPC0gZmluYW5jaWFsX2RhdGEkZGF0ZSArIDQqNjAqNjBcbmZpbmFuY2lhbF9kYXRhJFRhcmdldCA8LSBzaWduKGZpbmFuY2lhbF9kYXRhJFRhcmdldClcbmZpbmFuY2lhbF9kYXRhJFRhcmdldCA8LSBzaWduKGZpbmFuY2lhbF9kYXRhJFRhcmdldClcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
+<pre><code></code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyB0dXJuIGRhdGUgaW50byBhIGRhdGUgb2JqZWN0XG5maW5hbmNpYWxfZGF0YSRkYXRlIDwtIGFzLlBPU0lYY3QoZmluYW5jaWFsX2RhdGEkZGF0ZSlcbmZpbmFuY2lhbF9kYXRhJFRhcmdldCA8LSBmaW5hbmNpYWxfZGF0YSRjbG9zZSAtIGZpbmFuY2lhbF9kYXRhJG9wZW5cblxuIyBzZXQgdGltZSBlcXVhbCArIDRcbmZpbmFuY2lhbF9kYXRhJGRhdGUgPC0gZmluYW5jaWFsX2RhdGEkZGF0ZSArIDQqNjAqNjBcbmZpbmFuY2lhbF9kYXRhJFRhcmdldCA8LSBzaWduKGZpbmFuY2lhbF9kYXRhJFRhcmdldClcbmZpbmFuY2lhbF9kYXRhJFRhcmdldCA8LSBpZmVsc2UoZmluYW5jaWFsX2RhdGEkVGFyZ2V0IDwgMCwgMCwgMSlcbmBgYCJ9 -->
+<pre class="r"><code># turn date into a date object
 financial_data$date &lt;- as.POSIXct(financial_data$date)
 financial_data$Target &lt;- financial_data$close - financial_data$open
 
 # set time equal + 4
-
 financial_data$date &lt;- financial_data$date + 4*60*60
 financial_data$Target &lt;- sign(financial_data$Target)
-financial_data$Target &lt;- sign(financial_data$Target)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyB0ZWNobmljYWwgaW5kaWNhdG9yc1xuZW1hIDwtRU1BKGZpbmFuY2lhbF9kYXRhJGNsb3NlLG49MjApXG5iYiA8LUJCYW5kcyhmaW5hbmNpYWxfZGF0YSRjbG9zZSxzLmQ9Milcbk0gPC0gbW9tZW50dW0oZmluYW5jaWFsX2RhdGEkY2xvc2UsIG49MilcblJPQyA8LSBST0MoZmluYW5jaWFsX2RhdGEkY2xvc2Usbj0yKVxubWFjZCA8LSBNQUNEKGZpbmFuY2lhbF9kYXRhJGNsb3NlLCBuRmFzdD0xMiwgblNsb3c9MjYsXG4gICAgICAgICAgICAgblNpZz05LCBtYVR5cGU9U01BKVxucnNpID0gUlNJKGZpbmFuY2lhbF9kYXRhJGNsb3NlLCBuPTE0KVxuXG5maW5hbmNpYWxfZGF0YSRlbWEgPC0gZW1hXG5maW5hbmNpYWxfZGF0YSRiYiA8LSBiYlxuZmluYW5jaWFsX2RhdGEkTSA8LSBNXG5maW5hbmNpYWxfZGF0YSRST0MgPC0gUk9DXG5maW5hbmNpYWxfZGF0YSRtYWNkIDwtIG1hY2RcbmZpbmFuY2lhbF9kYXRhJHJzaSA8LSByc2lcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-# technical indicators
+financial_data$Target &lt;- ifelse(financial_data$Target &lt; 0, 0, 1)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyB0ZWNobmljYWwgaW5kaWNhdG9yc1xuZW1hIDwtRU1BKGZpbmFuY2lhbF9kYXRhJGNsb3NlLG49MjApXG5iYiA8LUJCYW5kcyhmaW5hbmNpYWxfZGF0YSRjbG9zZSxzLmQ9Milcbk0gPC0gbW9tZW50dW0oZmluYW5jaWFsX2RhdGEkY2xvc2UsIG49MilcblJPQyA8LSBST0MoZmluYW5jaWFsX2RhdGEkY2xvc2Usbj0yKVxubWFjZCA8LSBNQUNEKGZpbmFuY2lhbF9kYXRhJGNsb3NlLCBuRmFzdD0xMiwgblNsb3c9MjYsXG4gICAgICAgICAgICAgblNpZz05LCBtYVR5cGU9U01BKVxucnNpID0gUlNJKGZpbmFuY2lhbF9kYXRhJGNsb3NlLCBuPTE0KVxuXG5maW5hbmNpYWxfZGF0YSRlbWEgPC0gZW1hXG5maW5hbmNpYWxfZGF0YSRiYiA8LSBiYlxuZmluYW5jaWFsX2RhdGEkTSA8LSBNXG5maW5hbmNpYWxfZGF0YSRST0MgPC0gUk9DXG5maW5hbmNpYWxfZGF0YSRtYWNkIDwtIG1hY2RcbmZpbmFuY2lhbF9kYXRhJHJzaSA8LSByc2lcbmBgYCJ9 -->
+<pre class="r"><code># technical indicators
 ema &lt;-EMA(financial_data$close,n=20)
 bb &lt;-BBands(financial_data$close,s.d=2)
 M &lt;- momentum(financial_data$close, n=2)
@@ -287,34 +260,19 @@ financial_data$M &lt;- M
 financial_data$ROC &lt;- ROC
 financial_data$macd &lt;- macd
 financial_data$rsi &lt;- rsi</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuc2F2ZShmaW5hbmNpYWxfZGF0YSwgZmlsZSA9IFxcL1VzZXJzL3dvdXRlcmRld2l0dGUvRG9jdW1lbnRzL0dpdEh1Yi9TTVdBX1BlcmZvcm1hbmNlL2RhdGEvRmluYW5jaWFsX0RhdGEuUkRhdGFcXClcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-save(financial_data, file = \/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/Financial_Data.RData\)</code></pre>
-<p>```</p>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2F2ZShmaW5hbmNpYWxfZGF0YSwgZmlsZSA9IFwiL1VzZXJzL3dvdXRlcmRld2l0dGUvRG9jdW1lbnRzL0dpdEh1Yi9TTVdBX1BlcmZvcm1hbmNlL2RhdGEvRmluYW5jaWFsX0RhdGEuUkRhdGFcIilcbmBgYCJ9 -->
+<pre class="r"><code>save(financial_data, file = &quot;/Users/wouterdewitte/Documents/GitHub/SMWA_Performance/data/Financial_Data.RData&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkZpbmFuY2lhbCBEYXRhIFNCVVgiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCmxpYnJhcnkocXVhbnRtb2QpDQpybShsaXN0ID0gbHMoKSkNCg0KZmluYW5jaWFsX2RhdGEgPSByZWFkLmNzdigiL1VzZXJzL3dvdXRlcmRld2l0dGUvRG9jdW1lbnRzL0dpdEh1Yi9TTVdBX1BlcmZvcm1hbmNlL3NyYy9GaW5hbmNpYWxfRGF0YS9GaW5hbmNpYWxfRGF0YV9ob3VyLmNzdiIpDQpgYGANCg0KDQpgYGB7cn0NCmZpbmFuY2lhbF9kYXRhJGRhdGUgPC0gYXMuUE9TSVhjdChmaW5hbmNpYWxfZGF0YSRkYXRlKQ0KZmluYW5jaWFsX2RhdGEkVGFyZ2V0IDwtIGZpbmFuY2lhbF9kYXRhJGNsb3NlIC0gZmluYW5jaWFsX2RhdGEkb3Blbg0KDQojIHNldCB0aW1lIGVxdWFsICsgNA0KDQpmaW5hbmNpYWxfZGF0YSRkYXRlIDwtIGZpbmFuY2lhbF9kYXRhJGRhdGUgKyA0KjYwKjYwDQpmaW5hbmNpYWxfZGF0YSRUYXJnZXQgPC0gc2lnbihmaW5hbmNpYWxfZGF0YSRUYXJnZXQpDQpmaW5hbmNpYWxfZGF0YSRUYXJnZXQgPC0gaWZlbHNlKGZpbmFuY2lhbF9kYXRhJFRhcmdldCA8IDAsIDAsIDEpDQpgYGANCg0KYGBge3J9DQojIHRlY2huaWNhbCBpbmRpY2F0b3JzDQplbWEgPC1FTUEoZmluYW5jaWFsX2RhdGEkY2xvc2Usbj0yMCkNCmJiIDwtQkJhbmRzKGZpbmFuY2lhbF9kYXRhJGNsb3NlLHMuZD0yKQ0KTSA8LSBtb21lbnR1bShmaW5hbmNpYWxfZGF0YSRjbG9zZSwgbj0yKQ0KUk9DIDwtIFJPQyhmaW5hbmNpYWxfZGF0YSRjbG9zZSxuPTIpDQptYWNkIDwtIE1BQ0QoZmluYW5jaWFsX2RhdGEkY2xvc2UsIG5GYXN0PTEyLCBuU2xvdz0yNiwNCiAgICAgICAgICAgICBuU2lnPTksIG1hVHlwZT1TTUEpDQpyc2kgPSBSU0koZmluYW5jaWFsX2RhdGEkY2xvc2UsIG49MTQpDQoNCmZpbmFuY2lhbF9kYXRhJGVtYSA8LSBlbWENCmZpbmFuY2lhbF9kYXRhJGJiIDwtIGJiDQpmaW5hbmNpYWxfZGF0YSRNIDwtIE0NCmZpbmFuY2lhbF9kYXRhJFJPQyA8LSBST0MNCmZpbmFuY2lhbF9kYXRhJG1hY2QgPC0gbWFjZA0KZmluYW5jaWFsX2RhdGEkcnNpIDwtIHJzaQ0KYGBgDQoNCmBgYHtyfQ0Kc2F2ZShmaW5hbmNpYWxfZGF0YSwgZmlsZSA9ICIvVXNlcnMvd291dGVyZGV3aXR0ZS9Eb2N1bWVudHMvR2l0SHViL1NNV0FfUGVyZm9ybWFuY2UvZGF0YS9GaW5hbmNpYWxfRGF0YS5SRGF0YSIpDQpgYGANCg0K</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRmluYW5jaWFsIERhdGEgU0JVWCIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkocXVhbnRtb2QpCnJtKGxpc3QgPSBscygpKQoKZmluYW5jaWFsX2RhdGEgPSByZWFkLmNzdigiL1VzZXJzL3dvdXRlcmRld2l0dGUvRG9jdW1lbnRzL0dpdEh1Yi9TTVdBX1BlcmZvcm1hbmNlL3NyYy9GaW5hbmNpYWxfRGF0YS9GaW5hbmNpYWxfRGF0YV9ob3VyLmNzdiIpCmBgYAoKCmBgYHtyfQojIHR1cm4gZGF0ZSBpbnRvIGEgZGF0ZSBvYmplY3QKZmluYW5jaWFsX2RhdGEkZGF0ZSA8LSBhcy5QT1NJWGN0KGZpbmFuY2lhbF9kYXRhJGRhdGUpCmZpbmFuY2lhbF9kYXRhJFRhcmdldCA8LSBmaW5hbmNpYWxfZGF0YSRjbG9zZSAtIGZpbmFuY2lhbF9kYXRhJG9wZW4KCiMgc2V0IHRpbWUgZXF1YWwgKyA0CmZpbmFuY2lhbF9kYXRhJGRhdGUgPC0gZmluYW5jaWFsX2RhdGEkZGF0ZSArIDQqNjAqNjAKZmluYW5jaWFsX2RhdGEkVGFyZ2V0IDwtIHNpZ24oZmluYW5jaWFsX2RhdGEkVGFyZ2V0KQpmaW5hbmNpYWxfZGF0YSRUYXJnZXQgPC0gaWZlbHNlKGZpbmFuY2lhbF9kYXRhJFRhcmdldCA8IDAsIDAsIDEpCmBgYAoKYGBge3J9CiMgdGVjaG5pY2FsIGluZGljYXRvcnMKZW1hIDwtRU1BKGZpbmFuY2lhbF9kYXRhJGNsb3NlLG49MjApCmJiIDwtQkJhbmRzKGZpbmFuY2lhbF9kYXRhJGNsb3NlLHMuZD0yKQpNIDwtIG1vbWVudHVtKGZpbmFuY2lhbF9kYXRhJGNsb3NlLCBuPTIpClJPQyA8LSBST0MoZmluYW5jaWFsX2RhdGEkY2xvc2Usbj0yKQptYWNkIDwtIE1BQ0QoZmluYW5jaWFsX2RhdGEkY2xvc2UsIG5GYXN0PTEyLCBuU2xvdz0yNiwKICAgICAgICAgICAgIG5TaWc9OSwgbWFUeXBlPVNNQSkKcnNpID0gUlNJKGZpbmFuY2lhbF9kYXRhJGNsb3NlLCBuPTE0KQoKZmluYW5jaWFsX2RhdGEkZW1hIDwtIGVtYQpmaW5hbmNpYWxfZGF0YSRiYiA8LSBiYgpmaW5hbmNpYWxfZGF0YSRNIDwtIE0KZmluYW5jaWFsX2RhdGEkUk9DIDwtIFJPQwpmaW5hbmNpYWxfZGF0YSRtYWNkIDwtIG1hY2QKZmluYW5jaWFsX2RhdGEkcnNpIDwtIHJzaQpgYGAKCmBgYHtyfQpzYXZlKGZpbmFuY2lhbF9kYXRhLCBmaWxlID0gIi9Vc2Vycy93b3V0ZXJkZXdpdHRlL0RvY3VtZW50cy9HaXRIdWIvU01XQV9QZXJmb3JtYW5jZS9kYXRhL0ZpbmFuY2lhbF9EYXRhLlJEYXRhIikKYGBgCgo=</div>
 
 
 

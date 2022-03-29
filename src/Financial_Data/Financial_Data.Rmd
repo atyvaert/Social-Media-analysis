@@ -12,11 +12,11 @@ financial_data = read.csv("/Users/wouterdewitte/Documents/GitHub/SMWA_Performanc
 
 
 ```{r}
+# turn date into a date object
 financial_data$date <- as.POSIXct(financial_data$date)
 financial_data$Target <- financial_data$close - financial_data$open
 
 # set time equal + 4
-
 financial_data$date <- financial_data$date + 4*60*60
 financial_data$Target <- sign(financial_data$Target)
 financial_data$Target <- ifelse(financial_data$Target < 0, 0, 1)
