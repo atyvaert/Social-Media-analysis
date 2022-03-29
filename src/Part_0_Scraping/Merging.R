@@ -1,10 +1,9 @@
 rm(list=ls())
 setwd("C:\\Users\\bertj\\OneDrive\\Documenten\\GitHub\\SMWA_Performance\\data")
 
+# load in all files containing tweets
 load("First_Scrape9_03.Rdata")
 tweets1 <- as.data.frame(tweets[, c("user_id", "created_at", "text")])
-#load("Scrape_09_03.Rdata")
-#tweets2 <- as.data.frame(tweets[, c("user_id", "created_at", "text")])   # there is something wrong with this file
 load("Scrape1_10_03.Rdata")
 tweets3 <- as.data.frame(tweets[, c("user_id", "created_at", "text")])
 load("Scrape1_13_03.Rdata")
@@ -53,14 +52,18 @@ load("Scrape_24_03.Rdata")
 tweets25 <- as.data.frame(tweets[, c("user_id", "created_at", "text")])
 
 
+# combine all tweets
 all_tweets <- rbind(tweets1, tweets3, tweets4, tweets5, tweets6, tweets7, tweets8, tweets9, tweets10, tweets11, tweets12, tweets13, tweets14,
                     tweets15, tweets16, tweets17, tweets18, tweets19, tweets20, tweets21, tweets22, tweets23, tweets24, tweets25)
+
+# set column names
 colnames(all_tweets) <- c("user_id", "date", "text")
 
+# remove duplicate tweets
 sum(duplicated(all_tweets))
 all_tweets <- all_tweets[!duplicated(all_tweets), ]
 
-
+# change date for all tweet in order to merge with target variable and financial data into one basetable
 all_tweets$date <- ifelse(as.integer(format(all_tweets$date, format = "%H%M")) <= 1330,
                           ifelse(as.integer(format(all_tweets$date, format = "%M")) < 30,
                                  all_tweets$date + 60 - as.integer(format(all_tweets$date, format = "%S")) + (30 - (as.integer(format(all_tweets$date, format = "%M")) + 1)) * 60 + (14 - as.integer(format(all_tweets$date, format = "%H"))) * 60 * 60,
@@ -86,5 +89,5 @@ all_tweets$date <- as.POSIXct(all_tweets$date, format = "%Y-%m-%d %H:%M:%S", ori
 
 all_tweets <- subset(all_tweets, select = -c(weekday))
 
-
+# store tweets
 save(all_tweets, file = "all_tweets.Rdata")

@@ -42,7 +42,7 @@ lines(tweets_agg$date, tweets_agg$sentiment_weighted_mixed, type = "o", col = "o
 ```{r}
 #plot only where topic 2 is mentioned 
 
-plot(tweets_agg$date, tweets_agg$Topic_1,type = "o", col = "red", xlab = "Date", ylab = "average topics occurence", main = "Sentiment", ylim = c(0,2))
+plot(tweets_agg$date, tweets_agg$Topic_1,type = "o", col = "red", xlab = "Date", ylab = "average topics occurence", main = "Topic Occurence", ylim = c(0,2))
 
 legend("topright", legend=c("Topic1: coffee experiences", "Topic2: Ukraine conflict"), col=c("red", "blue"), lty=1, cex=0.8)
 
@@ -51,10 +51,33 @@ lines(tweets_agg$date, tweets_agg$Topic_2, type = "o", col = "blue")
 
 
 ```
+Let's look at the sentiment of tweets regarding topic 2 
+```{r}
+tweets_russia <- tweets_agg[tweets_agg$Topic_2>0.2,]
+
+
+plot(tweets_russia$date, tweets_russia$sentiment_by_dictionary,type = "o", col = "red", xlab = "Date", ylab = "Average Sentiment per Hour (using dictionary)", main = "Sentiment of tweets related to Russia", ylim = c(-0.3,0.3))
+abline(h = 0)
+
+
+```
+
+Let's look at the sentiment of tweets regarding topic 1
+```{r}
+tweets_coffee <- tweets_agg[tweets_agg$Topic_1>0.5,]
+tweets_coffee
+
+plot(tweets_coffee$date, tweets_coffee$sentiment_by_dictionary,type = "o", col = "green", xlab = "Date", ylab = "Average Sentiment per Hour (using dictionary)", main = "Sentiment of tweets related to coffee", ylim = c(-0.3,0.))
+abline(h = 0)
+```
+
+
+
+
 
 ```{r}
 # Clean tweet data
-#all_tweets <- subset(all_tweets, select = -c(text, user_id))
+all_tweets <- subset(all_tweets, select = -c(text, user_id))
 names(all_tweets)[2] <- "sentiment_by_dictionary"
 
 # Splitting in train and test set
